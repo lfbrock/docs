@@ -1,38 +1,24 @@
-.. Mattermost documentation master file, created by
-   sphinx-quickstart on Thu Nov 19 13:21:53 2015.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. Top-Level documentation file is used to start the toctree; 
+   however, this file is overriden in the rendering process
+   by an alternative index.html that provides a visually-pleasing 
+   landing page.  Updates to this top-level item must also
+   be transposed in the 'templates/index.html' file.
 
-Mattermost Documentation
-=========================
+Mattermost Documentation 
+------------------------
 
-.. toctree::
-   :maxdepth: 1
-   :caption: User Help
-   :glob:
-   
-   help/*
-   help/system-console/*
+.. _`mattermost.org/download`: http://www.mattermost.org/download/
+.. _contacting Mattermost, Inc.: https://about.mattermost.com/contact/
+.. _download and try it today.: https://docs.mattermost.com/install/ee-install.html
 
 .. toctree::
    :maxdepth: 1
-   :caption: Administration
    :glob:
+
+   Overview <overview/index>
+   User's Guide <guides/user>
+   Administrator's Guide <guides/administrator>
+   Integration Guide <guides/integration>
+   Developer's Guide <guides/developer>
+   Core Team Handbook <guides/core>
    
-   install/*
-   
-.. toctree::
-   :maxdepth: 1
-   :caption: Integrations
-   :glob:
-   
-   integrations/single-sign-on/*
-   integrations/services/*
-   integrations/webhooks/*
-   
-.. toctree::
-   :maxdepth: 1
-   :caption: Internal Process
-   :glob:
-   
-   process/*
