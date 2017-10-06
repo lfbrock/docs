@@ -366,7 +366,7 @@ Restrict the permission level required to rename and set the header or purpose f
 
 Enable public channel deletion for
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Restrict the permission level required to delete public channels. Deleted channels can be recovered from the database using a `command line tool <https://docs.mattermost.com/administration/command-line-tools.html>`_. The last member of a public channel has the ability to delete the channel regardless of their permission level.
+Restrict the permission level required to delete public channels. Deleted channels can be recovered from the database using a `command line tool <https://docs.mattermost.com/administration/command-line-tools.html>`_.
 
 **All channel members**: Allow all channel members to delete public channels.
 
@@ -412,7 +412,7 @@ Restrict the permission level required to rename and set the header or purpose f
 
 Enable private channel deletion for
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Restrict the permission level required to delete private channels. Deleted channels can be recovered from the database using a `command line tool <https://docs.mattermost.com/administration/command-line-tools.html>`_. The last member of a private channel has the ability to delete the channel regardless of their permission level.
+Restrict the permission level required to delete private channels. Deleted channels can be recovered from the database using a `command line tool <https://docs.mattermost.com/administration/command-line-tools.html>`_.
 
 **All channel members**: Allow all channel members to delete private channels.
 
@@ -738,7 +738,7 @@ Enable sign-in with username
 **False**: Sign in with username is disabled and does not appear on the login screen.
 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| This feature's ``config.json`` setting is ``EnableSignInWithUsername": false`` with options ``true`` and ``false`` for above settings respectively.                  |
+| This feature's ``config.json`` setting is ``EnableSignInWithUsername": true`` with options ``true`` and ``false`` for above settings respectively.                   |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 ________
@@ -1283,7 +1283,7 @@ ________
 
 
 MFA
---------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 *Available in Enterprise Edition E10 and higher*
 
 Configure security settings for multi-factor authentication.
@@ -1759,6 +1759,64 @@ Enable integrations to override profile picture icons
 | This feature's ``config.json`` setting is ``"EnablePostIconOverride": false`` with options ``true`` and ``false`` for above settings respectively.                   |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
+Enable Personal Access Tokens
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**True**: When true, users can create `personal access tokens <https://about.mattermost.com/default-user-access-tokens>`_ for integrations in **Account Settings > Security**. They can be used to authenticate against the API and give full access to the account.
+
+To manage who can create personal access tokens or to search users by token ID, go to the **System Console > Users** page.
+
+**False**: Personal access tokens are disabled on the server.
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"EnableUserAccessTokens": false`` with options ``true`` and ``false`` for above settings respectively.                   |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+________
+
+JIRA (Beta)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Enable JIRA
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**True**: You can configure JIRA webhooks to post message in Mattermost. To help combat phishing attacks, all posts are labelled by a BOT tag.
+
+**False**: JIRA webhook integration is not enabled.
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"Enabled": false`` with options ``true`` and ``false`` for above settings respectively.                                  |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+User
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Select the username that this integration is attached to.
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"UserName": ""`` with string input                                                                                       |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Secret
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The secret used to authenticate to Mattermost. Regenerating the secret for the webhook URL endpoint invalidates your existing JIRA integrations.
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"Secret": ""`` with string input                                                                                         |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Note that to set up a JIRA integration via ``config.json``, you can use the following format:
+
+  .. code-block:: text
+
+    "Plugins": {
+        "jira": {
+            "Enabled": true,
+            "Secret": "k-ZtjoTrmIdPs7eAGjalDEK_3Q8r3gXJ",
+            "UserName": "jira"
+        }
+    }
+
+where ``Enabled``, ``Secret`` and ``UserName`` are specified above.
 ________
 
 WebRTC (Beta)
@@ -1923,12 +1981,22 @@ Enable Server-Side Encryption for Amazon S3
 
 *Available in Enterprise Edition E20*
 
-**True**: Encrypts files in Amazon S3 using server-side encryption with `Amazon S3-managed keys <http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingServerSideEncryption.html>`.
+**True**: Encrypts files in Amazon S3 using server-side encryption with `Amazon S3-managed keys <http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingServerSideEncryption.html>`_.
 
 **False**: Doesn't encrypt files in Amazon S3.
 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | This feature's ``config.json`` setting is ``"AmazonS3SSE": true`` with options ``true`` and ``false`` for above settings respectively.                               |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Enable Amazon S3 Debugging
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**True**: Additional debugging information is included in the system logs. Typically set to `false` in production.
+
+**False**: No Amazon S3 debugging information is included in the system logs.
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"AmazonS3Trace": false`` with options ``true`` and ``false`` for above settings respectively.                            |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Allow File Sharing
@@ -2096,7 +2164,7 @@ ________
 Link Previews
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 Enable Link Previews
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^
 **True**: Enables users to display a preview of website content below the message, if available. When true, website previews can be enabled from Account Settings > Advanced > Preview pre-release features.
 
 **False**: Website link previews are disabled.
@@ -2110,7 +2178,7 @@ ________
 Emoji
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 Enable Emoji Picker
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^
 **True**: Enables an emoji picker that allows users to select emoji to add as reactions or use in messages. Enabling the emoji picker with a large number of custom emoji may slow down performance.
 
 **False**: Emoji picker is disabled.
@@ -2119,9 +2187,8 @@ Enable Emoji Picker
 | This feature's ``config.json`` setting is ``"EnableCustomEmoji": true`` with options ``true`` and ``false`` for above settings respectively.                         |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-
 Enable Custom Emoji
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 **True**: Enables a Custom Emoji option in the Main Menu, where users can go to create customized emoji.
 
 **False**: Custom emojis are disabled.
@@ -2131,7 +2198,7 @@ Enable Custom Emoji
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Restrict Custom Emoji Creation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 *Available in Enterprise Edition E10 and higher*
 
 **Allow everyone to create custom emoji**: Allows everyone to create custom emoji from the **Main Menu** > **Custom Emoji**.
@@ -2468,6 +2535,18 @@ Enable Developer Mode
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | This feature's ``config.json`` setting is ``"EnableDeveloper": false`` with options ``true`` and ``false`` for above settings respectively.                          |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Allow untrusted internal connections to
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In testing environments, such as when developing integrations locally on a development machine, use this setting to specify domains, IP addresses, or CIDR notations to allow internal connections. **Not recommended for use in production**, since this can allow a user to extract confidential data from your server or internal network.
+
+By default, user-supplied URLs such as those used for Open Graph metadata, webhooks, or slash commands will not be allowed to connect to reserved IP addresses including loopback or link-local addresses used for internal networks. Push notification, OAuth 2.0 and WebRTC server URLs are trusted and not affected by this setting.
+
+Separate two or more domains with spaces instead of commas, for example: ``webhooks.internal.example.com 127.0.0.1 10.0.16.0/28``
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"AllowedUntrustedInternalConnections": ""`` with string input.                                                           |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ________________________________________________________________________________________________________________________________________________________________________
 
 .. _high-availability:
@@ -2585,7 +2664,7 @@ Performance Monitoring
 *Available in Enterprise Edition E20*
 
 Enable Performance Monitoring
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 **True**: Mattermost enables performance monitoring collection and profiling. Please see `documentation <https://docs.mattermost.com/deployment/metrics.html>`_ to learn more about configuring performance monitoring for Mattermost.
 
 **False**: Mattermost performance monitoring is disabled.
@@ -2596,7 +2675,7 @@ Enable Performance Monitoring
 
 
 Listen Address
-~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 The address the Mattermost server will listen on to expose performance metrics.
 
 +-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -2723,13 +2802,35 @@ Team Settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 User Status Away Timeout
-~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This setting defines the number of seconds after which the user's status indicator changes to "Away", when they are away from Mattermost.
 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | This feature’s ``config.json`` setting is ``"UserStatusAwayTimeout": 300`` with whole number input.                                                                  |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Enable X to Leave Channels from Left-Hand Sidebar (Experimental)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**True**: Users can leave Public and Private Channels by clicking the "x" beside the channel name.
+
+**False**: Users must use the **Leave Channel** option from the channel menu to leave channels.
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"EnableXToLeaveChannelsFromLHS": false`` with options ``true`` and ``false`` for above settings respectively.               |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Town Square is Read-Only (Experimental)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+*Available in Enterprise Edition E10 and higher*
+
+**True**: Only Administrators can post in Town Square.
+
+**False**: Anyone can post in Town Square.
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``""ExperimentalTownSquareIsReadOnly"": false`` with options ``true`` and ``false`` for above settings respectively.               |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 ________
 
@@ -2801,7 +2902,7 @@ By default, Mattermost uses Signature V4 to sign API calls to AWS, but under som
 Email Settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 Email Batching Buffer Size
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specify the maximum number of notifications batched into a single email.
 
 +--------------------------------------------------------------------------------------------------------------------------+
@@ -2809,7 +2910,7 @@ Specify the maximum number of notifications batched into a single email.
 +--------------------------------------------------------------------------------------------------------------------------+
 
 Email Batching Interval
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Specify the maximum frequency, in seconds, which the batching job checks for new notifications. Longer batching intervals will increase performance.
 
 +-----------------------------------------------------------------------------------------------------------------------+
@@ -2817,7 +2918,7 @@ Specify the maximum frequency, in seconds, which the batching job checks for new
 +-----------------------------------------------------------------------------------------------------------------------+
 
 Skip Server Certificate Verification
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **True**: Do not validate SMTP servers when connecting to them.
 
@@ -2830,7 +2931,7 @@ Skip Server Certificate Verification
 GitLab Settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 Scope
-~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Standard setting for OAuth to determine the scope of information shared with OAuth client. Not currently supported by GitLab OAuth.
 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -2842,7 +2943,7 @@ ________
 Google Settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 Scope
-~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Standard setting for OAuth to determine the scope of information shared with OAuth client. Recommended setting is ``profile email``.
 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -2854,7 +2955,7 @@ ________
 Office 365 Settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 Scope
-~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Standard setting for OAuth to determine the scope of information shared with OAuth client. Recommended setting is ``User.Read``.
 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -2866,7 +2967,7 @@ ________
 Metrics Settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 Block Profile Rate
-~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Value that controls the `fraction of goroutine blocking events reported in the blocking profile <https://golang.org/pkg/runtime/#SetBlockProfileRate>`_.
 
 The profiler aims to sample an average of one blocking event per rate nanoseconds spent blocked.
@@ -2882,7 +2983,7 @@ Analytics Settings
 *Available in Enterprise Edition E10 and higher*
 
 Maximum Users for Statistics
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Sets the maximum number of users on the server before statistics for total posts, total hashtag posts, total file posts, posts per day, and active users with posts per day are disabled.
 
 This setting is used to maximize performance for large Enterprise deployments.
@@ -2891,8 +2992,8 @@ This setting is used to maximize performance for large Enterprise deployments.
 | This feature's ``config.json`` setting is ``"MaxUsersForStatistics": 2500`` with whole number input                                                                  |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Elasticsearch Settings
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Elasticsearch Settings (Beta)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Post Index Replicas
 ^^^^^^^^^^^^^^^^^^^^^
@@ -2909,3 +3010,117 @@ The number of shards to use for each post index. If this setting is changed, it 
 +-------------------------------------------------------------------------------------------------+
 | This feature's ``config.json`` setting is ``"PostIndexShards": 1`` with whole number input      |
 +-------------------------------------------------------------------------------------------------+
+
+Aggregate Search Indexes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Elasticsearch indexes over the age specified by this setting will be aggregated during the daily scheduled job.
+
++-----------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"AggregatePostsAfterDays": 365`` with whole number input      |
++-----------------------------------------------------------------------------------------------------------+
+
+Post Aggregator Start Time
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The start time of the daily scheduled aggregator job.
+
++-----------------------------------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"PostsAggregatorJobStartTime": 03:00`` with 24-hour time stamp input in the form HH:MM      |
++-----------------------------------------------------------------------------------------------------------------------------------------+
+
+Client Requirement Settings (Experimental)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Latest Android Version
+^^^^^^^^^^^^^^^^^^^^^^^^^
+The latest version of the Android React Native app that is recommended for use.
+
++-----------------------------------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"AndroidLatestVersion": ""`` with whole number and decimal input. For example, `1.2.0`        |
++-----------------------------------------------------------------------------------------------------------------------------------------+
+
+Minimum Android Version
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The minimum version of the Android React Native app that is required to be used.
+
++----------------------------------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"AndroidMinVersion": ""`` with whole number and decimal input. For example, `1.2.0`        |
++----------------------------------------------------------------------------------------------------------------------------------------+
+
+Latest Desktop Version
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+The latest version of the desktop app that is recommended for use.
+
++-------------------------------------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"DesktopLatestVersion": ""`` with whole number and decimal input. For example, `1.2.0`        |
++-------------------------------------------------------------------------------------------------------------------------------------------+
+
+Minimum Destop Version
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The minimum version of the desktop app that is required to be used.
+
++----------------------------------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"DesktopMinVersion": ""`` with whole number and decimal input. For example, `1.2.0`        |
++----------------------------------------------------------------------------------------------------------------------------------------+
+
+Latest iOS Version
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The latest version of the iOS app that is recommended for use.
+
++---------------------------------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"IosLatestVersion": ""`` with whole number and decimal input. For example, `1.2.0`        |
++---------------------------------------------------------------------------------------------------------------------------------------+
+
+Minimum iOS Version
+^^^^^^^^^^^^^^^^^^^^^
+The minimum version of the iOS React Native app that is required to be used.
+
++------------------------------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"IosMinVersion": ""`` with whole number and decimal input. For example, `1.2.0`        |
++------------------------------------------------------------------------------------------------------------------------------------+
+
+Theme Settings  (Experimental)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enable Theme Selection
+^^^^^^^^^^^^^^^^^^^^^^^^^
+*Available in Enterprise Edition E10 and higher*
+
+**True:** Enables the **Display** > **Theme** tab in Account Settings so users can select their theme.
+
+**False:** Users cannot select a different theme. The **Display** > **Theme** tab is hidden in Account Settings.
+
++-----------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"EnableThemeSelection": true`` with options ``true`` and ``false``. |
++-----------------------------------------------------------------------------------------------------------------+
+
+Default Theme
+^^^^^^^^^^^^^^^^^^^^^^^^^
+*Available in Enterprise Edition E10 and higher*
+
+Set a default theme that applies to all new users on the system.
+
++-----------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"DefaultTheme": "default"`` with options ``default``, ``organization``, ``mattermostDark`` and ``windows10``. |
++-----------------------------------------------------------------------------------------------------------------+
+
+Allow Custom Themes
+^^^^^^^^^^^^^^^^^^^^^^^^^
+*Available in Enterprise Edition E10 and higher*
+
+**True:** Enables the **Display** > **Theme** > **Custom Theme** section in Account Settings.
+
+**False:** Users cannot use a custom theme. The **Display** > **Theme** > **Custom Theme** section is hidden in Account Settings.
+
++--------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"AllowCustomThemes": true`` with options ``true`` and ``false``. |
++--------------------------------------------------------------------------------------------------------------+
+
+Allowed Themes
+^^^^^^^^^^^^^^^^^^^^^^^^^
+*Available in Enterprise Edition E10 and higher*
+
+Select the themes that can be chosen by users when ``"EnableThemeSelection"`` is set to ``true``.
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| This feature's ``config.json`` setting is ``"AllowedThemes": "default"`` with options ``default``, ``organization``, ``mattermostDark`` and ``windows10`` optionally separated by commas. For example, ``["mattermostDark", "windows10"]`` |
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+

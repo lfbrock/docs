@@ -1,6 +1,9 @@
 Frequently Asked Questions (FAQ)
 =================================
 
+.. toctree::
+  :maxdepth: 2
+
 General Questions
 -----------------
 
@@ -32,7 +35,6 @@ TPNS, hosted at ``http://push.mattermost.com``, doesn't offer transport-level en
 If you need encrypted transport or production-level SLAs for push notifications, you can either compile your own push-proxy service, with your own key, or you can use a paid option and become a Mattermost Enterprise Edition E10 subscriber `agreeing to our Conditions of Use <https://about.mattermost.com/default-terms/>`_, which enables you to use a production-level Hosted Push Notification Service (HPNS) at ``https://push.mattermost.com``, offering transport-level encryption.
 
 Learn more about `our mobile apps and push notification service <https://docs.mattermost.com/deployment/push.html>`_.
-
 
 Video, Audio, and Screen Sharing
 ----------------------------------------
@@ -79,19 +81,11 @@ How does Mattermost scale from teams to enterprises?
     1. Technical scaling - maintaining system responsiveness as large quantities of new users are added
     2. Functional scaling - adding advanced features to support the increased complexity of large organizations
 
-    **Technical Scaling** - Whether used for teams or enterprises, the Mattermost platform is designed to support tens of thousands of users on a single server with appropriate hardware. The platform is built using Golang, the language developed by Google to create internet-scale applications, and supports highly scalable databases like MySQL, which is `used extensively by Facebook <https://www.facebook.com/notes/facebook-engineering/mysql-and-database-engineering-mark-callaghan/10150599729938920/>`_. Beyond tens of thousands of users,  Mattermost Enterprise Edition can offer high availability/horizontal scaling configurations using multiple servers to support even larger organizations.
+    **Technical Scaling** - Whether used for teams or enterprises, the Mattermost server is designed to support tens of thousands of users on a single server with appropriate hardware. The server is built using Golang, the language developed by Google to create internet-scale applications, and supports highly scalable databases like MySQL, which is `used extensively by Facebook <https://www.facebook.com/notes/facebook-engineering/mysql-and-database-engineering-mark-callaghan/10150599729938920/>`_. Beyond tens of thousands of users,  Mattermost Enterprise Edition can offer high availability/horizontal scaling configurations using multiple servers to support even larger organizations.
 
     **Functional Scaling** - Scaling from a team to an enterprise is like going from a "virtual office" to a "virtual campus". Advanced features like enterprise authentication, granular permissions, compliance and auditing, and advanced reporting become increasingly important as organizations grow beyond teams. Organizations needing this flexibility can easily upgrade from Mattermost Team Edition to Mattermost Enterprise Edition, as well as downgrade without data loss, should their needs change.
 
     For more information on how Mattermost scales, technically and functionally, please `contact the Enterprise team <https://about.mattermost.com/contact/>`_ and `read about scaling for Enterprise <https://docs.mattermost.com/deployment/scaling.html>`_.
-
-
-Do I need to pay for deactivated users?  
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-No. If you deactivate a user that user is not counted as an active user during your annual renewal process. You can deactivate users manually via System Console and also via Active Directory/LDAP synchronization, the CLI tool and the server APIs. 
-
-If you choose to pull SQL reports from the database to monitor individual activity to make deactivation decisions, and you are running under high user load, we recommend the reports are pulled from a read replica of the database.   
 
 What are the options to purchase a subscription to Mattermost Enterprise Edition? 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -100,21 +94,64 @@ To simplify procurement and to keep prices low, Mattermost offers the following 
 
 1. **Purchasing a subscription online via credit card** (https://about.mattermost.com/pricing/) under standard Mattermost terms (https://about.mattermost.com/enterprise-edition-terms/) used by hundreds of other Enterprise Edition customers. 
 
-
 2. **Purchasing via a Mattermost reseller** (https://about.mattermost.com/partners/) under terms agreed between the customer and reseller, and then agreeing to **Mattermost Enterprise Edition Subscription Terms for Purchase by Resale** (https://about.mattermost.com/customer-terms-and-conditions/) prior to being provided a license key for the purchase by Mattermost, Inc. 
-
 
 3. **Purchase via a purchase order referencing a Mattermost quotation number**, and where the quotation is valid, unexpired and references the **Mattermost Enterprise Edition Subscription Terms** (https://about.mattermost.com/enterprise-edition-terms/): 
 
-
    i. If the PO references any special terms and conditions, it cannot be accepted by Mattermost, Inc. without the following special note: ``This Purchase Order is governed solely by the terms and conditions of the Mattermost Enterprise Edition Subscription Terms at https://about.mattermost.com/enterprise-edition-terms/. Despite anything to the contrary, no other terms and conditions printed on, or incorporated into or referenced by, shall apply.``
-
 
 4. **Purchase via a purchase order referencing a Master Services Agreement** or similar agreement executed by Mattermost and the customer for subscription purchases over $100,000 USD. 
 
-
    i. If the PO references any special terms and conditions, it cannot be accepted by Mattermost, Inc. without the following clause included in the prior signed agreement: ``THE PARTIES AGREE THAT ANY ADDITIONAL OR DIFFERENT TERMS AND CONDITIONS CONTAINED ON OR INCORPORATED INTO YOUR PURCHASE ORDER ARE EXPRESSLY REJECTED AND SHALL NOT BE CONSIDERED AN AMENDMENT TO THIS AGREEMENT.`` If the agreement does not include such a clause the following purchase order note is required: ``This purchase order is governed solely by the terms and conditions of the [AGREEMENT_TITLE] dated [AGREEMENT_DATE] between [CUSTOMER_NAME] and Mattermost, Inc..  All other terms and conditions contained on or referenced by this purchase order shall not apply.``
 
+How does the licensing key work?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+See our `frequently asked questions about licensing <https://about.mattermost.com/pricing/#frequently-asked-questions-about-licensing>`_.
+
+What happens when the Enterprise Edition subscription expires?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+See our `frequently asked questions about licensing <https://about.mattermost.com/pricing/#frequently-asked-questions-about-licensing>`_.
+
+How is user defined for Enterprise Edition subscriptions?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+See our `frequently asked questions about licensing <https://about.mattermost.com/pricing/#frequently-asked-questions-about-licensing>`_.
+
+How can I add more users to my subscription?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+See our `frequently asked questions about licensing <https://about.mattermost.com/pricing/#frequently-asked-questions-about-licensing>`_.
+
+Do I need to pay for deactivated users?  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+No. If you deactivate a user that user is not counted as an active user during your annual renewal process. You can deactivate users manually via System Console and also via Active Directory/LDAP synchronization, the CLI tool and the server APIs. 
+
+If you choose to pull SQL reports from the database to monitor individual activity to make deactivation decisions, and you are running under high user load, we recommend the reports are pulled from a read replica of the database.
+
+Can I use the same license key on multiple Enterprise Edition servers?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Customers who purchase the Premier Support add-on to E20 are licensed to run with the same Mattermost license key in a production deployment and up to 4 non-production deployments of Mattermost (for example: development, staging, user acceptance testing, etc.).
+
+Without the purchase of Premier Support, license keys for unlocking the advanced features in Mattermost Enterprise Edition should only be applied to a single deployment. A deployment consists of either a single Mattermost application server, or multiple linked Mattermost application servers in a high availability configuration.
+
+Do you have a program for official non-profits and charities?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+See our `frequently asked questions about licensing <https://about.mattermost.com/pricing/#frequently-asked-questions-about-licensing>`_.
+
+Do you have discounted licenses for academic institutions?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+See our `frequently asked questions about licensing <https://about.mattermost.com/pricing/#frequently-asked-questions-about-licensing>`_.
+
+Where can I find the license agreement for Mattermost Enterprise Edition?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+See our `frequently asked questions about licensing <https://about.mattermost.com/pricing/#frequently-asked-questions-about-licensing>`_.
 
 Integration
 ------------------
@@ -127,10 +164,6 @@ Mattermost is an open source, self-hosted alternative to proprietary SaaS servic
 While you're welcome to use the Mattermost source code under its open source license, Mattermost, Inc. does not offer support or technical advice for proprietary SaaS projects that result in customers potentially being paywalled from their data should they stop paying SaaS fees.
 
 To learn more about why we strongly believe that users and customers should always have access to their data, please read `why we created Mattermost <https://www.mattermost.org/why-we-made-mattermost-an-open-source-slack-alternative/>`_
-
-
-
-
 
 Use Cases
 ------------------
@@ -147,7 +180,7 @@ You are welcome to use the open source Mattermost Team Edition and its extensive
 
 Mattermost Enterprise Edition is designed for self-hosted, enterprise-grade communication. It is not recommended for primarily providing customer service or customer support, and does not currently offer a licensing model nor technical advice for this use case.
 
-If you'd like to create an open source derivative version of Mattermost using the ``/platform`` source code to support your use case please see below. 
+If you'd like to create an open source derivative version of Mattermost using the ``/mattermost-server`` source code to support your use case please see below. 
 
 Does Mattermost have an official website-based plug-in to offer anonymous chat to visitors?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -162,7 +195,7 @@ How can I create an open source derivative work of Mattermost?
 
 If you're looking to customize the look and feel of Mattermost, see `documentation on customization <https://github.com/mattermost/docs/issues/1006>`_. 
 
-If you're looking to change the Mattermost ``/platform`` source code and compile your own version of Mattermost, here are some considerations: 
+If you're looking to change the Mattermost ``/mattermost-server`` source code and compile your own version of Mattermost, here are some considerations: 
 
 Security
 
@@ -174,9 +207,9 @@ Re-branding
 - In Enterprise Edition you can re-brand your system using convenience tools for `custom branding <https://docs.mattermost.com/administration/config-settings.html#customization>`_, which can be done without forking. 
 - For advanced whitelabelling, and to whitelabel in Team Edition under MIT license without Enterprise Edition branding tools, you can manually update files on the Mattermost server `per product documentation. <https://github.com/mattermost/docs/issues/1006>`_ This can also be done without forking. 
 
-Using /platform open source code
+Using /mattermost-server open source code
 
-- Creating a solution using the open source Mattermost ``/platform`` repo requires a) compliance with licenses in the repo, including `NOTICE.txt <https://github.com/mattermost/platform/blob/master/NOTICE.txt>`_, and b) the compiled version of the ``/platform`` source code should have the same open source license as the source code, `per our licensing policy <https://www.mattermost.org/licensing/>`_.
+- Creating a solution using the open source Mattermost ``/mattermost-server`` repo requires a) compliance with licenses in the repo, including `NOTICE.txt <https://github.com/mattermost/mattermost-server/blob/master/NOTICE.txt>`_, and b) the compiled version of the ``/mattermost-server`` source code should have the same open source license as the source code, `per our licensing policy <https://www.mattermost.org/licensing/>`_.
 
 Other considerations:
 
@@ -196,15 +229,14 @@ While we welcome anyone to use the open source version of Mattermost Team Editio
 
 Learn more about our non-profit discount program at https://about.mattermost.com/mattermost-mondays/
 
-Can I create a derivative work of the Mattermost /platform repository that is not open source? 
+Can I create a derivative work of the Mattermost /mattermost-server repository that is not open source? 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Mattermost open source project was created by `a group of developers who had their data paywalled by a proprietary online messaging service <https://www.mattermost.org/why-we-made-mattermost-an-open-source-slack-alternative/>`_ and felt it was unfair. 
 
-Because of this, the Mattermost /platform repository uses an open source license that requires derivative works to use the same open source license. This prevents the creation of derivative works that are not open source, and the situation where end users would not have access to the source code of the systems they use, and hence be at risk of "lock in". 
+Because of this, the Mattermost /mattermost-server repository uses an open source license that requires derivative works to use the same open source license. This prevents the creation of derivative works that are not open source, and the situation where end users would not have access to the source code of the systems they use, and hence be at risk of "lock in". 
 
-For companies purchasing Enterprise Edition subscriptions for use by internal staff, who need to modify /platform, and who also have legal departments that won't allow their staff to work under an open source software license, a special "Advanced Licensing Option" can be purchased to modify /platform for internal use under a commercial software license. This option is not available for companies that would offer a modified, non-open source version of Mattermost to external parties. 
-
+For companies purchasing Enterprise Edition subscriptions for use by internal staff, who need to modify /mattermost-server, and who also have legal departments that won't allow their staff to work under an open source software license, a special "Advanced Licensing Option" can be purchased to modify /mattermost-server for internal use under a commercial software license. This option is not available for companies that would offer a modified, non-open source version of Mattermost to external parties. 
 
 Will Mattermost, Inc. offer the ability to resell Mattermost software without a reseller agreement?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

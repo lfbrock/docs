@@ -1,6 +1,23 @@
 Desktop Application Changelog
 ========================================
 
+Release 3.7.1
+--------------
+
+Release date: August 30, 2017
+
+This release contains a security update for Windows, Mac and Linux, and it is highly recommended that users upgrade to this version.
+
+Improvements and Bug Fixes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Windows
+^^^^^^^^^^^^^
+
+ - Client no longer freezes intermittently, such as when receiving desktop notifications.
+ - [Windows 8.1/10] Added support for running the desktop app across monitors of different DPI.
+ - [Windows 7/8] Clicking on a desktop notification now opens the message.
+
 Release 3.7.0
 --------------
 
@@ -77,7 +94,7 @@ Linux (Beta)
 ^^^^^^^^^^^^^
 
 - [Ubuntu - 64 bit] `Right clicking taskbar icon and choosing **Quit** only minimizes the app <https://github.com/mattermost/desktop/issues/90#issuecomment-233712183>`_
-- [Ubuntu - 64 bit] `Direct message notification comes as a streak of line instead of a pop up <https://github.com/mattermost/platform/issues/3589>`_
+- [Ubuntu - 64 bit] `Direct message notification comes as a streak of line instead of a pop up <https://github.com/mattermost/mattermost-server/issues/3589>`_
 
 Contributors
 ~~~~~~~~~~~~
@@ -175,7 +192,7 @@ Linux (Beta)
 ^^^^^^^^^^^^^
 
  - [Ubuntu - 64 bit] `Right clicking taskbar icon and choosing **Quit** only minimizes the app <https://github.com/mattermost/desktop/issues/90#issuecomment-233712183>`_
- - [Ubuntu - 64 bit] `Direct message notification comes as a streak of line instead of a pop up <https://github.com/mattermost/platform/issues/3589>`_
+ - [Ubuntu - 64 bit] `Direct message notification comes as a streak of line instead of a pop up <https://github.com/mattermost/mattermost-server/issues/3589>`_
 
 Contributors
 ~~~~~~~~~~~~
@@ -259,7 +276,7 @@ Linux (Beta)
 
 -  [Ubuntu - 64 bit] `Right clicking taskbar icon and choosing Quit only minimizes the
    app <https://github.com/mattermost/desktop/issues/90#issuecomment-233712183>`_
--  [Ubuntu - 64 bit] `Direct message notification pop ups do not properly render <https://github.com/mattermost/platform/issues/3589>`_
+-  [Ubuntu - 64 bit] `Direct message notification pop ups do not properly render <https://github.com/mattermost/mattermost-server/issues/3589>`_
 
 Contributors
 ~~~~~~~~~~~~
@@ -382,7 +399,7 @@ Linux (Beta)
 ^^^^^^^^^^^^
 
 -  [Ubuntu - 64 bit] Right clicking taskbar icon and choosing **Quit** only minimizes the app
--  [Ubuntu - 64 bit] `Direct message notification comes as a streak of line instead of a pop up <https://github.com/mattermost/platform/issues/3589>`_
+-  [Ubuntu - 64 bit] `Direct message notification comes as a streak of line instead of a pop up <https://github.com/mattermost/mattermost-server/issues/3589>`_
 
 Contributors
 ~~~~~~~~~~~~
@@ -505,7 +522,7 @@ Linux (Beta)
 ^^^^^^^^^^^^^
 
 -  [Ubuntu - 64 bit] Right clicking taskbar icon and choosing **Quit** only minimizes the app
--  [Ubuntu - 64 bit] `Direct message notification comes as a streak of line instead of a pop up <https://github.com/mattermost/platform/issues/3589>`_
+-  [Ubuntu - 64 bit] `Direct message notification comes as a streak of line instead of a pop up <https://github.com/mattermost/mattermost-server/issues/3589>`_
 
 Contributors
 ~~~~~~~~~~~~

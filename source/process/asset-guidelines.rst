@@ -105,9 +105,9 @@ Feature Title
 ^^^^^^^^^^^^^^
 
 1. Appears in the top left corner of the asset.
-2. Title should "communicate the benefit" of the work, while referencing its name, followed by "for Mattermost".
+2. Title should "communicate the benefit" of the work, while referencing its name.
   
-  - Sometimes the title is a straightforward description of an app that can now connect to Mattermost, e.g. "Jira integration for Mattermost".
+  - Sometimes the title is a straightforward description of an app that can now connect to Mattermost, e.g. "New Update for Desktop App".
   - Sometimes the title needs to be non-standard, e.g. "Gitter integration for Mattermost via Matterbridge".
 
 3. Aim to fit title on two lines. If title is too long, move Feature Representative Art more to the right of the banner to ensure that there is still at least 64px of width between Feature Title and Feature Representative Art.
@@ -144,6 +144,7 @@ Feature Representative Art
 6. Leave equal whitespace between all like objects.
 7. Avoid wavy lines when rotating an image. To avoid them, increase the size of the original layer, rotate it, then reduce the size of the image.
 8. Adjacent areas of light and dark should always have a separator, or have a shading so that the areas don't bleed into the background.
+9. Add a 1px grey border and a drop shadow around the screenshot.
 
 Mattermost and Representative Logos
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -152,8 +153,9 @@ Mattermost and Representative Logos
 2. Use white Mattermost logo on dark backgrounds and black Mattermost logo on light backgrounds.
 3. Representative logo appears on the left side of the asset below the feature title.
 4. For representative logos, always confirm you are using the official version of the company’s logo. If you’re unsure, ask.
-5. When the background color is dark, use the white/inverted version of representative logo. When the background color is light, use the dark/primary version of representative logo.
-6. If the color of the representative logo is the same as the color of the title, make sure to make them distinctive from each other by slightly reducing the size of the logo.
+5. The space between the feature title and the representative logo should be 35px.
+6. When the background color is dark, use the white/inverted version of representative logo. When the background color is light, use the dark/primary version of representative logo.
+7. If the color of the representative logo is the same as the color of the title, make sure to make them distinctive from each other by slightly reducing the size of the logo.
 
 Feature Screenshot
 ^^^^^^^^^^^^^^^^^^^

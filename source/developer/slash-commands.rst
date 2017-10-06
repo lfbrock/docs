@@ -3,7 +3,7 @@
 Slash Commands
 ==============
 
-Mattermost supports slash commands to easily integrate external applications into the platform. They function similarly to :doc:`outgoing webhooks <../developer/webhooks-outgoing/>`, except they can be used in any channel, including private channels and direct messages.
+Mattermost supports slash commands to easily integrate external applications into the server. They function similarly to :doc:`outgoing webhooks <../developer/webhooks-outgoing/>`, except they can be used in any channel, including private channels and direct messages.
 
 Messages that begin with ``/`` are interpreted as slash commands. The commands will send an HTTP POST request to a web service, and process a response back to Mattermost. Mattermost supports both `built-in <https://docs.mattermost.com/developer/slash-commands.html#built-in-commands>`_ and `custom slash commands <https://docs.mattermost.com/developer/slash-commands.html#custom-slash-command>`_.
 
@@ -153,6 +153,17 @@ If the parameter is present, the user is redirected to the specified URL in a ne
 
 The parameter supports any custom protocol including ``http://``, ``https://``, ``ftp://``, ``ssh://`` and ``mailto://``.
 
+Delayed and multiple responses
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use the ``response_url`` parameter to supply multiple responses or a delayed response to a slash command. Response URLs can be used to send five additional messages within a 30-minute time period from the original command invocation. 
+
+Delayed responses are useful when the action takes more than three seconds to perform. For instance:
+- Retrieval of data from external third-party services, where the response time may take longer than three seconds.
+- Report generation, batch processing or other long-running processes that take longer than three seconds to respond.
+
+Any requests that are made to the response URL should either be a plain text or JSON-encoded body. The JSON-encoded message supports both Markdown formatting and message attachments.
+
 Markdown formatting
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -167,7 +178,7 @@ For example, to create a message with a heading and an italicized text on the ne
 .. image:: ../images/incoming_webhooks_markdown_formatting.png
   :width: 300 px
   
-Messages with advanced formatting can be created by including an :doc:`attachment array <message-attachments>` in the JSON payload.
+Messages with advanced formatting can be created by including an :doc:`attachment array <message-attachments>` and :doc:`interactive message buttons <interactive-message-buttons>` in the JSON payload.
 
 Mention notifications
 ~~~~~~~~~~~~~~~~~~~~~~

@@ -38,7 +38,7 @@ Deployment
 
    /deployment/on-boarding*
    /deployment/bulk-loading.rst
-   /deployment/push*
+   AppConfig for EMM Solutions </deployment/mobile-appconfig.rst>
    /deployment/sso-ldap*
    /deployment/auth*
    /deployment/sso-saml.rst
@@ -66,8 +66,23 @@ Administration
    /administration/compliance*
    /administration/branding*
    /administration/backup*
+   /administration/liveness-check*
    /administration/upgrade.rst
+   /administration/version-archive*
    /administration/migrating.md
+   
+Mobile Apps
+-----------
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+
+   /mobile/mobile-overview.rst
+   /mobile/mobile-appconfig.rst
+   /mobile/mobile-hpns.rst
+   /mobile/mobile-faq.rst
+   /mobile/mobile-troubleshoot.rst
 
 Changelog
 =========

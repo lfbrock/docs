@@ -93,6 +93,14 @@ footer {
 
 .wy-menu-vertical li.toctree-l3.current li.toctree-l4>a {
 	background: transparent;
+	padding-right: 1em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.wy-menu-vertical li.toctree-l3.current li.toctree-l4> a code {
+	font-size: 1em;
+    font-family: "Lato","proxima-nova","Helvetica Neue",Arial,sans-serif;
 }
 
 .wy-menu-vertical li.toctree-l2.current li.toctree-l3>a {
@@ -295,16 +303,12 @@ header .header__searchbar {
 }
 
 @media (max-width: 768px){
-<<<<<<< HEAD
 	header .links__icon {
 		display: block;
 	}
 	.wy-nav-top {
 		display: none;
 	}
-=======
-	
->>>>>>> c8fd417... Added a search box to the nav header for the mobile view.
 	.wy-side-nav-search {
 		position: relative;
 	}
@@ -378,4 +382,19 @@ header .header__searchbar {
 	.wy-nav-content-wrap {
     	background: #fcfcfc; /* gets rid of the wony gray bottom of the page when viewed on a wide screen */
 	}
+}
+
+
+/* override table width restrictions */
+@media screen and (min-width: 767px) {
+
+   .wy-table-responsive table td {
+      /* !important prevents the common CSS stylesheets from overriding
+         this as on RTD they are loaded after this stylesheet */
+      white-space: normal !important;
+   }
+
+   .wy-table-responsive {
+      overflow: visible !important;
+   }
 }

@@ -3,7 +3,7 @@
 Outgoing Webhooks
 =================
 
-Mattermost supports webhooks to easily integrate external applications into the platform.
+Mattermost supports webhooks to easily integrate external applications into the server.
 
 Use outgoing webhooks to post automated responses to posts made by your users. Outgoing webhooks will send an HTTP POST request to a web service, and process a response back to Mattermost, when a message matches one or both of the following conditions:
 
@@ -158,7 +158,7 @@ For example, to create a message with a heading, and an italicized text on the n
 .. image:: ../images/incoming_webhooks_markdown_formatting.png
   :width: 300 px
 
-Messages with advanced formatting can be created by including an :doc:`attachment array <message-attachments>` in the JSON payload.
+Messages with advanced formatting can be created by including an :doc:`attachment array <message-attachments>` and :doc:`interactive message buttons <interactive-message-buttons>` in the JSON payload.
 
 Tips and Best Practices
 ------------------------

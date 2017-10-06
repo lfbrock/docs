@@ -4,8 +4,222 @@ This changelog summarizes updates to [Mattermost Team Edition](http://www.matter
 
 Also see [changelog in progress](http://bit.ly/2nK3cVf) for the next release.
 
-## Release v4.1.0
-Scheduled release date: 2017-08-16
+## Release v4.2.0
+Release date: 2017-09-16
+
+### Security Update
+
+- Mattermost v4.2.0 contains multiple security fixes ranging from low to moderate severity. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+
+### Highlights
+
+#### Interactive Message Buttons
+- Added message buttons to support user interactions with posts made by incoming webhooks and custom slash commands.
+
+#### Mobile Support for AppConfig
+- iOS and Android mobile apps now support Enterprise Mobility Management (EMM) solutions through integration with [App Config](https://www.appconfig.org/). See [documentation](https://docs.mattermost.com/deployment/mobile-appconfig.html) to learn more.
+
+### Improvements
+
+#### Web User Interface
+- Redesigned the channel member list.
+- Redesigned the message input box.
+- Redesigned the keyboard shortcuts dialog (CTRL/CMD+/).
+- Added a loading indicator when selecting a team on team selection page.
+- Added an on hover effect for team icons in the team sidebar, and the channel name and favorite button in channel header.
+- Added an active state for the channel member icon in channel header.
+- Added a "+" icon next to the Direct Messages header on channel sidebar to open a new direct or group message.
+- Added a tooltip for Main Menu next to user profile picture.
+- Mouse cursor now changes to a "hand selector" when hovering over the paperclip icon to upload a file.
+
+#### Mobile View
+- Made hover effects consistent across all header icons.
+- Removed transparency of the [...] menu in the right-hand sidebar.
+- Reduced opacity in channel info dialog.
+- Updated background color of search bar.
+
+#### Integrations
+- Added support for Slack-compatible delayed slash commands through the `response_url` parameter.
+- Improved handling of content-types for integrations.
+
+#### Notifications
+- Added support for plain text version of email notifications.
+- Added "Joined the channel" system message for the person who created the channel.
+
+#### Administration
+- Added a CLI command `platform channel move` to move a channel to another team.
+- CLI command `platform team delete` now lets you delete teams with no channels.
+
+#### Enterprise Edition
+- Removed the "Delete Channel" option for private channels, if you're the last channel member and policy setting restricts channel deletion to admins only.
+- In multi-node cluster environment, scheduled tasks such as LDAP sync will only happen on a single node through leader election for increased performance.
+- Added direct message channels to compliance exports.
+- Added a CLI command `platform channel modify` to convert a public channel to private, and vice versa.
+- Elasticsearch indexes over a certain age can be aggregated as part of the daily scheduled job.
+
+### Bug Fixes
+- Fixed permalinks not always loading in the channel.
+- Fixed an issue where a System Admin couldn't scroll to the bottom of the System Console sidebar in Firefox.
+- Flag icon and the "x" icon to close website previews now properly aligned for replies in compact view.
+- Fixed expand/collapse arrows not being visible for YouTube videos when image links are expanded by default.
+- Fixed an issue where reacting to a post in the right-hand sidebar via emoji picker didn't add the emoji to "Recently Used" section.
+- Pressing the ESC key no longer clears search box contents.
+- Fixed an issue where turning off email batching in the System Console resulted in no email notification option selected in Account Settings.
+- Fixed an issue where a user wasn't able to scroll down in message preview mode when using Markdown headings.
+- Fixed an issue on Safari browsers where file thumbnails were sometimes blank.
+- Fixed an issue where quotes weren't working inside URL links.
+- Fixed an error when the language set in **Account Settings > Display** was removed from available languages in **System Console > Localization**.
+- Fixed out-of-channel mentions for usernames with dashes and periods.
+- Fixed an issue where a missing config setting sometimes caused server panic.
+- Jumping to a group message channel from a flagged message list now adds the channel to the channel list.
+- Character limits are no enforced when renaming a channel via `/rename`.
+- Fixed channel header icons when WebRTC call is on-going.
+- Fixed webhook message attachments not appearing in search results or flagged messages list.
+- Timestamp on deleted, ephemeral, or pending posts is no longer a permalink, causing a blank page.
+- Fixed focus issues on iPad Classic app.
+- Fixed an issue where changing other user's profile image as a System Admin via the API didn't work.
+- Fixed mention notifications firing for mentions inside triple backticks.
+- Collapse and expand arrows no longer shown for image links when no image is available.
+- A single collapsed link preview now stays collapsed after page refresh.
+- With email batching enabled, if there is activity in Mattermost before email batch is sent, the email notification is not sent.
+- Fixed an issue where copying and pasting SVG files into message draft never finish uploading.
+- Autocomplete is no longer cut on the channel header modal.
+- Fixed email notifications settings appearing saved despite cancelling the change.
+- Notification confirmation message no longer appears when sending channel wide @-all and @-channel mentions in code blocks.
+
+### Compatibility
+
+#### Breaking Changes
+
+1 - Mattermost now handles multiple content types for integrations, including plaintext content type. If your integration suddenly prints the JSON payload data instead of rendering the generated message, make sure your integration is returning the `application/json` content-type to retain previous behavior.
+
+2 - By default, user-supplied URLs such as those used for Open Graph metadata, webhooks, or slash commands will no longer be allowed to connect to reserved IP addresses including loopback or link-local addresses used for internal networks. 
+
+This change may cause private integrations to break in testing environments, which may point to a URL such as http://127.0.0.1:1021/my-command.
+
+If you point private integrations to such URLs, you may whitelist such domains, IP addresses, or CIDR notations via the [AllowedUntrustedInternalConnections config setting](https://docs.mattermost.com/administration/config-settings.html#allow-untrusted-internal-connections-to) in your local environment. Although not recommended, you may also whitelist the addresses in your production environments. See [documentation to learn more](https://docs.mattermost.com/administration/config-settings.html#allow-untrusted-internal-connections-to).
+
+Push notification, OAuth 2.0 and WebRTC server URLs are trusted and not affected by this setting.
+
+3 - Mattermost `/platform` repo has been separated to `/mattermost-webapp` and `/mattermost-server`. This may affect you if you have a private fork of the `/platform` repo. [More details here](https://forum.mattermost.org/t/mattermost-separating-platform-into-two-repositories-on-september-6th/3708).
+
+#### Removed and Deprecated Features
+- All APIv3 endpoints are scheduled for removal on January 16, 2018.
+
+For a list of past and upcoming deprecated features, [see our website](https://about.mattermost.com/deprecated-features/).
+
+#### config.json
+
+The following settings were unintentionally added to ``config.json`` and are removed in Mattermost 4.2.
+
+- Under `SupportSettings` in `config.json`:
+  - `"AdministratorsGuideLink": "https://about.mattermost.com/administrators-guide/"`
+  - `"TroubleshootingForumLink": "https://about.mattermost.com/troubleshooting-forum/"`
+  - `"CommercialSupportLink": "https://about.mattermost.com/commercial-support/"`
+
+Multiple setting options were added to `config.json`. Below is a list of the additions and their default values on install. The settings can be modified in `config.json`, or the System Console when available.
+
+**Changes to Team Edition and Enterprise Edition**:
+
+- Under `ServiceSettings` in `config.json`:
+  - Added `AllowedUntrustedInternalConnections": ""` to specify domains, IP address or CIDR notations for internal connections. Used in testing environments when developing integrations locally on a development machine. Not recommended for use in production.
+- Under `TeamSettings` in `config.json`:
+  - Added `EnableXToLeaveChannelsFromLHS: false` to set if a user can leave a channel by clicking "X" next to a channel in the channel sidebar. This setting is Beta and may be replaced or removed in a future release.
+- Under `FileSettings` in `config.json`:
+  - Added `AmazonS3Trace: false` to enable additional debugging for Amazon S3.
+
+**Additional Changes to Enterprise Edition**:
+
+- Under `ElasticsearchSettings` in `config.json`:
+  - Added `AggregatePostsAfterDays": ""` to specify the age at which indexes will be aggregated as part of the daily scheduled job
+  - Added `PostsAggregatorJobStartTime": ""` to specify the start time of the daily scheduled aggregator job.
+- Under `TeamSettings` in `config.json`:
+  - Added `ExperimentalTownSquareIsReadOnly: false` to set if Town Square is a read-only channel. Applies to all teams in the Mattermost server. This setting is Beta and may be replaced or removed in a future release.
+- Added `ThemeSettings` in `config.json`. These settings are Beta and may be replaced or removed in a future release.
+  - Added `"EnableThemeSelection": true` to set whether end users can change their Mattermost theme.
+  - Added `"DefaultTheme": "default"` to set default theme for new users.
+  - Added `"AllowCustomThemes": true` to set whether end users can set a custom theme.
+  - Added `"AllowedThemes": []` to list which built-in Mattermost themes are available to users.
+
+### Database Changes
+
+### API v4 Changes
+- It is recommended that any new integrations use APIv4 endpoints. For more details, and for a complete list of available endpoints, see [https://api.mattermost.com/](https://api.mattermost.com/).
+- All APIv3 endpoints are scheduled for removal on January 16, 2018.
+
+**Added routes (API v4)**
+- `POST` at `/posts/{post_id}/actions/{action_id}`
+  - To perform a post action, which allows users to interact with integrations through messages.
+
+### Known Issues
+- Google login fails on the Classic mobile apps.
+- Clicking on a channel during the tutorial makes the tutorial disappear.
+- User can receive a video call from another browser tab while already on a call.
+- Jump link in search results does not always jump to display the expected post.
+- First load of the emoji picker is slow on low-speed connections or on deployments with hundreds of custom emoji.
+- Scrollbar is sometimes not visible in the left-hand sidebar after switching teams.
+- Certain code block labels don't appear while scrolling on iOS mobile web.
+- Deleted message doesn't clear unreads or unread mentions.
+- Status may sometimes get stuck as away or offline in High Availability mode with IP Hash turned off.
+- Searching stop words in quotes with Elasticsearch enabled returns more than just the searched terms.
+- Searching with Elasticsearch enabled may not always highlight the searched terms.
+- Channel links to channels that the current user does not belong to may not render correctly.
+- Pinned posts list header sometimes shows an incorrect channel name.
+- Missing an indication if a message is pending but not yet sent.
+- Searching for users with one or two-letter names doesn't work.
+
+### Contributors
+
+/platform
+
+- [asaadmahmood](https://github.com/asaadmahmood), [ccbrown](https://github.com/ccbrown), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [csduarte](https://github.com/csduarte), [dmeza](https://github.com/dmeza), [enahum](https://github.com/enahum), [esethna](https://github.com/esethna), [grundleborg](https://github.com/grundleborg), [hmhealey](https://github.com/hmhealey), [jasonblais](https://github.com/jasonblais), [jwilander](https://github.com/jwilander), [KenmyZhang](https://github.com/KenmyZhang), [lindalumitchell](https://github.com/lindalumitchell), [meilon](https://github.com/meilon), [MusikPolice](https://github.com/MusikPolice), [n1aba](https://github.com/n1aba), [pruthvip](https://github.com/pruthvip), [saturninoabril](https://github.com/saturninoabril), [stanhu](https://github.com/stanhu), [sudheerDev](https://github.com/sudheerDev), [Whiteaj36](https://github.com/Whiteaj36)
+
+/docs
+
+- [amyblais](https://github.com/amyblais), [balasankarc](https://github.com/balasankarc), [esethna](https://github.com/esethna), [hmhealey](https://github.com/hmhealey), [it33](https://github.com/it33), [jasonblais](https://github.com/jasonblais), [jwilander](https://github.com/jwilander), [lfbrock](https://github.com/lfbrock), [lindy65](https://github.com/lindy65)
+
+/mattermost-redux
+
+- [aditya-konarde](https://github.com/aditya-konarde), [brettmc](https://github.com/brettmc), [ccbrown](https://github.com/ccbrown), [enahum](https://github.com/enahum), [hmhealey](https://github.com/hmhealey), [jwilander](https://github.com/jwilander), [kevin3274](https://github.com/kevin3274), [saturninoabril](https://github.com/saturninoabril)
+
+/mattermost-mobile
+
+- [csduarte](https://github.com/csduarte), [enahum](https://github.com/enahum), [hmhealey](https://github.com/hmhealey), [lfbrock](https://github.com/lfbrock), [onepict](https://github.com/onepict)
+
+/desktop
+
+- [jasonblais](https://github.com/jasonblais), [yuya-oc](https://github.com/yuya-oc)
+
+/mattermost-kubernetes
+
+- [coreyhulen](https://github.com/coreyhulen), [crspeller](https://github.com/crspeller), [escardin](https://github.com/escardin), [grundleborg](https://github.com/grundleborg)
+	
+/mattermost-docker
+
+- [jasonblais](https://github.com/jasonblais), [pichouk](https://github.com/pichouk), [tejasbubane](https://github.com/tejasbubane)
+	
+/mattermost-push-proxy
+
+- [coreyhulen](https://github.com/coreyhulen), [enahum](https://github.com/enahum)
+
+/mattermost-mdk
+
+- [jwilander](https://github.com/jwilander)
+
+/mattermost-api-reference
+
+- [ccbrown](https://github.com/ccbrown), [cpanato](https://github.com/cpanato), [jasonblais](https://github.com/jasonblais), [jwilander](https://github.com/jwilander), [prixone](https://github.com/prixone)
+
+/mattermost-load-test
+
+- [crspeller](https://github.com/crspeller)
+
+## Release v4.1.1
+
+ - **v4.1.1, released 2017-09-16**
+   - Mattermost v4.1.1 contains multiple security fixes ranging from low to medium severity. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+ - **v4.1.0, released 2017-08-16**
+   - Original 4.1.0 release
 
 ### Security Update
 
@@ -199,9 +413,9 @@ See [api.mattermost.com](https://api.mattermost.com/) for more details:
 
 Many thanks to all our contributors. In alphabetical order:
 
-/platform
+/mattermost-server
 
-- [94117nl](https://github.com/94117nl), [asaadmahmood](https://github.com/asaadmahmood), [ccbrown](https://github.com/ccbrown), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [csduarte](https://github.com/csduarte), [debanshuk](https://github.com/debanshuk), [dmeza](https://github.com/dmeza), [enahum](https://github.com/enahum), [fraziern](https://github.com/fraziern), [grundelborg](https://github.com/grundelborg), [harshavardhana](https://github.com/harshavardhana), [hmhealey](https://github.com/hmhealey), [jasonblais](https://github.com/jasonblais), [jwilander](https://github.com/jwilander), [lindalumitchell](https://github.com/lindalumitchell), [megos](https://github.com/megos), [moonmeister](https://github.com/moonmeister), [MusikPolice](https://github.com/MusikPolice), [Ppjet6](https://github.com/Ppjet6), [saturninoabril](https://github.com/saturninoabril), [Whiteaj36](https://github.com/Whiteaj36)
+- [94117nl](https://github.com/94117nl), [asaadmahmood](https://github.com/asaadmahmood), [ccbrown](https://github.com/ccbrown), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [csduarte](https://github.com/csduarte), [debanshuk](https://github.com/debanshuk), [dmeza](https://github.com/dmeza), [enahum](https://github.com/enahum), [fraziern](https://github.com/fraziern), [grundelborg](https://github.com/grundelborg), [harshavardhana](https://github.com/harshavardhana), [hmhealey](https://github.com/hmhealey), [jasonblais](https://github.com/jasonblais), [jwilander](https://github.com/jwilander), [lindalumitchell](https://github.com/lindalumitchell), [megos](https://github.com/megos), [moonmeister](https://github.com/moonmeister), [MusikPolice](https://github.com/MusikPolice), [Ppjet6](https://github.com/Ppjet6), [saturninoabril](https://github.com/saturninoabril), [tejaycar](https://github.com/tejaycar), [Whiteaj36](https://github.com/Whiteaj36)
 
 /docs
 
@@ -239,8 +453,10 @@ Many thanks to all our contributors. In alphabetical order:
 
 - [fkr](https://github.com/fkr), [hmhealey](https://github.com/hmhealey)
 
-## Release v4.0.4
+## Release v4.0.5
 
+ - **v4.0.5, released 2017-09-16**
+   - Mattermost v4.0.5 contains multiple security fixes ranging from low to medium severity. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
  - **v4.0.4, released 2017-08-18**
    - Mattermost v4.0.4 contains multiple security fixes ranging from low to high severity. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
    - Fixed issue when using single-sign-on with GitLab where using a non-English language option in **System Console > Localization** sometimes resulted in a login failure.
@@ -474,7 +690,7 @@ Multiple setting options were added to `config.json`. Below is a list of the add
 
 Many thanks to all our contributors. In alphabetical order:
 
-/platform
+/mattermost-server
 
 - [94117nl](https://github.com/94117nl), [abustany](https://github.com/abustany), [alexrford](https://github.com/alexrford), [asaadmahmood](https://github.com/asaadmahmood), [ccbrown](https://github.com/ccbrown), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [dmeza](https://github.com/dmeza), [enahum](https://github.com/enahum), [ftKnox](https://github.com/ftKnox), [grundleborg](https://github.com/grundleborg), [hmhealey](https://github.com/hmhealey), [it33](https://github.com/it33), [jasonblais](https://github.com/jasonblais), [JeffSchering](https://github.com/JeffSchering), [jwilander](https://github.com/jwilander), [kkamdooong](https://github.com/kkamdooong), [lindalumitchell](https://github.com/lindalumitchell), [megos](https://github.com/megos), [meilon](https://github.com/meilon), [moonmeister](https://github.com/moonmeister), [pieterlexis](https://github.com/pieterlexis), [saturninoabril](https://github.com/saturninoabril), [VeraLyu](https://github.com/VeraLyu), [ZJvandeWeg](https://github.com/ZJvandeWeg)
 
@@ -671,7 +887,7 @@ Multiple setting options were added to `config.json`. Below is a list of the add
 
 Many thanks to all our contributors. In alphabetical order:
 
-/platform
+/mattermost-server
 
 - [asaadmahmood](https://github.com/asaadmahmood), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [dmeza](https://github.com/dmeza), [doh5](https://github.com/doh5), [enahum](https://github.com/enahum), [grundleborg](https://github.com/grundleborg), [harshavardhana](https://github.com/harshavardhana), [hmhealey](https://github.com/hmhealey), [jasonblais](https://github.com/jasonblais), [jwilander](https://github.com/jwilander), [kulak-at](https://github.com/kulak-at), [saturninoabril](https://github.com/saturninoabril), [tjuerge](https://github.com/tjuerge)
 
@@ -917,7 +1133,7 @@ Multiple setting options were added to `config.json`. Below is a list of the add
 
 Many thanks to all our contributors. In alphabetical order:
 
-/platform
+/mattermost-server
 
 - [asaadmahmood](https://github.com/asaadmahmood), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [doh5](https://github.com/doh5), [enahum](https://github.com/enahum), [grundleborg](https://github.com/grundleborg), [gstraube](https://github.com/gstraube) , [hmhealey](https://github.com/hmhealey), [jasonblais](https://github.com/jasonblais), [JeffSchering](https://github.com/JeffSchering), [justinwyer](https://github.com/justinwyer), [jwilander](https://github.com/jwilander), [lindalumitchell](https://github.com/lindalumitchell), [prixone](https://github.com/prixone), [Rudloff](https://github.com/Rudloff), [R-Wang97](https://github.com/R-Wang97), [saturninoabril](https://github.com/saturninoabril), [simon0191](https://github.com/simon0191), [VeraLyu](https://github.com/VeraLyu)
 
@@ -1146,7 +1362,7 @@ Multiple setting options were added to `config.json`. Below is a list of the add
 
 Many thanks to all our contributors. In alphabetical order:
 
-/platform:
+/mattermost-server:
 
 - [aautio](https://github.com/aautio), [asaadmahmood](https://github.com/asaadmahmood), [bonespiked](https://github.com/bonespiked), [bradhowes](https://github.com/bradhowes), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [doh5](https://github.com/doh5), [enahum](https://github.com/enahum), [esethna](https://github.com/esethna), [grundleborg](https://github.com/grundleborg), [hmhealey](https://github.com/hmhealey), [jasonblais](https://github.com/jasonblais), [JeffSchering](https://github.com/JeffSchering), [jostyee](https://github.com/jostyee), [jwilander](https://github.com/jwilander), [kaakaa](https://github.com/kaakaa), [lindalumitchell](https://github.com/lindalumitchell), [prixone](https://github.com/prixone), [R-Wang97](https://github.com/R-Wang97), [saturninoabril](https://github.com/saturninoabril), [VeraLyu](https://github.com/VeraLyu)
 
@@ -1439,7 +1655,7 @@ Multiple setting options were added to `config.json`. Below is a list of the add
 
 Many thanks to all our contributors. In alphabetical order:
 
-/platform
+/mattermost-server
 
 - [aautio](https://github.com/aautio), [akihikodaki](https://github.com/akihikodaki), [andreistanciu24](https://github.com/andreistanciu24), [asaadmahmood](https://github.com/asaadmahmood), [ayadav](https://github.com/ayadav), [AymaneKhouaji](https://github.com/AymaneKhouaji), [bjoernr-de](https://github.com/bjoernr-de), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [CrEaK](https://github.com/CrEaK), [crspeller](https://github.com/crspeller), [DavidLu1997](https://github.com/DavidLu1997), [debanshuk](https://github.com/debanshuk), [enahum](https://github.com/enahum), [erikgui](https://github.com/erikgui), [favadi](https://github.com/favadi), [gig177](https://github.com/gig177), [grundleborg](https://github.com/grundleborg), [hmhealey](https://github.com/hmhealey), [it33](https://github.com/it33), [jasonblais](https://github.com/jasonblais), [jazzzz](https://github.com/jazzzz), [JeffSchering](https://github.com/JeffSchering), [joannekoong](https://github.com/joannekoong), [jostyee](https://github.com/jostyee), [jurgenhaas](https://github.com/jurgenhaas), [jwilander](https://github.com/jwilander), [kaakaa](https://github.com/kaakaa), [khawerrind](https://github.com/khawerrind), [laur89](https://github.com/laur89), [lfbrock](https://github.com/lfbrock), [mikaoelitiana](https://github.com/mikaoelitiana), [morenoh149](https://github.com/morenoh149), [mpoornima](https://github.com/mpoornima), [pan-feng](https://github.com/pan-feng), [pepf](https://github.com/pepf), [Rudloff](https://github.com/Rudloff), [ruzette](https://github.com/ruzette), [saturninoabril](https://github.com/saturninoabril), [senk](https://github.com/senk), [Zaicon](https://github.com/Zaicon), [ZJvandeWeg](https://github.com/ZJvandeWeg)
 
@@ -1729,7 +1945,7 @@ The following config settings will only work on servers with an Enterprise Licen
 
 Many thanks to all our contributors. In alphabetical order:
 
-/platform
+/mattermost-server
 
 - [asaadmahmood](https://github.com/asaadmahmood), [bjoernr-de](https://github.com/bjoernr-de), [bolecki](https://github.com/bolecki), [brendanbowidas](https://github.com/brendanbowidas), [CometKim](https://github.com/CometKim), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [debanshuk](https://github.com/debanshuk), [enahum](https://github.com/enahum), [esethna](https://github.com/esethna), [fraziern](https://github.com/fraziern), [grundleborg](https://github.com/grundleborg), [hmhealey](https://github.com/hmhealey), [it33](https://github.com/it33), [jwilander](https://github.com/jwilander), [kaakaa](https://github.com/kaakaa), [khawerrind](https://github.com/khawerrind), [lfbrock](https://github.com/lfbrock), [maruTA-bis](https://github.com/maruTA-bis), [pepf](https://github.com/pepf), [raphael0202](https://github.com/raphael0202), [Rudloff](https://github.com/Rudloff), [Yangchen1](https://github.com/Yangchen1), [ZJvandeWeg](https://github.com/ZJvandeWeg)
 
@@ -1783,7 +1999,7 @@ Many thanks to all our contributors. In alphabetical order:
 
 Thanks also to those who reported bugs that benefited the release, in alphabetical order:
 
- - [bjoernr-de](https://github.com/bjoernr-de) ([#5079](https://github.com/mattermost/platform/issues/5079)), [S6066](https://github.com/S6066) ([#5011](https://github.com/mattermost/platform/issues/5011))
+ - [bjoernr-de](https://github.com/bjoernr-de) ([#5079](https://github.com/mattermost//mattermost-server/issues/5079)), [S6066](https://github.com/S6066) ([#5011](https://github.com/mattermost//mattermost-server/issues/5011))
 
 ## Release v3.5.1  
 
@@ -2060,7 +2276,7 @@ Routes used to get files and their metadata from the server have been changed su
 
 Many thanks to all our contributors. In alphabetical order:
 
-/platform
+/mattermost-server
 
 - [alsma](https://github.com/alsma), [asaadmahmood](https://github.com/asaadmahmood), [coreyhulen](https://github.com/coreyhulen), [crspeller](https://github.com/crspeller), [DavidLu1997](https://github.com/DavidLu1997), [digitaltoad](https://github.com/digitaltoad), [dmeza](https://github.com/dmeza), [enahum](https://github.com/enahum), [esethna](https://github.com/esethna), [grundleborg](https://github.com/grundleborg), [harshavardhana](https://github.com/harshavardhana), [hmhealey](https://github.com/hmhealey), [it33](https://github.com/it33), [jasonblais](https://github.com/jasonblais), [jwilander](https://github.com/jwilander), [kaakaa](https://github.com/kaakaa), [lfbrock](https://github.com/lfbrock), [npcode](https://github.com/npcode), [R-Wang97](https://github.com/R-Wang97), [Rudloff](https://github.com/Rudloff), [S4KH](https://github.com/S4KH), [shieldsjared](https://github.com/shieldsjared), [thomchop](https://github.com/thomchop), [usmanarif](https://github.com/usmanarif), [wget](https://github.com/wget), [yangchen1](https://github.com/yangchen1)
 
@@ -2238,7 +2454,7 @@ The following config settings will only work on servers with an Enterprise Licen
 
 Many thanks to all our contributors. In alphabetical order:
 
-/platform
+/mattermost-server
 - [asaadmahmood](https://github.com/asaadmahmood), [coreyhulen](https://github.com/coreyhulen), [crspeller](https://github.com/crspeller), [cybershambles](https://github.com/cybershambles), [daizenberg](https://github.com/daizenberg), [DavidLu1997](https://github.com/DavidLu1997), [enahum](https://github.com/enahum), [esethna](https://github.com/esethna), [gramakri](https://github.com/gramakri), [grundleborg](https://github.com/grundleborg), [hmhealey](https://github.com/hmhealey), [HugoGiraudel](https://github.com/HugoGiraudel), [it33](https://github.com/it33), [jasonblais](https://github.com/jasonblais), [joonsun-baek](https://github.com/joonsun-baek), [jwilander](https://github.com/jwilander), [lfbrock](https://github.com/lfbrock), [npcode](https://github.com/npcode), [paranbaram](https://github.com/paranbaram), [phrix32](https://github.com/phrix32), [R-Wang97](https://github.com/R-Wang97), [shieldsjared](https://github.com/shieldsjared)
 
 /ios
@@ -2496,7 +2712,7 @@ The following config settings will only work on servers with an Enterprise Licen
 
 Many thanks to all our contributors. In alphabetical order:
 
-/platform
+/mattermost-server
 
 - [asaadmahmood](https://github.com/asaadmahmood), [coreyhulen](https://github.com/coreyhulen), [crspeller](https://github.com/crspeller), [DavidLu1997](https://github.com/DavidLu1997), [eadmund](https://github.com/eadmund), [enahum](https://github.com/enahum), [esethna](https://github.com/esethna), [hmhealey](https://github.com/hmhealey), [jasonblais](https://github.com/jasonblais), [jwilander](https://github.com/jwilander), [lfbrock](https://github.com/lfbrock), [maruTA-bis5](https://github.com/maruTA-bis5), [Rudloff](https://github.com/Rudloff), [samogot](https://github.com/samogot), [yuters](https://github.com/yuters)
 
@@ -2726,7 +2942,7 @@ The following config settings will only work on servers with an Enterprise Licen
 
 Many thanks to all our contributors. In alphabetical order:
 
-/platform    
+/mattermost-server
 - [42wim](https://github.com/42wim), [apheleia](https://github.com/apheleia), [asaadmahmood](https://github.com/asaadmahmood), [coreyhulen](https://github.com/coreyhulen),[crspeller](https://github.com/crspeller), [DavidLu1997](https://github.com/DavidLu1997), [enahum](https://github.com/enahum), [esethna](https://github.com/esethna), [hmhealey](https://github.com/hmhealey), [iansim](https://github.com/iansim), [it33](https://github.com/it33), [jwilander](https://github.com/jwilander), [kevynb](https://github.com/kevynb), [lfbrock](https://github.com/lfbrock), [samogot](https://github.com/samogot), [tbalthazar](https://github.com/tbalthazar), [tehraven](https://github.com/tehraven), [thiyagaraj](https://github.com/thiyagaraj), [yumenohosi](https://github.com/yumenohosi)
 
 /ios  
@@ -2903,7 +3119,7 @@ The following config settings will only work on servers with an Enterprise Licen
 
 Many thanks to all our contributors. In alphabetical order:
 
-/platform
+/mattermost-server
 - [apheleia](https://github.com/apheleia), [ArthurHlt](https://github.com/ArthurHlt), [asaadmahmood](https://github.com/asaadmahmood), [coreyhulen](https://github.com/coreyhulen), [crspeller](https://github.com/crspeller), [DavidLu1997](https://github.com/DavidLu1997), [enahum](https://github.com/enahum), [goofy-bz](https://github.com/goofy-bz), [gramakri](https://github.com/gramakri), [hmhealey](https://github.com/hmhealey), [it33](https://github.com/it33), [jasonblais](https://github.com/jasonblais), [jwilander](https://github.com/jwilander), [kevynb](https://github.com/kevynb), [khoa-le](https://github.com/khoa-le), [lfbrock](https://github.com/lfbrock), [rompic](https://github.com/rompic), [ryoon](https://github.com/ryoon), [samogot](https://github.com/samogot), [ScriptAutomate](https://github.com/ScriptAutomate), [tbalthazar](https://github.com/tbalthazar), [tehraven](https://github.com/tehraven/)
 
 /ios
@@ -3056,7 +3272,7 @@ Changes from v2.2 to v3.0:
 
 **iOS and Android**  
 
-Mattermost iOS and Android app v3.0 requires Mattermost platform v3.0 and higher.
+Mattermost iOS and Android app v3.0 requires Mattermost server v3.0 and higher.
 
 **APIs**
 
@@ -3125,7 +3341,7 @@ Version 3.0 uses a different database than version 2.0. A one-way change to the 
 
 Many thanks to all our contributors. In alphabetical order:
 
-/platform
+/mattermost-server
 - [alanmoo](https://github.com/alanmoo), [ArthurHlt](https://github.com/ArthurHlt), [asaadmahmood](https://github.com/asaadmahmood), [augustohp](https://github.com/augustohp),  [brunoqc](https://github.com/brunoqc), [chengweiv5](https://github.com/chengweiv5), [Compaurum](https://github.com/Compaurum), [coreyhulen](https://github.com/coreyhulen), [crspeller](https://github.com/crspeller), [CyrilTerets](https://github.com/CyrilTerets), [DavidLu1997](https://github.com/DavidLu1997), [enahum](https://github.com/enahum), [FeliciousX](https://github.com/FeliciousX), [hauschke](https://github.com/hauschke), [hmhealey](https://github.com/hmhealey), [insin](https://github.com/insin), [it33](https://github.com/it33), [jwilander](https://github.com/jwilander), [khoa-le](https://github.com/khoa-le), [lfbrock](https://github.com/lfbrock), [loafoe](https://github.com/loafoe), [maruTA-bis5](https://github.com/maruTA-bis5), [moogle19](https://github.com/moogle19), [olivierperes](https://github.com/olivierperes), [pjgrizel](https://github.com/pjgrizel), [qcu](https://github.com/qcu), [rodrigocorsi2](https://github.com/rodrigocorsi2), [ryoon](https://github.com/ryoon), [samogot](https://github.com/samogot), [stupied4ever](https://github.com/stupied4ever), [takashibagura](https://github.com/takashibagura), [usmanarif](https://github.com/usmanarif), [yumenohosi](https://github.com/yumenohosi)
 
 /mattermost-docker
@@ -3303,7 +3519,7 @@ User Interface
 Changes from v2.0 to v2.1:
 
 **Android**  
-- Mattermost Android Application is for use with Mattermost platform v2.1 and higher.
+- Mattermost Android Application is for use with Mattermost server v2.1 and higher.
 
 **config.json**    
 - The following setting was added and can be modified under `ServiceSettings` in `config.json` or the System Console.  
@@ -3353,7 +3569,7 @@ Expected Release date: 2016-02-16
 
 ##### Enhanced Support for Mobile Devices
 
-- BREAKING CHANGE to APIs: New Android and updated iOS apps require `platform` 2.0 and higher
+- BREAKING CHANGE to APIs: New Android and updated iOS apps require Mattermost server 2.0 and higher
 - iOS added app support for GitLab single sign-on
 - iOS added app support for AD/LDAP single sign-on (Enterprise Edition only)
 
@@ -3450,7 +3666,7 @@ Changes from v1.4 to v2.0:
 
 **iOS**  
 
-Mattermost iOS app v2.0 requires Mattermost platform v2.0 and higher.
+Mattermost iOS app v2.0 requires Mattermost server v2.0 and higher.
 
 **config.json**    
 
@@ -3470,8 +3686,8 @@ Multiple setting options were added to `config.json`. Below is a list of the add
 **Localization**  
 
 There are two new directories for i18n localization JSON files:
-- platform/i18n for server-side localization files
-- platform/web/static/i18n for client-side localization files
+- mattermost-server/i18n for server-side localization files
+- mattermost-webapp/i18n for client-side localization files
 
 #### Database Changes from v1.4 to v2.0
 
@@ -3688,7 +3904,7 @@ Messaging & Comments
 - Added emoji autocomplete
 
 Extras
-- Added `/loadtest url` tool for manually [testing text processing](https://github.com/mattermost/platform/tree/master/tests)
+- Added `/loadtest url` tool for manually [testing text processing](https://github.com/mattermost//mattermost-server/tree/master/tests)
 
 ### Improvements
 

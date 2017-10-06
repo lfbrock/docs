@@ -1,7 +1,7 @@
 Command Line Tools
 ==================
 
-From the directory where the Mattermost platform is installed, a
+From the directory where the Mattermost server is installed, a
 ``platform`` command is available for configuring the system, including:
 
 **General Administration**
@@ -28,6 +28,7 @@ From the directory where the Mattermost platform is installed, a
 -  Removing users from channels
 -  Listing all channels for a team
 -  Restoring previously deleted channels
+-  Modifying a channel's public/private type
 -  Migrating sign-in options
 -  Resetting multi-factor authentication for a user
 
@@ -113,6 +114,8 @@ platform channel
     -  `platform channel create`_ - Create a channel
     -  `platform channel delete`_ - Delete a channel
     -  `platform channel list`_ - List all channels on specified teams
+    -  `platform channel modify`_ - Modify a channel's public/private type
+    -  `platform channel move`_ - Move a channel to another team
     -  `platform channel remove`_ - Remove users from a channel
     -  `platform channel restore`_ - Restore a channel from the archive
 
@@ -218,6 +221,45 @@ platform channel list
     .. code-block:: none
 
       sudo ./platform channel list myteam
+
+platform channel modify
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Description
+    Modify a channel's public/private type.
+
+  Format
+    .. code-block:: none
+
+      platform channel modify
+
+  Example
+    .. code-block:: none
+
+      sudo ./platform channel modify myteam:mychannel --private
+
+  Options
+    .. code-block:: none
+
+          --public   Change a private channel to be public.
+          --private  Change a public channel to be private.
+
+platform channel move
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Description
+    Move channels to another team. The command validates that all users in the channel belong to the target team. Incoming/Outgoing webhooks are moved along with the channel. Channels can be specified by ``[team]:[channel]`` or by channel ID.
+
+  Format
+    .. code-block:: none
+
+      platform channel move
+
+  Example
+    .. code-block:: none
+
+      sudo ./platform channel move 8soyabwthjnf9qibfztje5a36h
+      sudo ./platform channel move myteam:mychannel
 
 platform channel remove
 ~~~~~~~~~~~~~~~~~~~~~~~~
