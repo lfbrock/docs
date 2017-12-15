@@ -7,6 +7,8 @@ Important Upgrade Notes
 +----------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | If you’re upgrading from a version earlier than... | Then...                                                                                                                                                         |
 +====================================================+=================================================================================================================================================================+
+| v4.4.0                                             | Composite database indexes were added to the ``Posts`` table. This may lead to longer ugprade times for servers with more than 1 million messages.              |
++----------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | v4.2.0                                             | Mattermost now handles multiple content types for integrations, including plaintext content type. If your integration suddenly prints the JSON payload data     |
 |                                                    | instead of rendering the generated message, make sure your integration is returning the ``application/json`` content-type to retain previous behavior.          |
 |                                                    +-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -21,6 +23,8 @@ Important Upgrade Notes
 |                                                    | `documentation to learn more <https://docs.mattermost.com/administration/config-settings.html#allow-untrusted-internal-connections-to>`_.                       |
 |                                                    |                                                                                                                                                                 |
 |                                                    | Push notification, OAuth 2.0 and WebRTC server URLs are trusted and not affected by this setting.                                                               |
+|                                                    +-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                    | Uploaded file attachments are now grouped by day and stored in ``/data/<date-of-upload-as-YYYYMMDD>/teams/...`` of your file storage system.                    |
 |                                                    +-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                    | Mattermost `/platform` repo has been separated to `/mattermost-webapp` and `/mattermost-server`. This may affect you if you have a private fork of the          |
 |                                                    | `/platform` repo. `More details here <https://forum.mattermost.org/t/mattermost-separating-platform-into-two-repositories-on-september-6th/3708>`_.             |

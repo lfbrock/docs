@@ -36,7 +36,7 @@ Mobile App Experience
 ^^^^^^^^^^^^^^^^^^^^^
 
 -  iPhone 4s and later with iOS 9+
--  Android devices with Android 4.4+
+-  Android devices with Android 5+
 
 Mobile Web Experience
 ^^^^^^^^^^^^^^^^^^^^^
@@ -58,6 +58,7 @@ Mattermost Server Operating System
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 -  Ubuntu 14.04, Ubuntu 16.04, Debian Jessie, CentOS 6.6+, CentOS 7.1+, RedHat Enterprise Linux 6.6+, RedHat Enterprise Linux 7.1+, Oracle Linux 6.6+, Oracle Linux 7.1+
+- Using Mattermost `Docker image <https://docs.mattermost.com/install/prod-docker.html>`_ on a Docker-compatible operating system (Linux-based OS is still recommended)
 
 While community support exists for Fedora, FreeBSD and Arch Linux, Mattermost does not currently include production support for these platforms.
 
@@ -138,7 +139,7 @@ For enterprise deployments of 10,000-20,000 registered users with moderate usage
 Alternate Storage Calculations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As an alternative to recommended storage sizing above, you can forecast your own storage usuage. Begin with a Mattermost server approximately 600 MB to 800 MB in size including operating system and database, then add the multiplied product of:
+As an alternative to recommended storage sizing above, you can forecast your own storage usage. Begin with a Mattermost server approximately 600 MB to 800 MB in size including operating system and database, then add the multiplied product of:
 
 -  Estimated storage per user per month (see below), multipled by 12 months in a year
 -  Estimated mean average number of users in a year

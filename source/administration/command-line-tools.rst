@@ -21,8 +21,6 @@ From the directory where the Mattermost server is installed, a
 
 **Advanced Automation**
 
-*Available in Enterprise Edition E10 and higher*
-
 -  Creating channels
 -  Inviting users to channels
 -  Removing users from channels
@@ -49,7 +47,7 @@ To run the CLI commands, you must be in the directory that contains the Mattermo
     sudo ./platform version
 
 Using the CLI on GitLab Omnibus
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------
 
 On GitLab Omnibus, you must be in the following directory when you run CLI commands: ``/opt/gitlab/embedded/service/mattermost``. Also, you must run the commands as the user *mattermost* and specify the location of the configuration file. The executable is ``/opt/gitlab/embedded/bin/mattermost``.
 
@@ -62,6 +60,17 @@ On GitLab Omnibus, you must be in the following directory when you run CLI comma
 
 .. note::
   The example commands in the documentation are for a default installation of Mattermost. You must modify the commands so that they work on GitLab Omnibus.
+  
+Using the CLI on Docker Install
+-------------------------------
+
+On Docker install, the default working directory is ``/mattermost/bin``, so you can use the CLI directly with the ``docker exec`` command. Note that the container name may be ``mattermostdocker_app_1`` if you installed Mattermost with ``docker-compose.yml``.
+
+**For example, to get the Mattermost version on a Docker install:**
+
+  .. code-block:: bash
+
+    docker exec -it <your-mattermost-container-name> platform version
 
 Mattermost 3.6 and later
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -90,9 +99,10 @@ platform
 
   Child Commands
     -  `platform channel`_ - Management of channels
+    -  `platform command`_ - Management of slash commands
     -  `platform help`_ - Generate full documentation for the CLI
     -  `platform import`_ - Import data
-    -  `platform ldap`_ - LDAP related utilities
+    -  `platform ldap`_ - AD/LDAP related utilities
     -  `platform license`_ - Licensing commands
     -  `platform reset`_ - Reset the database to initial state
     -  `platform roles`_ - Management of user roles
@@ -248,7 +258,7 @@ platform channel move
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
   Description
-    Move channels to another team. The command validates that all users in the channel belong to the target team. Incoming/Outgoing webhooks are moved along with the channel. Channels can be specified by ``[team]:[channel]`` or by channel ID.
+    Move channels to another team. The command validates that all users in the channel belong to the target team. Incoming/Outgoing webhooks are moved along with the channel. Channels can be specified by ``[team]:[channel]`` or by using channel IDs.
 
   Format
     .. code-block:: none
@@ -295,6 +305,32 @@ platform channel restore
       sudo ./platform channel restore 8soyabwthjnf9qibfztje5a36h
       sudo ./platform channel restore myteam:mychannel
 
+platform command
+-----------------
+
+  Description
+    Commands for slash command management.
+
+  Child Commands
+    -  `platform command move`_ - Move a slash command to a different team
+
+platform command move
+~~~~~~~~~~~~~~~~~~~~~~
+
+  Description
+    Move a slash command to a different team. Commands can be specified by {team}:{command-trigger-word}, or by using command IDs.
+
+  Format
+    .. code-block:: none
+
+      platform command move
+
+  Examples
+    .. code-block:: none
+
+      sudo ./platform command move newteam oldteam:command-trigger-word
+      sudo ./platform channel move newteam o8soyabwthjnf9qibfztje5a36h
+
 platform help
 ---------------
 
@@ -335,7 +371,7 @@ platform ldap
 -------------
 
   Description
-    Commands to configure and synchronize LDAP.
+    Commands to configure and synchronize AD/LDAP.
 
   Child Command
     -  `platform ldap sync`_ - Synchronize now
@@ -344,7 +380,7 @@ platform ldap sync
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
   Description
-    Synchronize all LDAP users now.
+    Synchronize all AD/LDAP users now.
 
   Format
     .. code-block:: none
@@ -690,11 +726,11 @@ platform user invite
       sudo ./platform user invite user@example.com myteam
       sudo ./platform user invite user@example.com myteam1 myteam2
 
-platform user migrate\_auth
+platform user migrate_auth
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   Description
-    Migrates all user accounts from one authentication provider to another. For example, you can upgrade your authentication provider from email to LDAP. Output will display any accounts that are not migrated successfully.
+    Migrates all user accounts from one authentication provider to another. For example, you can upgrade your authentication provider from email to AD/LDAP. Output will display any accounts that are not migrated successfully.
 
     -  ``from_auth``: The authentication service from which to migrate user accounts. Supported options: ``email``, ``gitlab``, ``saml``.
 
@@ -714,7 +750,7 @@ platform user migrate\_auth
   Options
     .. code-block:: none
 
-      --force  Ignore duplicate entries on the LDAP server.
+      --force  Ignore duplicate entries on the AD/LDAP server.
 
 platform user password
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -836,7 +872,8 @@ Notes:
 - Team name and channel name refer to the handles, not the display names. So in the url ``https://pre-release.mattermost.com/core/channels/town-square`` team name would be ``core`` and channel name would be ``town-square``
 
 
-.. tip :: If you automate user creation through the CLI tool with SMTP enabled emails will be sent to all new users created. If you run such a load script, it is best to disable SMTP or to use test accounts so that new account creation emails aren't unintentionally set to people at your organization who aren't expecting them.
+.. tip :: If you automate user creation through the CLI tool with SMTP enabled, emails will be sent to all new users created. If you run such a load script, it is best to disable SMTP or to use test accounts so that new account creation emails aren't unintentionally sent to people at your organization who aren't expecting them.
+
 CLI Documentation:
 
 ::

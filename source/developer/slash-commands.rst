@@ -21,6 +21,7 @@ Each Mattermost installation comes with some built-in slash commands that are re
     "/away", "Set your status away", "/away"
     "/offline", "Set your status offline", "/offline"
     "/online", "Set your status online", "/online"
+    "/dnd", "Set your status to Do Not Disturb", "/dnd"
     "/code *{text}*", "Display text as a code block", "/code File bugs"
     "/collapse", "Turn on auto-collapsing of image previews", "/collapse"
     "/expand", "Turn off auto-collapsing of image previews", "/expand"
@@ -30,12 +31,15 @@ Each Mattermost installation comes with some built-in slash commands that are re
     "/rename *{text}*", "Rename the channel", "/rename Developers"
     "/help", "Open the Mattermost help page", "/help"
     "/invite_people *{name@domain.com ...}*", "Send an email invite to your Mattermost team","/invite_people john@example.com"
+    "/kick *{@username}*", "Remove a member from a public or private channel", "/kick @alice"
+    "/remove *{@username}*", "Remove a member from a public or private channel", "/remove @alice"
     "/join *{channel-name}*", "Join the open channel", "/join off-topic"
     "/open *{channel-name}*", "Join the open channel", "/open off-topic"
     "/leave", "Leave the current channel", "/leave"
     "/logout", "Log out of Mattermost", "/logout"
     "/me *{message}*", "Do an action", "/me Hello World"
     "/msg *{@username}* *{message}*", "Send a Direct Message to a user", "/msg @alice hello"
+    "/groupmsg *{@username1, @username2, ...}* *{message}*", "Sends a Group Message to the specified users", "/groupmsg @alice, @bob hello"
     "/search *{text}*", "Search text in messages", "/search meeting"
     "/settings", "Open the Account Settings dialog", "/settings"
     "/shortcuts", "Display a list of keyboard shortcuts", "/shortcuts"
@@ -88,6 +92,8 @@ You can follow these general guidelines to set up a custom Mattermost slash comm
    token=xr3j5x3p4pfk7kk6ck7b4e6ghh&
    user_id=c3a4cqe3dfy6dgopqt8ai3hydh&
    user_name=somename
+
+If your integration sends back a JSON payload, make sure it returns the ``application/json`` content-type.
 
 9 - Add a configurable *MATTERMOST_TOKEN* variable to your application and set it to the **Token** value from step 7. This value will be used by your application to confirm the HTTP POST or GET request came from Mattermost.
 
@@ -282,3 +288,10 @@ Command with a trigger of 'trigger_word' returned an empty response
 If you are using a slash command that previously worked in Slack, try specifying the ``response_type`` for the slash command. 
 
 Slack assumes the ``response_type`` is ``ephemeral`` while Mattermost does not, so the `response_type must be specified <https://docs.mattermost.com/developer/slash-commands.html#message-type>`_ before the command works.
+
+My integration prints the JSON payload data in a Mattermost channel
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Mattermost handles multiple content types for integrations, including plain text content type. 
+
+If your integration prints the JSON payload data instead of rendering the generated message, make sure your integration is returning the ``application/json`` content-type.

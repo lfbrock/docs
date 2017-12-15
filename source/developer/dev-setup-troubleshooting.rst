@@ -51,7 +51,7 @@ Testing errors
 --------------
 
 I get the following error when running ``make test``: t.Run undefined (type *testing.T has no field or method Run)
-  You need to upgrade to Go 1.8. We don't support earlier versions than that.
+  You need to upgrade to Go 1.9. We don't support earlier versions than that.
 
 Other errors
 ------------
@@ -65,8 +65,8 @@ I don't see anything logged to the console when Mattermost is running
 I can't log into Mattermost because I don't have an account
   You can create an account using the following command:
 
-  ``go run ./cmd/platform/*.go user create --email user@example.com --username test1 --password mypassword``
+  ``go build ./cmd/platform && ./platform user create --email user@example.com --username test1 --password mypassword``
 
   Optionally, you can make that account a System Admin with the following command:
 
-  ``go run ./cmd/platform/*.go user create --email user@example.com --username test1 --password mypassword --system_admin``
+  ``go build ./cmd/platform && ./platform user create --email user@example.com --username test1 --password mypassword --system_admin``

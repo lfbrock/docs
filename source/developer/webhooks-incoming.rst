@@ -32,13 +32,15 @@ Let's learn how to create a simple incoming webhook that posts the following mes
 
 .. code-block:: text
 
-  curl -i -X POST -d 'payload={"text": "Hello, this is some text\nThis is more text. :tada:"}' http://{your-mattermost-site}/hooks/xxx-generatedkey-xxx
+  curl -i -X POST -H 'Content-Type: application/json' -d '{"text": "Hello, this is some text\nThis is more text. :tada:"}' http://{your-mattermost-site}/hooks/xxx-generatedkey-xxx
+  # or
+  curl -i -X POST --data-urlencode 'payload={"text": "Hello, this is some text\nThis is more text. :tada:"}' http://{your-mattermost-site}/hooks/xxx-generatedkey-xxx
 
 If you're running cURL on Windows, you need to wrap the payload with double quotes (``"``) instead of single quotes (``'``). Moreover, ensure inner double quotes are escaped with a backslash and that colons have no spaces. Here's an example payload on Windows:
 
 .. code-block:: text
 
-  curl -i -X POST -d "payload={\"text\":\"Hello, this is some text\nThis is more text. :tada:\"}" http://{your-mattermost-site}/hooks/xxx-generatedkey-xxx
+  curl -i -X POST -H 'Content-Type: application/json' -d '{\"text\": "Hello, this is some text\nThis is more text. :tada:\"}' http://{your-mattermost-site}/hooks/xxx-generatedkey-xxx
 
 Parameters and Formatting
 --------------------------
@@ -160,7 +162,7 @@ Tips and Best Practices
 
 5. The external application may be written in any programming language as long as it supports sending an HTTP POST request in the required JSON format to a specified Mattermost URL.
 
-6. For the HTTP request body, if `Content-Type` is specified as `application/json` in the header of the HTTP request, then the body can be direct JSON. For example,
+6. For the HTTP request body, if `Content-Type` is specified as ``application/json`` in the header of the HTTP request, then the body can be direct JSON. For example,
 
 .. code-block:: text
 
@@ -224,3 +226,5 @@ Some common error messages include:
 4. ``curl: (3) [globbing] unmatched close brace/bracket in column N``: Typically an error when using cURL on Windows, when:
   1. You have space around JSON separator colons, ``payload={"Hello" : "test"}`` or  
   2. You are using single quotes to wrap the ``-d`` data, ``-d 'payload={"Hello":"test"}'``
+
+If your integration prints the JSON payload data instead of rendering the generated message, make sure your integration is returning the ``application/json`` content-type.

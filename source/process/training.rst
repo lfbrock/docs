@@ -33,7 +33,6 @@ T-minus 1-3 weeks
 
 - (People Ops & New Hire) People Ops should find out new hire's preference for laptop, either to be purchased or taken from stock and shipped by People Ops or purchased locally by new hire and expensed. Windows laptops generally cost less than Macs so budget is based on Macs. For non-developers, budget is cost of a Macbook in your local area, for developers budget is cost of a Macbook Pro. Since these items are company property, you do not need to buy insurance or extended warranties for them, but you do need to report any loss or damage to People@mattermost.com as soon as it occurs.
 - (New Hire) Read the entirety of Onboarding page for info on meetings, mindsets, terminology and training materials.
-- (New Hire) Ask your manager for a link to the CEO's calendar to schedule a 45 minute meeting on your first day 
  
 T-minus 1 week
 ---------------------------------------------------------
@@ -357,7 +356,7 @@ In making these trade-offs, consider the following mindsets:
 
    Fix something that's important, broken and dangerous as fast as possible. Speed is critical, do not care about "leaving a scar" in our architecture or business process, just own it and get it done. Solve the problem, DO NOT OVER BUILD.
  
-   *Example:* Something incorrect on our public website with more than 100 page views a month should be fixed immediately and not put on a queue tied to a longer term project. 
+   *Example:* Something incorrect on our public website with more than 100,000 page views a month should be fixed immediately and not put on a queue tied to a longer term project. 
 
 - **Field Surgeon** 
 
@@ -430,7 +429,7 @@ A specific type of mana for developers similar to "points" or "jelly beans" in a
 Expert Mode (and Crimson Force Field)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When documentation or on-screen text is written for someone with considerable knowledge or expertise, instead of being designed for a new learner. In general, try to state things simply rather than speaking to just the "experts" reading the the text.
+When documentation or on-screen text is written for someone with considerable knowledge or expertise, instead of being designed for a new learner. In general, try to state things simply rather than speaking to just the "experts" reading the text.
 
 If something is extremely difficult to understand, and yet still justified in the mind of the writer, we call it "Crimson Force Field". This term is intended to evoke the emotional response of coming across something that is difficult to understand, so writers of Crimson Force Field material can empathize with the readers. Crimson Force Field is drawn from an esoteric episode of Star Trek and it is unlikely anyone but the originator of the term understands its complete meaning. Crimson Force Field is itself Crimson Force Field.
 
@@ -599,13 +598,16 @@ When becoming a core committer to the Mattermost project we create a "Mattermost
 
 Mattermost avatars are caricatures of core committers in the costume of a popular culture character (e.g. Spiderman, Wonder Woman, Luke Skywalker, etc.) created for personal use, and which may be potentially used in team rosters, demonstration sites, "group photos" where avatar images from the team are collected in one image of all the characters together, and other public uses. 
 
-To have a Mattermost avatar created, you'll be invited to create a Mattermost avatar via email and asked to provide the following: 
+To have a Mattermost avatar created, you'll be invited to create a Mattermost avatar via email: 
 
 1. Please use the email subject "[YOUR_FULL_NAME] as [CHARACTER_NAME]", for example "Corey Hulen as Han Solo". 
 2. Attach a clear image at least 600 pixels high and 600 pixels wide showing your character's full body in a standing pose. 
+3. Send a clear photo of your face at least 600 pixels high and 600 pixels wide facing the same direction as your character image.
 
-   Note: Character should be human-sized (no giant characters).
-3. Send a clear photo of your face at least 600 pixels high and 600 pixels wide pointing in the same direction as your character image.
+Notes: 
+
+1. Character should be human-sized (no giant characters).  
+2. Character's appearance should be family-friendly. For example, no gory or provocative costumes.
  
 You should receive your digital Mattermost avatars by email in 6-8 weeks. 
 
