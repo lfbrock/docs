@@ -145,7 +145,7 @@ Set up Mattermost Server
 
    a. Open a command prompt, and execute ``cd c:\mattermost\bin`` to change your working directory
 
-   b. Execute ``platform.exe``
+   b. Execute ``mattermost.exe``
    
    c. Verify that mattermost is running and connected to the database successfully by confirmed a console 
       log like ``Server is listening on :8065`` letting you know the service is running.
@@ -165,7 +165,7 @@ Configure the Firewall
 
    .. code:: batch
 
-      netsh advfirewall firewall add rule name="Mattermost" dir=in action=allow program="C:\mattermost\bin\platform.exe" enable=yes 
+      netsh advfirewall firewall add rule name="Mattermost" dir=in action=allow program="C:\mattermost\bin\mattermost.exe" enable=yes 
 
 Establish a Windows Service
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -185,14 +185,15 @@ a wrapper-utility must be used.
     .. code:: batch
 
        cd c:\mattermost\bin
-       nssm install mattermost c:\mattermost\bin\platform.exe
+       nssm install mattermost c:\mattermost\bin\mattermost.exe
+       nssm set mattermost AppDirectory c:\mattermost
 
 12. Start the service by executing the following
 
     .. code:: batch
 
       net start mattermost
-      tasklist /FI "IMAGENAME eq platform.exe"
+      tasklist /FI "IMAGENAME eq mattermost.exe"
 
 Verify Mattermost Connectivity
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -379,8 +380,8 @@ Finish Mattermost Server Setup
 
 5. Update **Notification** > **Email** settings to setup an SMTP email service. The example below assumes AmazonSES.
 
-   a. Set **Send Email Notifications** to true
-   b. Set **Require Email Verification** to true
+   a. Set **Send Email Notifications** to ``true``
+   b. Set **Require Email Verification** to ``true``
    c. Set **Feedback Name** to ``No-Reply``
    d. Set **Feedback Email** to ``mattermost@example.com``
    e. Set **SMTP Username** to ``[YOUR_SMTP_USERNAME]``
@@ -390,23 +391,27 @@ Finish Mattermost Server Setup
    i. Set **Connection Security** to ``TLS``
    j. Save the Settings
 
-6. Update **File** > **Storage** settings:
+6. (Optional) Update **Security** > **Sign Up** settings:
+
+   - Set **Enable Email Invitations** to ``true``
+
+7. Update **File** > **Storage** settings:
 
    - Change **Local Directory Location** from ``./data/`` to
      ``/mattermost/data``
 
-7. Update **General** > **Logging** settings:
+8. Update **General** > **Logging** settings:
 
    - Set **Log to The Console** to ``false``
 
-8. Update **Advanced** > **Rate Limiting** settings:
+9. Update **Advanced** > **Rate Limiting** settings:
 
    - Set **Vary By Remote Address** to false
    - Set **Vary By HTTP Header** to X-Real-IP
 
-9. Feel free to modify other settings.
+10. Feel free to modify other settings.
 
-10. Login to the Mattermost server (10.0.0.2) and restart the Mattermost Service by typing the following into a command line 
+11. Login to the Mattermost server (10.0.0.2) and restart the Mattermost Service by typing the following into a command line 
 
    .. code:: batch
 

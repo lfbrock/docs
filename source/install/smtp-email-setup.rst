@@ -67,7 +67,11 @@ To enable email, configure an SMTP email service as follows:
       9. Then click **Save**
       10. Then click **Test Connection**
       11. If the test failed please look in **OTHER** > **Logs** for any
-          errors that look like ``[EROR] /api/v3/admin/test_email ...``
+          errors that look like ``[EROR] /api/v4/email/test ...``
+
+   4. (Optional) Go to the **Security** > **Sign Up** tab and configure the following:
+
+      1.  **Enable Email Invitations:** ``true``
 
 Sample SMTP Settings
 ~~~~~~~~~~~~~~~~~~~~
@@ -76,8 +80,7 @@ Amazon SES
 ^^^^^^^^^^
 
 -  Set **SMTP Username** to **[YOUR_SMTP_USERNAME]**
--  Set **SMTP Password** to
-   **[YOUR_SMTP_PASSWORD]**
+-  Set **SMTP Password** to **[YOUR_SMTP_PASSWORD]**
 -  Set **SMTP Server** to **email-smtp.us-east-1.amazonaws.com**
 -  Set **SMTP Port** to **465**
 -  Set **Connection Security** to **TLS**
@@ -110,6 +113,15 @@ Hotmail
 -  Set **SMTP Server** to **smtp-mail.outlook.com**
 -  Set **SMTP Port** to **587**
 -  Set **Connection Security** to **STARTTLS**
+
+Office365 / Outlook	
+^^^^^^^^^^^^^^^^^^^^^	
+	
+- Set **SMTP Username** to **your\_email@hotmail.com**	
+- Set **SMTP Password** to **your\_password**	
+- Set **SMTP Server Name** to **smtp.office365.com**	
+- Set **SMTP Port** to **587**	
+- Set **Connection Security** to **STARTTLS**
 
 Troubleshooting SMTP
 ~~~~~~~~~~~~~~~~~~~~
@@ -144,7 +156,7 @@ Checking your SMTP server is reachable
 -  Attempt to telnet to the email service to make sure the server is
    reachable.
 -  You must run the following commands from the same machine or virtual
-   instance where ``mattermost/bin/platform`` is located. So if you're
+   instance where ``mattermost/bin/mattermost`` is located. So if you're
    running Mattermost from Docker you need to
    ``docker exec -ti mattermost-dev /bin/bash``
 -  Telnet to the email server with ``telnet mail.example.com 25``. If

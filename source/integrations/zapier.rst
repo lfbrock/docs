@@ -8,9 +8,8 @@ Integrate over 700 apps into Mattermost, including `Email <https://zapier.com/za
 This documentation includes:
 
 - `Zapier Setup Guide <https://docs.mattermost.com/integrations/zapier.html#id1>`_ - Instructions on registering the Zapier app on your server and creating a zap.
-- `Message Formatting Tips <https://docs.mattermost.com/integrations/zapier.html#id4>`_ - Tips from the Mattermost team on formatting Zapier integration messages.
-- `Troubleshooting Guide <https://docs.mattermost.com/integrations/zapier.html#id6>`_ - Advice on troubleshooting common setup issues.
-
+- `Message Formatting Tips <https://docs.mattermost.com/integrations/zapier.html#id6>`_ - Tips from the Mattermost team on formatting Zapier integration messages.
+- `Troubleshooting Guide <https://docs.mattermost.com/integrations/zapier.html#id8>`_ - Advice on troubleshooting common setup issues.
 
 Zapier Setup Guide
 --------------------------------
@@ -19,6 +18,8 @@ Zapier is authorized using OAuth2.0. The setup guide requires that a System Admi
 Enable Zapier on your Mattermost Instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The first time you set up Zapier on your Mattermost instance you will be required to enable an OAuth 2.0 application which can be used by everyone on your server. Your System Admin must execute these steps.
+
+To learn more about OAuth 2.0 applications, including what permissions they have access to, see the `OAuth 2.0 documentation <https://docs.mattermost.com/developer/oauth-2-0-applications.html>`_.
 
 Enable OAuth 2.0
 ```````````````````````````
@@ -35,12 +36,11 @@ Register Zapier as an OAuth 2.0 Application
   b. **Display Name**: ``Zapier``
   c. **Description**: ``Application for Zapier integrations``
   d. **Homepage**: ``https://zapier.com/``
-  e. **Icon URL**: ``http://bit.ly/2yMR7E7``
+  e. **Icon URL**: ``https://bit.ly/2uGVGeC``
   f. **Callback URLs**: ``https://zapier.com/dashboard/auth/oauth/return/MattermostDevAPI/``
 3. Click **Save** to create the application. You will be provided with a **Client ID** and **Client Secret**. Save these values, or share them with your team to connect Zapier in the steps below.
 
 .. image:: ../images/zapier-oauth.png
-
 
 Create a Zap
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -139,8 +139,13 @@ Cannot connect a Mattermost account
   a. Possible Solution: The **Client Secret** might be incorrect. Verify this value in **Main Menu** > **Integrations** > **OAuth 2.0 Applications**, or check with your System Admin.
 
   .. image:: ../images/zapier-error4.png
+  
+4. **"Error Invalid client id"**
+  a. Possible Solution: The **Client ID** and/or **Client Secret** might have trailing spaces in them when copied and pasted into the form. Verify there are no trailing spaces in the **Client ID** and **Client Secret** fields then try again.
 
-4. **"Mattermost needs your help: We couldn't find the requested app"**
+  .. image:: ../images/zapier-trailing-space-error.png
+
+5. **"Mattermost needs your help: We couldn't find the requested app"**
   a. Possible Solution: The **Client ID** might be incorrect. Verify this value in **Main Menu** > **Integrations** > **OAuth 2.0 Applications**, or check with your System Admin.
 
   .. image:: ../images/zapier-error3.png

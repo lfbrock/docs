@@ -20,12 +20,12 @@ Common Tasks
 ------------
 
 Creating System Admin account from the command line
-  - If the System Admin leaves the organization or is otherwise unavailable, you can use the command line interface to assign the *system_admin* role to an existing user. In the ``mattermost/bin`` directory, type ``sudo ./platform roles system_admin {user-name}``, where *{user-name}* is the username of the person with the new role. For more information about using the command line interface, see :doc:`../administration/command-line-tools`.
+  - If the System Admin leaves the organization or is otherwise unavailable, you can use the command line interface to assign the *system_admin* role to an existing user. In the ``mattermost/bin`` directory, type ``sudo ./mattermost roles system_admin {user-name}``, where *{user-name}* is the username of the person with the new role. For more information about using the command line interface, see :doc:`../administration/command-line-tools`.
   - The user needs to log out and log back in before the *system_admin* role is applied.
 
 Deactivating a user
   - System Admins can go to **System Console > Users** for a list of all users on the server. The list can be searched and filtered to make finding the user easier. Click the user's role and in the menu that opens, click **Deactivate**.
-  - To preserve audit history, users are never deleted from the system. It is highly recommended that System Admins do not attempt to delete users manually from the database, as this may compromise system integrity and the ability to upgrade in the future.
+  - To preserve audit history, users are typically never deleted from the system. If permanently deleting a user is necessary (e.g. for the purposes of `GDPR <https://gdpr-info.eu/>`_), a :doc:`CLI tool <../administration/command-line-tools>` can be used to do so.
   - Note that AD/LDAP user accounts cannot be deactivated from Mattermost; they must be deactivated from your Active Directory.
 
 Checking for a valid license in Enterprise Edition without logging in

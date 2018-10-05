@@ -1,4 +1,6 @@
-API
-===
+.. _api:
 
-The API has separate `documentation <https://api.mattermost.com>`__.
+API
+=================
+
+See the `API documentation <https://api.mattermost.com>`__.

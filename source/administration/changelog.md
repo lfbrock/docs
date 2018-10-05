@@ -4,6 +4,1422 @@ This changelog summarizes updates to [Mattermost Team Edition](http://www.matter
 
 Also see [changelog in progress](http://bit.ly/2nK3cVf) for the next release.
 
+## Release v5.3
+
+Mattermost v5.3.0 contains a high level security fix. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+  
+- **v5.3.1, released 2018-09-19** 
+  - Fixed an issue where HTML elements such as links did not display correctly for non-English languages.
+- **v5.3.0, released 2018-09-16**
+  - Original 5.3.0 release
+
+### Highlights
+
+#### Search Date Filters
+- Search for messages before, on, or after a specified date.
+
+#### IdAttribute Setting for SAML
+- Added a new `IdAttribute` setting for SAML, which allows SAML users to change their email address without losing their account.
+
+### Improvements
+
+#### Web User Interface (UI)
+- Added ability to set username and profile picture in **Outgoing Webhooks** setup page.
+- Added "Deactivate Account" option under **Account Settings > Advanced**.
+- Added member count for the **More Direct Messages** list.
+- Expanded shortened (e.g. bitly) links for previewable content such as images and YouTube links.
+
+#### Performance
+- Improved channel switcher performance by adding a short delay after the last character has been typed before querying  the server for new autocomplete results.
+
+#### Integrations
+- Added support for interactive message buttons to, for instance, delete or edit the post after clicking on a message button.
+
+#### Administration
+- Created a telemetry event for when telemetry is turned off from the System Console.
+- Added support for attachments in Direct Message channels to the [bulk import tool](https://docs.mattermost.com/deployment/bulk-loading.html).
+
+### Bug Fixes
+- Fixed an issue where closing an archived channel did not redirect users to the last viewed channel.
+- Fixed an issue where users were able to react to existing emojis in an archived channel.
+- Fixed an issue where clicking "+" twice to add a public or private channel added a recently archived channel back to the left-hand side.
+- Fixed an issue where channel autocomplete appeared to include all public channels, including deleted channels and channels one has never joined.
+
+### Compatibility
+
+#### config.json
+
+Multiple setting options were added to `config.json`. Below is a list of the additions and their default values on install. The settings can be modified in `config.json`, or the System Console when available.
+
+#### Changes to Enterprise Edition:
+
+ - Under "SamlSettings": in ``config.json``:
+    - Added ``"EnableSyncWithLdapIncludeAuth": false,`` to override the SAML ID attribute with the AD/LDAP ID attribute if configured, or override the SAML Email attribute with the AD/LDAP Email attribute if SAML ID attribute is not present. See [documentation](https://about.mattermost.com/default-saml-ldap-sync) to learn more.
+    - Added ``"IdAttribute": "",`` to set the attribute in the SAML Assertion that will be used to bind users from SAML to users in Mattermost.
+
+### API Changes
+
+#### Plugin API Changes (Release Candidate)
+ - Added ``postId`` as a property for ``PostDropDownMenuComponent`` and as a parameter for the ``PostDropDownMenuAction`` function to improve the ability to add options to the post "..." action menu.
+ - Added ``FileInfo`` and ``file []byte`` to retrieve File Info for a specific fileId and to ensure the file is read for a specific path.
+ - Added ``GetLDAPUserAttributes``, which matches the functionality of the ``ldapextras`` built-in plugin that was removed in Mattermst v5.2.
+
+### Known Issues
+
+ - When "Enable sign-in with username" is set to false, logging in with LDAP account with MFA enabled results in "Error trying to authenticate MFA token" error.
+ - Google login fails on the Classic mobile apps.
+ - User can receive a video call from another browser tab while already on a call.
+ - Jump link in search results does not always jump to display the expected post.
+ - Status may sometimes get stuck as away or offline in High Availability mode with IP Hash turned off.
+ - Searching stop words in quotes with Elasticsearch enabled returns more than just the searched terms.
+ - Searching with Elasticsearch enabled may not always highlight the searched terms.
+ - Team sidebar on desktop app does not update when channels have been read on mobile.
+ - Channel scroll position flickers while images and link previews load.
+ - Slack import through the CLI fails if email notifications are enabled.
+ - Push notifications don't always clear on iOS when running Mattermost in High Availability mode.
+ - CTRL/CMD+U shortcut to upload a file doesn’t work on Firefox.
+
+### Contributors
+
+[aeomin](https://github.com/aeomin), [amyblais](https://github.com/amyblais), [ArchRoller](https://github.com/archroller), [asaadmahmood](https://github.com/asaadmahmood), [chikei](https://github.com/chikei), [cometkim](https://github.com/cometkim), [comharris](https://github.com/comharris), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [csduarte](https://github.com/csduarte), [dcherniv](https://github.com/dcherniv), [der-test](https://github.com/der-test), [DHaussermann](https://github.com/DHaussermann), [dmitrysamuylovpharo](https://github.com/dmitrysamuylovpharo), [DSchalla](https://github.com/DSchalla), [enahum](https://github.com/enahum), [esethna](https://github.com/esethna), [grundleborg](https://github.com/grundleborg), [gvengel](https://github.com/gvengel), [Hanzei](https://github.com/Hanzei), [hmhealey](https://github.com/hmhealey), [it33](https://github.com/it33), [jasonblais](https://github.com/jasonblais), [jespino](https://github.com/jespino), [Jessica-c53](https://github.com/Jessica-c53), [JustinReynolds-MM](https://github.com/JustinReynolds-MM), [jwilander](https://github.com/jwilander), [kaakaa](https://github.com/kaakaa), [kayazeren](https://github.com/kayazeren), [lfbrock](https://github.com/lfbrock), [lieut-data](https://github.com/lieut-data), [lindalumitchell](https://github.com/lindalumitchell), [lindy65](https://github.com/lindy65), [lisakycho](https://github.com/lisakycho), [meilon](https://github.com/meilon), [MerlinDMC](https://github.com/MerlinDMC), [michaelkochub](https://github.com/michaelkochub), [mkraft](https://github.com/mkraft), [mlongo4290](https://github.com/mlongo4290), [n1aba](https://github.com/n1aba), [pichouk](https://github.com/pichouk), [pjgrizel](https://github.com/pjgrizel), [pradeepmurugesan](https://github.com/pradeepmurugesan), [robert843](https://github.com/robert843), [rodcorsi](https://github.com/rodcorsi), [rononline](https://github.com/rononline), [rqtaylor](https://github.com/rqtaylor), [ryoon](https://github.com/ryoon), [R-Wang97](https://github.com/R-Wang97), [saturninoabril](https://github.com/saturninoabril), [sjstyle](https://github.com/sjstyle), [sudheerDev](https://github.com/sudheerDev), [thePanz](https://github.com/thepanz), [ThiefMaster](https://github.com/ThiefMaster), [uhlhosting](https://github.com/uhlhosting), [wget](https://github.com/wget), [wiersgallak](https://github.com/wiersgallak), [yuya-oc](https://github.com/yuya-oc)
+
+## Release v5.2
+
+ - **v5.2.2, released 2018-09-16**
+   - Mattermost v5.2.2 contains a high level security fix. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+- **v5.2.1, released 2018-08-23**
+  - Disabled the ability to search archived channels by default, given multiple issues were raised after v5.2.0 was released. The feature can be enabled in v5.2.1 via ``ExperimentalViewArchivedChannels`` setting.
+- **v5.2.0, released 2018-08-16**
+  - Original 5.2.0 release
+
+### Security Update
+
+- Mattermost v5.2.0 contains medium level security fixes. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+
+### Highlights
+
+#### Embed Mattermost in Other Apps (Beta)
+ - Added support for extensions, which allow you to embed Mattermost in other apps and websites via OAuth 2.0.
+ - A sample extension for Chrome [is here](https://github.com/mattermost/mattermost-chrome-extension).
+
+#### Plugins
+ - Added support to add/delete and enable/disable plugins via the CLI.
+ - See our [demo plugin](https://github.com/mattermost/mattermost-plugin-demo) that demonstrates the capabilities of a Mattermost plugin. For a starting point to write a Mattermost plugin, see our [sample plugin](https://github.com/mattermost/mattermost-plugin-sample).
+ - Breaking changes to the plugins framework introduced. To migrate your existing plugins to be compatible with Mattermost 5.2 and later, see our [migration guide](https://developers.mattermost.com/extend/plugins/migration/).
+ 
+#### Searching Archived Channels
+ - Added ability to search for archived channel content on desktop and mobile clients.
+ 
+#### Romanian Language
+ - Added support for Romanian language.
+
+### Improvements
+
+#### Web User Interface (UI)
+ - Added experimental custom default channels.
+ - Added link to profile pop-over from names in Join/Leave messages.
+ - Added support for webhook message attachments to trigger mentions.
+ - Stripped markdown formatting characters from desktop notifications and "Commented on..." text.
+ - Added ability to bulk import emoji.
+ - Added support for file attachments in bulk import.
+ 
+#### Plugins (All Beta)
+ - New [antivirus plugin](https://github.com/mattermost/mattermost-plugin-antivirus) to scan for viruses before uploading a file to Mattermost. Supports [ClamAV anti-virus software](https://www.clamav.net/) across browser, Desktop Apps and the Mobile Apps.
+ - New [GitHub plugin](https://github.com/mattermost/mattermost-plugin-github) to subscribe to notifications, and to keep track of unread GitHub messages and open pull requests requiring your attention.
+ - [Zoom plugin](https://docs.mattermost.com/integrations/zoom.html) now has one option to start a meeting rather than three separate ones to simplify the user experience.
+
+#### Server Plugins: Release Candidate
+ - A release candidate (RC) is released for server plugins. Stable release is expected in v5.3 or v5.4.
+ - Added various API methods for plugins to provide the same capabilities as the REST API.
+ - Added support to intercept file uploads before the file is uploaded to a Mattermost server.
+ - Added support for plugins to respond after a user joins/leaves a channel or a team, or creates a new channel.
+ - Added support for plugins to respond prior to or after a user logs in to a Mattermost server.
+ - Added support for plugins to update user status. Sample use case is setting a user’s status to Do Not Disturb based on Google Calendar events.
+ - Added CSRF tokens that are attached to users sessions. The tokens can be enforced as an alternative to XHR checks in the plugin request system.
+ - Added session token to context for ServeHTTP hook.
+
+#### Webapp Plugins: Beta
+ - Upcoming Mattermost UI redesign may cause breaking changes to webapp plugins. Hence, webapp plugins remain as beta in v5.2.
+ - Added support to override [...] post menu, and paperclip icon for file uploads.
+ - Added support for multiple plugins to add components at the same integration points instead of only allowing one plugin to do so.
+ - Removed ability to fully override profile popover. Instead, multiple plugins can now add to the profile popover via multiple integration points.
+ - For an up-to-date list of pluggable UI components, [see this list in our demo plugin](https://github.com/mattermost/mattermost-plugin-demo/tree/master/webapp#components).
+ 
+#### Administration
+ - In the compliance export status table, in System Console > Compliance > Compliance Export, added a number of exported records to Details column.
+ - Added support for cross-origin resource sharing.
+
+#### Command Line Interface (CLI)
+ - Enhanced log output from Permanent Delete CLI command to delete FileInfos for a user's posts.
+ - Addded channel renaming to CLI.
+ 
+#### Enterprise Edition
+ - Added the Global Relay Export CLI command.
+ - Added support to search plugin contents.
+
+### Bug Fixes
+ - Fixed an issue where the "Switch Channel" shortcut (⌘K) didn't work on dvorak layout on Mac.
+ - Fixed an issue where the Custom Integrations section in the System Console was blank after role changes.
+
+### Compatibility
+
+#### config.json
+
+Multiple setting options were added to `config.json`. Below is a list of the additions and their default values on install. The settings can be modified in `config.json`, or the System Console when available.
+
+#### Changes to Team Edition and Enterprise Edition:
+
+ - Under "ServiceSettings": in ``config.json``:
+      - Added ``"CorsExposedHeaders": ""``, to add a whitelist of headers that will be accessible to the requester.
+      - Added ``"CorsAllowCredentials": false``, to allow requests that pass validation to include the ``Access-Control-Allow-Credentials`` header.
+      - Added ``"CorsDebug": false``, to print messages to the logs to help when developing an integration that uses CORS.
+ - Under "TeamSettings" in ``config.json``:
+      - Added ``"ViewArchivedChannels": true``, to allow users to share permalinks and search for content of channels that have been archived.
+      - Added ``"ExperimentalDefaultChannels": ""``, to allow choosing the default channels every user is added to automatically after joining a new team.
+
+### API Changes
+ 
+#### RESTful API v4 Changes
+ - ``deleteReaction`` API was added to send the correct value for ``post.HasReactions``.
+ - Support for add/delete and enable/disable plugins via CLI was added.
+ - File download API was improved to stream files instead of loading them entirely into memory.
+
+#### Websocket Changes
+ - Support for add/delete and enable/disable plugins via CLI was added.
+
+#### Database Changes
+ - Two new columns were added in the ``OutgoingWebhooks`` table, "Username" and "IconURL".
+
+### Known Issues
+
+ - Google login fails on the Classic mobile apps.
+ - User can receive a video call from another browser tab while already on a call.
+ - Jump link in search results does not always jump to display the expected post.
+ - Status may sometimes get stuck as away or offline in High Availability mode with IP Hash turned off.
+ - Searching stop words in quotes with Elasticsearch enabled returns more than just the searched terms.
+ - Searching with Elasticsearch enabled may not always highlight the searched terms.
+ - Team sidebar on desktop app does not update when channels have been read on mobile.
+ - Channel scroll position flickers while images and link previews load.
+ - Slack import through the CLI fails if email notifications are enabled.
+ - Push notifications don't always clear on iOS when running Mattermost in High Availability mode.
+ - CTRL/CMD+U shortcut to upload a file doesn’t work on Firefox.
+
+### Contributors
+[aeomin](https://github.com/aeomin), [alanpog](https://github.com/alanpog), [Alexgoodman7](https://github.com/Alexgoodman7), [amyblais](https://github.com/amyblais), [archroller](https://github.com/archroller), [asaadmahmood](https://github.com/asaadmahmood), [burguyd](https://github.com/burguyd), [chikei](https://github.com/chikei), [cometkim](https://github.com/cometkim), [comharris](https://github.com/comharris), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [csduarte](https://github.com/csduarte), [der-test](https://github.com/der-test), [DHaussermann](https://github.com/DHaussermann), [DSchalla](https://github.com/DSchalla), [enahum](https://github.com/enahum), [esethna](https://github.com/esethna), [falcon78921](https://github.com/falcon78921), [fdebrabander](https://github.com/fdebrabander), [grundleborg](https://github.com/grundleborg), [herooftimeandspace](https://github.com/herooftimeandspace), [hmhealey](https://github.com/hmhealey), [icelander](https://github.com/icelander), [it33](https://github.com/it33), [jasonblais](https://github.com/jasonblais), [jespino](https://github.com/jespino), [Jessica-c53](https://github.com/Jessica-c53), [JustinReynolds-MM](https://github.com/JustinReynolds-MM), [jwilander](https://github.com/jwilander), [kaakaa](https://github.com/kaakaa), [kayazeren](https://github.com/kayazeren), [kennethjeremyau](https://github.com/kennethjeremyau), [lfbrock](https://github.com/lfbrock), [lieut-data](https://github.com/lieut-data), [lindalumitchell](https://github.com/lindalumitchell), [lindy65](https://github.com/lindy65), [meilon](https://github.com/meilon), [mkraft](https://github.com/mkraft), [mlongo4290](https://github.com/mlongo4290), [pepf](https://github.com/pepf), [pichouk](https://github.com/pichouk), [pietroglyph](https://github.com/pietroglyph), [pjgrizel](https://github.com/pjgrizel), [pradeepmurugesan](https://github.com/pradeepmurugesan), [rodcorsi](https://github.com/rodcorsi), [Roy-Orbison](https://github.com/Roy-Orbison), [ryoon](https://github.com/ryoon), [santos22](https://github.com/santos22), [saturninoabril](https://github.com/saturninoabril), [scherno2](https://github.com/scherno2), [seansackowitz](https://github.com/seansackowitz), [sudheerDev](https://github.com/sudheerDev), [tejasbubane](https://github.com/tejasbubane), [theblueskies](https://github.com/theblueskies), [ThiefMaster](https://github.com/ThiefMaster), [uhlhosting](https://github.com/uhlhosting), [uusijani](https://github.com/uusijani), [wget](https://github.com/wget), [wiersgallak](https://github.com/wiersgallak), [yuya-oc](https://github.com/yuya-oc) 
+
+## Release v5.1
+
+ - **v5.1.2, released 2018-09-16**
+   - Mattermost v5.1.2 contains a high level security fix. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+ - **v5.1.1, released 2018-08-07**
+   - Mattermost v5.1.1 contains medium level security fixes. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+ - **v5.1.0, released 2018-07-16**
+   - Original 5.1.0 release
+
+### Security Update
+
+- Mattermost v5.1.0 contains multiple security fixes ranging from low to high severity. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+
+### Highlights
+
+#### Gfycat integration
+ - Added easy access to sharing GIFs without leaving the Mattermost interface. System Admins can enable this feature in **System Console > Customization > GIF**.
+ 
+#### Auto-linking plugin (Beta)
+ - Messages can now be formatted into Markdown links automatically before they are saved to the Mattermost database. See [autolink plugin repository](https://github.com/mattermost/mattermost-plugin-autolink) to learn more.
+
+#### Support Mattermost on a subpath
+ - Added support for hosting Mattermost at any route (e.g., https://www.example.com/mattermost) with newly added subpath support.
+ 
+#### CSV Compliance Export ([Enterprise Edition E20](https://about.mattermost.com/pricing))
+ - Extended compliance export feature with CSV format. See [documentation](https://docs.mattermost.com/administration/compliance-export.html) to learn more.
+
+### Improvements
+
+#### Web User Interface
+ - Added highlighting for Elasticsearch results.
+ - Renamed "Delete Channel" to "Archive Channel". Channels can be unarchived [from the commandline](https://docs.mattermost.com/administration/command-line-tools.html#mattermost-channel-restore).
+ - Added Channel Purpose as a searchable field in the "More Channels" menu.
+ 
+#### Administration
+ - Added the ability to reset user emails in **System Console > Users**.
+ - Server restart is no longer required to run the job server for the first time.
+ 
+#### Command Line Interface (CLI)
+ - Made the `permissions reset` CLI command able to reset all custom-role related data.
+ - When `permanent delete user` CLI command is used, all files uploaded by the user are now deleted as well.
+ - ``export`` CLI command was updated to support scheduling exports via `export schedule`, and to export files in Actiance XML and CSV formats.
+ - Running the CLI outside of the bin directory is now less error prone.
+
+#### Enterprise Edition E20
+ - Added experimental support for certificate-based authentication (CBA) to identify a user or a device before granting access to Mattermost. See [documentation](https://docs.mattermost.com/deployment/certificate-based-authentication.html) to learn more.
+
+### Bug Fixes
+
+ - Fixed an issue where users could not reply to push notifications on iOS.
+ - Fixed an issue with an incorrect system message after converting a public channel to private.
+ - Fixed an issue with being unable to add emoji reactions after expanding the message details sidebar.
+ - Fixed an issue where [rate limiting settings](https://docs.mattermost.com/administration/config-settings.html#rate-limiting) could not be edited in the System Console, and weren't displayed in the User Interface if configured via `config.json`.
+ - Fixed an issue where deleted users shown as "Someone" in the Favorite Channels section could not be removed.
+
+### Compatibility
+
+#### config.json
+
+Multiple setting options were added to `config.json`. Below is a list of the additions and their default values on install. The settings can be modified in `config.json`, or the System Console when available.
+
+#### Changes to Team Edition and Enterprise Edition:
+
+ - Under "ExperimentalSettings:" in ``config.json``:
+    - Added ``"ClientSideCertEnable": false,``, to enable client-side certification for your Mattermost server.
+    - Added ``"ClientSideCertCheck": "secondary"``, to control whether email and password are required following client-side certification.
+ - Under "ServiceSettings:" in ``config.json``:
+    - Added ``"ExperimentalLimitClientConfig": false``, to limit the number of config settings sent to users prior to login. Supported on mobile apps v1.10 and later.
+    - Added ``"EnableGifPicker": false,``, ``"GfycatApiKey": 2_KtH_W5,`` and ``"GfycatApiSecret": 3wLVZPiswc3DnaiaFoLkDvB4X0IV6CpMkj4tf2inJRsBY6-FnkT08zGmppWFgeof,`` to enable a built-in GIF integration with Gfycat.
+    - Added ``"EnableEmailInvitations": false``, to disable email invitations on the system.
+ - Under "SqlSettings:" in ``config.json``:
+    - Added ``"ConnMaxLifetimeMilliseconds": 3600000,``, to configure the maximum lifetime for a connection to the database.
+    
+### API Changes
+ 
+#### RESTful API v4 Changes
+
+ - A new ``matches`` field was added to ``POST teams/{team_id}/posts/search`` to return a list of matched terms within the post. This field will only be populated on servers running version v5.1 or greater with Elasticsearch enabled.
+
+### Known Issues
+
+ - Google login fails on the Classic mobile apps.
+ - User can receive a video call from another browser tab while already on a call.
+ - Jump link in search results does not always jump to display the expected post.
+ - Status may sometimes get stuck as away or offline in High Availability mode with IP Hash turned off.
+ - Searching stop words in quotes with Elasticsearch enabled returns more than just the searched terms.
+ - Searching with Elasticsearch enabled may not always highlight the searched terms.
+ - Team sidebar on desktop app does not update when channels have been read on mobile.
+ - Channel scroll position flickers while images and link previews load.
+ - Slack import through the CLI fails if email notifications are enabled.
+ - Push notifications don't always clear on iOS when running Mattermost in High Availability mode.
+ - CTRL/CMD+U shortcut to upload a file doesn’t work on Firefox.
+
+### Contributors
+
+[Alexgoodman7](https://github.com/Alexgoodman7), [amyblais](https://github.com/amyblais), [AndersonWebStudio](https://github.com/AndersonWebStudio), [asaadmahmood](https://github.com/asaadmahmood), [Brodan](https://github.com/Brodan), [cjohannsen81](https://github.com/cjohannsen81), [cometkim](https://github.com/cometkim). [comharris](https://github.com/comharris), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [csduarte](https://github.com/csduarte), [cvitter](https://github.com/cvitter), [dmeza](https://github.com/dmeza), [DSchalla](https://github.com/DSchalla), [enahum](https://github.com/enahum), [esethna](https://github.com/esethna), [evelikov](https://github.com/evelikov), [fbartels](https://github.com/fbartels), [greensteve](https://github.com/greensteve), [grundleborg](https://github.com/grundleborg), [hmhealey](https://github.com/hmhealey), [icelander](https://github.com/icelander), [it33](https://github.com/it33), [jasonblais](https://github.com/jasonblais), [jespino](https://github.com/jespino), [jkurian](https://github.com/jkurian), [jwilander](https://github.com/jwilander), [kaakaa](https://github.com/kaakaa), [kennethjeremyau](https://github.com/kennethjeremyau), [lfbrock](https://github.com/lfbrock), [lieut-data](https://github.com/lieut-data), [lindalumitchell](https://github.com/lindalumitchell), [lisakycho](https://github.com/lisakycho), [michaelgamble](https://github.com/michaelgamble), [mkraft](https://github.com/mkraft), [pichouk](https://github.com/pichouk), [Roy-Orbison](https://github.com/Roy-Orbison), [R-Wang97](https://github.com/R-Wang97), [saturninoabril](https://github.com/saturninoabril), [stanchan](https://github.com/stanchan), [sudheerDev](https://github.com/sudheerDev),[svelle](https://github.com/svelle), [tejasbubane](https://github.com/tejasbubane), [ThiefMaster](https://github.com/ThiefMaster), [wiersgallak](https://github.com/wiersgallak), [wildloop](https://github.com/wildloop), [yuya-oc](https://github.com/yuya-oc)
+
+## Release v5.0
+
+ - **v5.0.3, released 2018-08-07**
+   - Mattermost v5.0.3 contains a medium level security fix. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+ - **v5.0.2, released 2018-07-16**
+   - Mattermost v5.0.2 contains a high severity security fix. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+ - **v5.0.1, released 2018-07-09**
+   - Fixed an issue where large Global Relay exports could cause export jobs to fail completely. 
+ - **v5.0.0, released 2018-06-16**
+   - Original 5.0.0 release
+
+### Highlights
+
+#### Plugin Intercept
+ - Adds support for plugins to intercept posts prior to saving them into the database.
+ - Supports use cases such as auto-detecting and censoring restricted words, and auto-linking phrases. [Read our forum post to learn more](https://forum.mattermost.org/t/coming-soon-apiv4-mattermost-post-intercept/4982).
+ 
+#### Permissions Schemes
+ - System Scheme now sets the default permissions inherited system-wide by System Admins, Team Admins, Channel Admins and everyone else. 
+ - Added new Team Schemes to override the default permissions in specific teams for Team Admins, Channel Admins and all other team members.
+
+#### Increased Character Limit on Posts
+ - Increased character limit to 16,383 on new deployments to allow posting long messages and to allow better Markdown formatting, including tables.
+ - For existing deployments, read [how to migrate your system](https://docs.mattermost.com/administration/important-upgrade-notes.html) to support the increased character limit.
+ 
+#### Combined Join/Leave Messages
+ - System messages related to joining, leaving, adding and removing people from channels and teams are combined into a single message to save space in channels.
+
+### Improvements
+
+#### Web User Interface
+ - Added a feature to collapse image upload using a collapse icon or using the ``/collapse`` command.
+ - Added a whitelist for valid types of links when autolinking.
+ - Updated the styling of default team icons.
+ 
+#### Performance
+ - Fixed ``update_status`` cluster event being sent thousands of times on restart of app servers.
+
+#### Integrations
+ - Slash commands configured to receive a GET request now have the payload encoded in the query string instead of receiving it in the body of the request.
+ - Added ability for webhooks to actually be locked to a channel.
+ 
+#### Notifications
+ - Updated email notification subject line and contents for Group Messages.
+ - Updated the styling of push notifications.
+ 
+#### System Console
+ - Added a System Console setting to disable the preview mode banner when email notifications are disabled.
+ 
+#### Administration
+ - Added Password Requirements and Customer Branding to Team Edition.
+ - Moved Themes per team to Team Edition.
+ 
+#### Enterprise Edition
+ - Added ``LoginIdAttribute`` to allow LDAP users to change their login ID without losing their account.
+
+### Bug Fixes
+
+ - Fixed an issue where ``EnableUserCreation`` was set to `false` when not included in config.json.
+ - Fixed an issue where a public channel made private did not disappear automatically from clients not part of the channel.
+ - Fixed an issue where team icon did not get automatically saved when removed.
+ - Fixed an issue where Town Square channel disappeared from channel list for a non-admin users when "ExperimentalTownSquareIsReadOnly" `config.json` was set to `true` in config.json.
+ 
+### Compatibility
+
+ - For a list of important changes with Mattermost v5.0, please [see our Forum announcement](https://forum.mattermost.org/t/upcoming-changes-with-mattermost-v5-0/5119).
+
+#### Deprecated Features
+
+For a list of past and upcoming deprecated features, [see our website](https://about.mattermost.com/deprecated-features/).
+
+1. All API v3 endpoints have been removed. [See documentation](https://api.mattermost.com/#tag/schema) to learn more about how to migrate your integrations to API v4. [Ticket #8708](https://mattermost.atlassian.net/browse/MM-8708).
+2. `platform` binary has been renamed to mattermost for a clearer install and upgrade experience. **You should point your `systemd` service file at the new `mattermost` binary.** All command line tools, including the bulk loading tool and developer tools, have also been renamed from platform to mattermost. [Ticket #9985](https://mattermost.atlassian.net/browse/MM-9985).
+3. A Mattermost user setting to configure desktop notification duration in **Account Settings** > **Notifications** > **Desktop Notifications** has been removed.
+4. Slash commands configured to receive a GET request now have the payload encoded in the query string instead of receiving it in the body of the request, consistent with standard HTTP requests. Although unlikely, this could break custom slash commands that use GET requests incorrectly. [Ticket #10201](https://mattermost.atlassian.net/browse/MM-10201).
+5. A new `config.json` setting to whitelist types of protocols for auto-linking has been added. [Ticket #9547](https://mattermost.atlassian.net/browse/MM-9547).
+6. A new `config.json` setting to disable the [permanent APIv4 delete team parameter](https://api.mattermost.com/#tag/teams%2Fpaths%2F~1teams~1%7Bteam_id%7D%2Fput) has been added. The setting is off by default for all new and existing installs, except those deployed on GitLab Omnibus. A System Administrator can enable the API v4 endpoint from the config.json file. [Ticket #9916](https://mattermost.atlassian.net/browse/MM-9916).
+7. An unused `ExtraUpdateAt` field has been removed from the channel model. [Ticket #9739](https://mattermost.atlassian.net/browse/MM-9739).
+ 
+#### config.json
+
+Multiple setting options were added to `config.json`. Below is a list of the additions and their default values on install. The settings can be modified in `config.json`, or the System Console when available.
+
+#### Changes to Team Edition and Enterprise Edition:
+
+ - Under ``"ServiceSettings":`` in ``config.json``:
+   - Added ``"EnableAPITeamDeletion": false,`` to disable the permanent APIv4 delete team parameter.
+   - Added ``"ExperimentalEnableHardenedMode": false`` to enable a hardened mode for Mattermost that makes user experience trade-offs in the interest of security.
+ - Under ``"EmailSettings":`` in ``config.json``:
+   - Added ``"EnablePreviewModeBanner": true,`` to allow Preview Mode banner to be displayed so users are aware that email notifications are disabled.
+ - Under ``"ClusterSettings":`` in ``config.json``:
+   - Added ``"MaxIdleConns": 100,`` to add the maximum number of idle connections held open from one server to all others in the cluster.
+   - Added ``"MaxIdleConnsPerHost": 128,`` to add the maximum number of idle connections held open from one server to another server in the cluster.
+   - Added ``"IdleConnTimeoutMilliseconds": 90000`` to add the number of milliseconds to leave an idle connection open between servers in the cluster.
+ - Under ``"TeamSettings":`` in ``config.json``:
+   - Added ``"ExperimentalHideTownSquareinLHS": false,`` to hide Town Square in the left-hand sidebar if there are no unread messages in the channel.
+ - Under ``"DisplaySettings":`` in ``config.json``:
+   - Added ``"CustomUrlSchemes": [],``, to add a list of URL schemes that are used for autolinking in message text.
+ - Under ``"LdapSettings":`` in ``config.json``:
+   - Added ``"LoginIdAttribute": "",`` to add an attribute in the AD/LDAP server used to log in to Mattermost.
+   
+#### API Changes
+
+ - All APIv3 endpoints were removed.
+ - Improved file upload API to stream files instead of loading them entirely into memory.
+ - SAML login endpoints were moved out of API package.
+ - ``context.go`` was moved out of Api4 and into web.
+ - ``api4/handlers.go`` was created to create the API handlers using the Context and Handler from web.
+ - ``web/handlers.go`` was added to define the Handler struct, the base ServeHTTP function and a single web handler.
+ 
+#### WebSocket Changes
+
+ - Ping/pong and reconnection handling were added to Go WebSocket client.
+ - Support was added for WebSocket custom dialer.
+ - ``channel_converted`` WebSocket event was added, which is published team-wide whenever a channel is converted from public to private.
+
+### Known Issues
+
+ - [Image proxy](https://docs.mattermost.com/administration/image-proxy.html) cannot be saved in the System Console UI. Configure the settings in your `config.json` file instead.
+ - Google login fails on the Classic mobile apps.
+ - User can receive a video call from another browser tab while already on a call.
+ - Jump link in search results does not always jump to display the expected post.
+ - Status may sometimes get stuck as away or offline in High Availability mode with IP Hash turned off.
+ - Searching stop words in quotes with Elasticsearch enabled returns more than just the searched terms.
+ - Searching with Elasticsearch enabled may not always highlight the searched terms.
+ - Team sidebar on desktop app does not update when channels have been read on mobile.
+ - Channel scroll position flickers while images and link previews load.
+ - Slack import through the CLI fails if email notifications are enabled.
+ - Push notifications don't always clear on iOS when running Mattermost in High Availability mode.
+ - CTRL/CMD+U shortcut to upload a file doesn’t work on Firefox.
+
+### Contributors
+
+[aeomin](https://translate.mattermost.com/user/aeomin/), [amyblais](https://github.com/amyblais), [AndersonWebStudio](https://github.com/AndersonWebStudio), [asaadmahmood](https://github.com/asaadmahmood), [balasankarc](https://github.com/balasankarc), [chclaus](https://github.com/chclaus), [chikei](https://github.com/chikei), [comharris](https://github.com/comharris), [compilenix](https://github.com/compilenix), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [csduarte](https://github.com/csduarte), [cvitter](https://github.com/cvitter), [der-test](https://github.com/der-test), [dkadioglu](https://github.com/dkadioglu), [DSchalla](https://github.com/DSchalla), [enahum](https://github.com/enahum), [esethna](https://github.com/esethna), [fbartels](https://github.com/fbartels), [gnufede](https://github.com/gnufede), [grundleborg](https://github.com/grundleborg), [haraldkubota](https://github.com/haraldkubota), [hmhealey](https://github.com/hmhealey), [icelander](https://github.com/icelander), [it33](https://github.com/it33), [jasonblais](https://github.com/jasonblais), [jespino](https://github.com/jespino), [jordanbuchman](https://github.com/jordanbuchman), [jwilander](https://github.com/jwilander), [kaakaa](https://github.com/kaakaa), [kayazeren](https://github.com/kayazeren), [lfbrock](https://github.com/lfbrock), [lieut-data](https://github.com/lieut-data), [lindalumitchell](https://github.com/lindalumitchell), [lindy65](https://github.com/lindy65), [lisakycho](https://github.com/lisakycho), [meilon](https://github.com/meilon), [mkraft](https://github.com/mkraft), [mlongo4290](https://github.com/mlongo4290), [odontomachus](https://github.com/odontomachus), [pichouk](https://github.com/pichouk), [pjgrizel](https://github.com/pjgrizel), [rodcorsi](https://github.com/rodcorsi), [Roy-Orbison](https://github.com/Roy-Orbison), [ryoon](https://github.com/ryoon), [R-Wang97](https://github.com/R-Wang97), [saturninoabril](https://github.com/saturninoabril), [sudheerDev](https://github.com/sudheerDev), [thePanz](https://github.com/thepanz), [uturkdogan](https/github.com/uturkdogan), [wget](https://github.com/wget), [wiersgallak](https://github.com/wiersgallak), [yuya-oc](https://github.com/yuya-oc)  
+
+## Release v4.10
+
+ - **v4.10.4, released 2018-09-16**
+   - Mattermost v4.10.4 contains a high level security fix. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+ - **v4.10.3, released 2018-08-07**
+   - Mattermost v4.10.3 contains a medium level security fix. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+ - **v4.10.2, released 2018-07-16**
+   - Mattermost v4.10.2 contains a high severity security fix. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+ - **v4.10.1, released 2018-06-04**
+   - Mattermost v4.10.1 contains a moderate severity security fix. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+   - Fixed an issue where the Mattermost screen went blank when viewing "Manage Members" list while another user was added to the channel.
+   - Fixed an issue where [automatic replies](https://docs.mattermost.com/administration/config-settings.html#enable-automatic-replies-experimental) weren't properly posting or suppressing emails.
+   - Fixed an issue where a member's roles for a team wasn't properly deleted when the team was deleted via the API, causing crashing issues.
+ - **v4.10.0, released 2018-05-16**
+   - Original 4.10.0 release
+
+### Highlights
+
+#### Convert Public Channels to Private
+ - Team and System Admins can now convert a channel to private from the user interface. System Admins can also convert channels back to public [via the commandline](https://docs.mattermost.com/administration/command-line-tools.html#platform-channel-modify).
+
+#### Performance Improvements
+ - Decreased loading time by up to 90% for users with lots of direct and group message channels.
+
+#### Environment Variables Support in GitLab Omnibus
+ - Simplified Mattermost administration by supporting environment variables in GitLab Omnibus. See [documentation](https://docs.gitlab.com/omnibus/gitlab-mattermost/#upgrading-gitlab-mattermost-from-versions-prior-to-11-0) to learn more.
+
+### Improvements
+
+#### Web User Interface
+ - Removed support for transparent team icons to support any sidebar theme colors and added the ability to remove team icons.
+ - Added an experimental setting that users can use to set a custom message that will be automatically sent in response to Direct Messages.
+ - Added a loading animation for "Add Members" channel invite modal.
+ - Made SHIFT+UP switch keyboard focus to right-hand side if it's already open to the current thread.
+ - Removed an unnecessary WebRTC end user setting to avoid user errors and confusion.
+ - Added an on-hover effect for image link previews.
+ 
+ #### Plugins
+ - Added better plugin error handling and reporting.
+ 
+ #### Slash Commands
+ - Added ``/invite`` slash command to invite users to a channel.
+ - Improved slash command error message when payload has invalid JSON.
+ 
+ #### Administration
+ - Added structured logging to more easily review server logs.
+ - Users' client no longer refreshes after changing a System Console or ``config.json`` setting.
+ 
+ #### Command Line Interface (CLI)
+ - Added `/platform team list` command to list all teams on the server..
+
+#### Enterprise Edition E20
+ - Added cluster event types to [Performance Monitoring](https://docs.mattermost.com/deployment/metrics.html).
+
+### Bug Fixes
+
+ - Fixed an issue where focus with CTRL/CMD+SHIFT+L was always set to the right-hand side when reply thread was open.
+ - Fixed an issue where a user added to a channel wasn't immediately removed from other users' "Add Members" dialog.
+ - Fixed an issue where 'Copy Link' context menu option was partially hidden when right-clicking a team in team sidebar.
+ - Fixed an issue where a user could not log in to Mattermost when their login id ("authdata") failed to migrate properly during migration from LDAP to SAML.
+ - Fixed an issue where plugin configuration was not saved in the System Console.
+ - Removed duplicate indexes accidentally created on the ``Channels``, ``Emoji`` and ``OAuthAccessData`` tables.
+
+### Compatibility
+ 
+#### config.json
+
+Multiple setting options were added to `config.json`. Below is a list of the additions and their default values on install. The settings can be modified in `config.json`, or the System Console when available.
+
+#### Changes to Team Edition and Enterprise Edition:
+
+ - Under `"TeamSettings"` in `config.json`:
+   - Added ``"ExperimentalEnableAutomaticReplies": false,`` to allow users to set a custom message that will be automatically sent in response to Direct Messages.
+ - Under `"LogSettings"` in `config.json`:
+   - Removed ``FileFormat`` and added ``"FileJson": true,`` and ``"ConsoleJson": true,`` to allow logged events to be written as a machine readable JSON format instead of the be printed as plain text.
+
+#### API Changes
+ 
+##### RESTful API v4 Changes
+
+ - Support was added to RESTful API for sending ephemeral messages to users.
+ - An APIv4 endpoint of ``POST /channels/{channel_id}/convert`` was added to convert a channel from public to private and to restrict this setting to ``team_admin``.
+ - An APIv4 endpoint of ``DELETE /teams/{team_id}/image`` was added to remove team icon and restrict it to ``team_admin``.
+ 
+#### Database Changes
+
+**Users Table:**
+
+ - Migrates SAML `AuthData` to lowercase via `"UPDATE Users SET AuthData=LOWER(AuthData) WHERE AuthService = 'saml'"` query.
+
+**Channels Table:**
+
+ - Removed duplicate `Name_2` index. 
+
+**Emoji Table:**
+
+ - Removed duplicate `Name_2` index. 
+
+**OAuthAccessData Table:**
+
+ - Removed duplicate `ClientId_2` index. 
+
+#### Upcoming Deprecated Features in Mattermost v5.0
+
+The following deprecations are planned for the Mattermost v5.0 release, which is scheduled for summer/2018. This list is subject to change prior to the release.
+
+1. All API v3 endpoints will be removed. [See documentation](https://api.mattermost.com/#tag/schema) to learn more about how to migrate your integrations to API v4. [Ticket #8708](https://mattermost.atlassian.net/browse/MM-8708).
+2. `platform` binary will be renamed to mattermost for a clearer install and upgrade experience. All command line tools, including the bulk loading tool and developer tools, will also be renamed from platform to mattermost. [Ticket #9985](https://mattermost.atlassian.net/browse/MM-9985).
+3. A Mattermost user setting to configure desktop notification duration in **Account Settings** > **Notifications** > **Desktop Notifications** will be removed.
+4. Slash commands configured to receive a GET request will have the payload being encoded in the query string instead of receiving it in the body of the request, consistent with standard HTTP requests. Although unlikely, this could break custom slash commands that use GET requests incorrectly. [Ticket #10201](https://mattermost.atlassian.net/browse/MM-10201).
+5. A new `config.json` setting to whitelist types of protocols for auto-linking will be added. [Ticket #9547](https://mattermost.atlassian.net/browse/MM-9547).
+6. A new `config.json` setting to disable the [permanent APIv4 delete team parameter](https://api.mattermost.com/#tag/teams%2Fpaths%2F~1teams~1%7Bteam_id%7D%2Fput) will be added. The setting will be off by default for all new and existing installs, except those deployed on GitLab Omnibus. A System Administrator can enable the API v4 endpoint from the config.json file. [Ticket #9916](https://mattermost.atlassian.net/browse/MM-9916).
+7. An unused `ExtraUpdateAt` field will be removed from the channel model. [Ticket #9739](https://mattermost.atlassian.net/browse/MM-9739).
+
+### Known Issues
+
+ - Google login fails on the Classic mobile apps.
+ - User can receive a video call from another browser tab while already on a call.
+ - Jump link in search results does not always jump to display the expected post.
+ - Status may sometimes get stuck as away or offline in High Availability mode with IP Hash turned off.
+ - Searching stop words in quotes with Elasticsearch enabled returns more than just the searched terms.
+ - Searching with Elasticsearch enabled may not always highlight the searched terms.
+ - Team sidebar on desktop app does not update when channels have been read on mobile.
+ - Channel scroll position flickers while images and link previews load.
+ - Numbered lists can sometimes extend beyond the normal post area.
+ - Slack import through the CLI fails if email notifications are enabled.
+ - Push notifications don't always clear on iOS when running Mattermost in High Availability mode.
+ - CTRL/CMD+U shortcut to upload a file doesn’t work on Firefox.
+
+### Contributors
+[amyblais](https://github.com/amyblais), [AndersonWebStudio](https://github.com/AndersonWebStudio), [antoineHC](https://github.com/antoineHC), [asaadmahmood](https://github.com/asaadmahmood), [Autre31415](https://github.com/Autre31415), [cometkim](https://github.com/cometkim), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [csduarte](https://github.com/csduarte), [daanlevi](https://github.com/daanlevi), [DSchalla](https://github.com/DSchalla), [enahum](https://github.com/enahum), [esethna](https://github.com/esethna), [grundleborg](https://github.com/grundleborg), [guydemi](https://github.com/guydemi), [hmhealey](https://github.com/hmhealey), [icelander](https://github.com/icelander), [iri-dw](https://github.com/iri-dw), [it33](https://github.com/it33), [james-mm](https://github.com/james-mm), [jasonblais](https://github.com/jasonblais), [jespino](https://github.com/jespino), [jordanbuchman](https://github.com/jordanbuchman), [jwilander](https://github.com/jwilander), [kethinov](https://github.com/kethinov), [koxen](https://github.com/koxen), [lfbrock](https://github.com/lfbrock), [lieut-data](https://github.com/lieut-data), [lindalumitchell](https://github.com/lindalumitchell), [lindy65](https://github.com/lindy65), [lisakycho](https://github.com/lisakycho), [liusy182](https://github.com/liusy182), [Merlin2001](https://github.com/merlin2001), [michaeltaylor-kerauno](https://github.com/michaeltaylor-kerauno), [mkraft](https://github.com/mkraft), [n1aba](https://github.com/n1aba), [pichouk](https://github.com/pichouk), [saturninoabril](https://github.com/saturninoabril), [stanchan](https://github.com/stanchan), [sudheerDev](https://github.com/sudheerDev), [tejasbubane](https://github.com/tejasbubane), [timconner](https://github.com/timconner), [tomo667a](https://github.com/tomo667a), [yuya-oc](https://github.com/yuya-oc)
+
+## Release v4.9
+
+ - **v4.9.4, released 2018-06-04**
+   - Mattermost v4.9.4 contains a moderate severity security fix. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+ - **v4.9.3, released 2018-05-15**
+   - Fixed an issue where plugin configuration got corrupted upon saving the configuration via the System Console.
+ - **v4.9.2, released 2018-05-04**
+   - Fixed an issue with permissions migration when ``AllowEditPost`` was set to "Always".
+ - **v4.9.1, released 2018-04-27**
+   - Fixed an issue where System Console permissions settings displayed a false error when running High Availability mode.
+   - Fixed a race condition on loading roles in the System Console.
+   - Reverted a change causing significant performance degradation when loading posts.
+   - Fixed a performance issue causing significant initial load time for the Desktop application.
+ - **v4.9.0, released 2018-04-16**
+   - Original 4.9.0 release
+
+### Highlights
+
+#### Channel Mute
+ - Added a `/mute` command, meaning that when a channel is muted, desktop, push and email notifications are not sent for the channel.   
+ - Channel Mute is also accessible via Channel Notification Preferences. 
+ - A muted channel gets sorted at the bottom of the left-hand sidebar section.
+ 
+#### Teammate Name Display Setting
+ - Added the setting for rendering of at-mentions by the teammate name display back to the Account Settings.
+ 
+#### Team Icons
+ - Added support for team icons in the team sidebar.
+ 
+#### Global Relay (Beta) ([Enterprise Edition E20](https://about.mattermost.com/pricing/) Add-On)
+ - Added export support for Global Relay as a compliance solution. [Learn more here](https://about.mattermost.com/default-compliance-export-documentation).
+
+### Improvements
+
+#### Web User Interface
+ - Users can now set their timezone in **Account Settings > Timezone**.
+ - Cursor now returns to the reply thread input box after deleting a reply on the right-hand sidebar.
+
+#### Performance
+ - Decreased channel load time by optimizing database queries used to fetch threads and parent posts in a channel.
+ - Decreased load time of large channels with 5,000+ messages by up to 90% by optimizing many client functions related to rendering posts and threads.
+ - Changing properties other than Site URL in ``/general/logging`` section will now require a server restart before taking effect.
+ 
+#### Plugins (Beta)
+ - Plugins now have more flexibility to format text, emojis and Markdown.
+ - Added support for plugins to add actions to the sidebar dropdowns.
+ 
+#### Administration
+ - Added support for AWS Identity and Access Management (IAM) roles for Amazon S3 file storage.
+ - Added a "Test Connection" button to test Amazon S3 connection.
+
+#### Enterprise Edition
+ - When `ExperimentalTownSquareIsReadOnly` is set to `true`, non-admins can no longer react to messages, pin messages or update channel information.
+ - Added cache invalidation totals to [Performance Monitoring](https://docs.mattermost.com/deployment/metrics.html).
+
+### Bug Fixes
+
+ - Fixed server log 404 error messages "We couldn't get the emoji" for numeric emojis.
+ - Fixed an issue where cursor jumped to end of line when trying to edit text in the middle of search bar.
+ - Fixed an issue where a download link opened images in a new tab instead of downloading them.
+ - Fixed an issue where Direct Message channel with yourself did not show up in channel switcher.
+ - Fixed an issue where deleting one username from "add member to a channel" field deleted all names.
+ - Fixed an issue where View/Manage members should have been sorted by username, not online status.
+ - Fixed an issue where a non-system-admin should not see `Is Trusted` option on OAuth 2.0 integrations.
+ - Fixed an issue with being unable to click on pinned post, channel members, and so on with keyboard focus on search box.
+ - Fixed an issue where Mattermost only imported first user during Slack import.
+ - Fixed an issue where cleared search term reappeared after closing RHS.
+ - Fixed an issue where a thumbnail appeared larger than expected in center channel when posting an image while the right hand side was open.
+ - Fixed an issue with adding users to channels when the usernames contained periods.
+ - Fixed an issue with a JavaScript error when using CMD/CTRL-K keyboard shortcut to change channels.
+ - Fixed an issue with not being able to get past second page of `/admin_console/users`.
+ - Fixed an issue where ALT+UP/DOWN caused error in console and then stopped working.
+
+### Compatibility
+
+ - IE11 Compatibility View now shows an "Unsupported Browser" error page, [given it's not a supported version](https://docs.mattermost.com/install/requirements.html#pc-web-experience).
+
+#### Removed and Deprecated Features
+
+ - To improve the production use of Mattermost with Docker, the docker image is now running a as non-root user and listening on port 8000. Please read the [upgrade instructions](https://github.com/mattermost/mattermost-docker#upgrading-mattermost-to-49) for important changes to existing installations.
+
+- Several configuration settings have been migrated to roles in the database and changing their `config.json` values no longer takes effect. These permissions can still be modified by their respective System Console settings as before. The affected `config.json` settings are:
+   - RestrictPublicChannelManagement
+   - RestrictPrivateChannelManagement
+   - RestrictPublicChannelCreation
+   - RestrictPrivateChannelCreation
+   - RestrictPublicChannelDeletion
+   - RestrictPrivateChannelDeletion
+   - RestrictPrivateChannelManageMembers
+   - EnableTeamCreation
+   - EnableOnlyAdminIntegrations
+   - RestrictPostDelete
+   - AllowEditPost
+   - RestrictTeamInvite
+   - RestrictCustomEmojiCreation
+
+For a list of past and upcoming deprecated features, [see our website](https://about.mattermost.com/deprecated-features/).
+
+#### Upcoming Deprecated Features in Mattermost v5.0
+
+The following deprecations are planned for the Mattermost v5.0 release, which is scheduled for summer/2018. This list is subject to change prior to the release.
+
+1. All API v3 endpoints will be removed. [See documentation](https://api.mattermost.com/#tag/APIv3-Deprecation) to learn more about how to migrate your integrations to API v4. [Ticket #8708](https://mattermost.atlassian.net/browse/MM-8708).
+2. `platform` binary will be renamed to mattermost for a clearer install and upgrade experience. All command line tools, including the bulk loading tool and developer tools, will also be renamed from platform to mattermost. [Ticket #9985](https://mattermost.atlassian.net/browse/MM-9985).
+3. A new `config.json` setting to whitelist types of protocols for auto-linking will be added. [Ticket #9547](https://mattermost.atlassian.net/browse/MM-9547).
+4. A new `config.json` setting to disable the [permanent APIv4 delete team parameter](https://api.mattermost.com/#tag/teams%2Fpaths%2F~1teams~1%7Bteam_id%7D%2Fput) will be added. The setting will be off by default for all new and existing installs, except those deployed on GitLab Omnibus. A System Administrator can enable the API v4 endpoint from the config.json file. [Ticket #9916](https://mattermost.atlassian.net/browse/MM-9916).
+5. An unused `ExtraUpdateAt` field will be removed from the channel model. [Ticket #9739](https://mattermost.atlassian.net/browse/MM-9739).
+
+#### config.json
+
+Multiple setting options were added to `config.json`. Below is a list of the additions and their default values on install. The settings can be modified in `config.json`, or the System Console when available.
+
+#### Changes to Team Edition and Enterprise Edition:
+
+ - Under `MessageExportSettings` in `config.json`:
+     - Added `"CustomerType": "A9"`, to allow selecting the type of Global Relay customer account the user's organization has.
+     - Added `"EmailAddress": ""`, to allow selecting the email address the user's Global Relay server monitors for incoming compliance exports.
+ - Under ` "SamlSettings"` in `config.json`:
+     - Added `"ScopingIDPProviderId": ""`, to allow an authenticated user to skip the initial login page of their federated Azure AD server, and only require a password to log in.
+     - Added `"ScopingIDPName": ""`, to add the name associated with a user's Scoping Identity Provider ID.
+ - Under `DisplaySettings"` in `config.json`:
+     - Added `"ExperimentalTimezone": false`, to allow selecting the timezone used for timestamps in the user interface and email notifications.
+
+#### API Changes
+
+ - It is required that any new integrations use API v4 endpoints. For more details, and for a complete list of available endpoints, see [https://api.mattermost.com/](https://api.mattermost.com/).
+ - All API v3 endpoints have been deprecated and are scheduled for removal in Mattermost v5.0.
+
+#### Database Changes
+
+**Users Table:**
+
+ - Added `Timezone` column.
+ 
+**Teams Table:**
+
+ - Added `LastTeamIconUpdate` column.
+
+**Channels Table:**
+
+ - Removed `idx_channels_displayname` index.
+
+### Known Issues
+ - Google login fails on the Classic mobile apps.
+ - User can receive a video call from another browser tab while already on a call.
+ - Jump link in search results does not always jump to display the expected post.
+ - Status may sometimes get stuck as away or offline in High Availability mode with IP Hash turned off.
+ - Searching stop words in quotes with Elasticsearch enabled returns more than just the searched terms.
+ - Searching with Elasticsearch enabled may not always highlight the searched terms.
+ - Team sidebar on desktop app does not update when channels have been read on mobile.
+ - Channel scroll position flickers while images and link previews load.
+ - Numbered lists can sometimes extend beyond the normal post area.
+ - Slack import through the CLI fails if email notifications are enabled.
+ - Push notifications don't always clear on iOS when running Mattermost in High Availability mode.
+ - CTRL/CMD+U shortcut to upload a file doesn’t work on Firefox.
+
+### Contributors
+
+[amyblais](https://github.com/amyblais), [AndersonWebStudio](https://github.com/AndersonWebStudio), [asaadmahmood](https://github.com/asaadmahmood), [ccbrown](https://github.com/ccbrown), [chclaus](https://github.com/chclaus), [chumbalum](https://github.com/chumbalum), [cjohannsen81](https://github.com/cjohannsen81), [CoolMoeDee](https://github.com/CoolMoeDee), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [csduarte](https://github.com/csduarte), [dmeza](https://github.com/dmeza), [enahum](https://github.com/enahum), [esethna](https://github.com/esethna), [gajananpp](https://github.com/gajananpp), [GitHubJasper](https://github.com/GitHubJasper), [gnufede](https://github.com/gnufede), [grundleborg](https://github.com/grundleborg), [hmhealey](https://github.com/hmhealey), [icelander](https://github.com/icelander), [it33](https://github.com/it33), [james-mm](https://github.com/james-mm), [jasonblais](https://github.com/jasonblais), [jespino](https://github.com/jespino), [jwilander](https://github.com/jwilander), [kaakaa](https://github.com/kaakaa), [koxen](https://github.com/koxen), [letsila](https://github.com/letsila), [lieut-data](https://github.com/lieut-data), [lindalumitchell](https://github.com/lindalumitchell), [lindy65](https://github.com/lindy65), [mkraft](https://github.com/mkraft), [moonmeister](https://github.com/moonmeister), [MusikPolice](https://github.com/MusikPolice), [panditsavitags](https://github.com/panditsavitags), [philippe-granet](https://github.com/philippe-granet), [pichouk](https://github.com/pichouk), [qichengzx](https://github.com/qichengzx), [Rudloff](https://github.com/Rudloff), [R-Wang97](https://github.com/R-Wang97), [saturninoabril](https://github.com/saturninoabril), [stanchan](https://github.com/stanchan), [stephenkiers](https://github.com/stephenkiers), [sudheerDev](https://github.com/sudheerDev), [svelle](https://github.com/svelle), [tejasbubane](https://github.com/tejasbubane), [thePanz](https://github.com/thePanz), [timconner](https://github.com/timconner), [tomo667a](https://github.com/tomo667a), [Vorlif](https://github.com/Vorlif), [yuya-oc](https://github.com/yuya-oc)
+
+## Release v4.8
+
+ - **v4.8.2, released 2018-06-04**
+   - Mattermost v4.8.2 contains a moderate severity security fix. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+ - **v4.8.1, released 2018-04-09**
+   - Mattermost v4.8.1 contains multiple security fixes ranging from low to high severity. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+   - Fixed a performance issue by removing the `DisplayName` index on the Channels table.
+ - **v4.8.0, released 2018-03-16**
+   - Original 4.8.0 release
+
+### Security Update
+
+- Mattermost v4.8.0 contains multiple security fixes ranging from low to high severity. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+
+### Highlights
+
+#### Enhanced compatibility with CloudFront
+
+ - Added support for configuring CloudFront to host Mattermost's static assets.
+ - Allows for improved caching performance and shorter load times for those members of your team geographically distributed throughout the world.
+
+#### SAML Migration Command  ([Enterprise Edition E20](https://about.mattermost.com/pricing/))
+
+ - Added a CLI command to easily migrate users to SAML.
+
+### Improvements
+
+#### Web User Interface
+ - Added a web app build hash to About Mattermost dialog to tell what version of the web app is being used.
+ - Switched search bar to a button in tablet view, to increase how much space is available in the channel header.
+ 
+#### Performance
+ - Reduced load times by optimizing database queries and WebSocket events destined for a single user.
+ - Created an iOS endpoint that enables users to upload files larger than 20MB.
+ - Improved caching of `getRootPosts` call.
+
+#### 508 Compliance
+ - Added alt attribute to profile pictures.
+
+#### Integrations
+ - Updated incoming webhooks to accept multipart/form-data content type such as that supplied by `curl -F`.
+
+#### Notifications
+ - A system message is now posted when a channel is moved between teams by the CLI command.
+
+#### Authentication
+ - Reduced OAuth SSO login errors by falling back to a constructed URL if Site URL is blank.
+
+#### System Console
+ - Removed plugin upload setting from System Console UI and prevented switching the setting from the API.
+ - Added paging to system console log viewer and set default value of `per_paging` for logs to 1000.
+ 
+### Bug Fixes
+ - Fixed an issue where sidebar unreads text setting was ignored in custom theme.
+ - Fixed an issue where emoji picker had an empty line at the bottom of the list.
+ - Fixed an issue with Markdown help wrapping on a second line in Edit Message dialog.
+ - Fixed an issue where after leaving last team the "Logout" link did nothing.
+ - Fixed an issue where focus was sometimes wrong on delete post modal.
+ - Fixed an issue where the bulk import tool didn't force Town Square membership.
+ - Fixed duplicate calls of the "view" request when switching channels.
+ - Fixed an issue where channel name was included in push notifications if someone posted only files with Push Notification Contents set to not include channel name.
+ - Fixed an issue where attempting to preview an attached document failed to finish "loading" if the file extension didn't match the actual file type.
+ - Fixed an issue where focus was not set to input box after replying to a message in Classic Mobile App.
+ - Fixed an issue where a username such as "user.name" gets a highlight only on "name" when @-icon is clicked.
+ - Fixed an issue where the "More Unreads Above" indicator didn't always work.
+ - Fixed an issue where IE11 posted placeholder from hidden textbox.
+ - Fixed an issue where last channel was not remembered after refresh when switching teams.
+ - Fixed an issue with no auto-focusing into input text when attaching a file in Classic Mobile App.
+ - Fixed an issue with not being able to type with composed characters (e.g. CJK) in View Team Members modal and channel switcher.
+ - Fixed an issue where insecure images were loaded by sending client before proxying.
+ - Fixed an issue with sandboxing support for CentOS and Bosh.
+ - Fixed an issue where JIRA plugin posts were not properly truncated.
+ - Fixed an issue where tall/wide emojis appeared stretched in emoji picker.
+ - Fixed an issue where web app could not be built if not in a git repository.
+ - Fixed an issue where jumping to a search result did not always load the context posts.
+ - Fixed an issue where edit box changed size on switching to markdown preview in some languages.
+
+### Compatibility
+
+#### Removed and Deprecated Features
+
+ - All API v3 endpoints have been deprecated and are scheduled for removal in Mattermost v5.0.
+ - An unused `ExtraUpdateAt` field will be removed from the channel model in Mattermost v5.0.
+ - As Mattermost moves to a role-based permissions system in v4.9, a number of configuration settings will be migrated to roles in the database and changing their `config.json` values will no longer take effect. These permissions can still be modified by their respective System Console settings. The `config.json` settings to be migrated are:
+   - RestrictPublicChannelManagement
+   - RestrictPrivateChannelManagement
+   - RestrictPublicChannelCreation
+   - RestrictPrivateChannelCreation
+   - RestrictPublicChannelDeletion
+   - RestrictPrivateChannelDeletion
+   - RestrictPrivateChannelManageMembers
+   - EnableTeamCreation
+   - EnableOnlyAdminIntegrations
+   - RestrictPostDelete
+   - AllowEditPost
+   - RestrictTeamInvite
+   - RestrictCustomEmojiCreation
+
+For a list of past and upcoming deprecated features, [see our website](https://about.mattermost.com/deprecated-features/).
+
+#### config.json
+
+Multiple setting options were added to `config.json`. Below is a list of the additions and their default values on install. The settings can be modified in `config.json`, or the System Console when available.
+
+#### Changes to Team Edition and Enterprise Edition:
+
+ - Under `ServiceSettings` in `config.json`:
+    - Added `AllowCookiesForSubdomains`, to ensure that the domain parameter is set for cookies, which allows the browser to send the cookies to subdomains as well.
+    - Added `WebsocketURL`, which allows the server to instruct clients where they should try to connect WebSockets to.
+    - Changed `EnableAPIV3` setting to `false` for new installs, as all API v3 endpoints have been deprecated and are scheduled for removal in Mattermost v5.0.
+
+### API Changes
+
+ - It is required that any new integrations use API v4 endpoints. For more details, and for a complete list of available endpoints, see [https://api.mattermost.com/](https://api.mattermost.com/).
+ - All API v3 endpoints have been deprecated and are scheduled for removal in Mattermost v5.0.
+ 
+#### RESTful API v4 Changes
+
+ - Updated `POST /files` to support requests with only the `channel_id` and `filename` defined as query parameters with the contents of a single file in the body of the request.
+
+### Known Issues
+
+ - Google login fails on the Classic mobile apps.
+ - User can receive a video call from another browser tab while already on a call.
+ - Jump link in search results does not always jump to display the expected post.
+ - Status may sometimes get stuck as away or offline in High Availability mode with IP Hash turned off.
+ - Searching stop words in quotes with Elasticsearch enabled returns more than just the searched terms.
+ - Searching with Elasticsearch enabled may not always highlight the searched terms.
+ - Team sidebar on desktop app does not update when channels have been read on mobile.
+ - Channel scroll position flickers while images and link previews load.
+ - Numbered lists can sometimes extend beyond the normal post area.
+ - Slack import through the CLI fails if email notifications are enabled.
+ - Push notifications don't always clear on iOS when running Mattermost in High Availability mode.
+ - CTRL/CMD+U shortcut to upload a file doesn’t work on Firefox.
+
+### Contributors
+
+[Alexgoodman7](https://github.com/Alexgoodman7), [amyblais](https://github.com/amyblais), [AndersonWebStudio](https://github.com/AndersonWebStudio), [andruwa13](https://github.com/andruwa13), [asaadmahmood](https://github.com/asaadmahmood), [avasconcelos114](https://github.com/avasconcelos114), [billybrown1](https://github.com/billybrown1), [ccbrown](https://github.com/ccbrown), [chumbalum](https://github.com/chumbalum), [cometkim](https://github.com/cometkim), [CoolTomatos](https://github.com/CoolTomatos), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [csduarte](https://github.com/csduarte), [enahum](https://github.com/enahum), [esethna](https://github.com/esethna), [GitHubJasper](https://github.com/GitHubJasper), [gnufede](https://github.com/gnufede), [grundleborg](https://github.com/grundleborg), [hmhealey](https://github.com/hmhealey), [icelander](https://github.com/icelander), [it33](https://github.com/it33), [james-mm](https://github.com/james-mm), [jasonblais](https://github.com/jasonblais), [jespino](https://github.com/jespino), [jwilander](https://github.com/jwilander), [kaakaa](https://github.com/kaakaa), [kemenaran](https://github.com/kemenaran), [koxen](https://github.com/koxen), [leblanc-simon](https://github.com/leblanc-simon), [letsila](https://github.com/letsila), [lfbrock](https://github.com/lfbrock), [lieut-data](https://github.com/lieut-data), [lindalumitchell](https://github.com/lindalumitchell), [lindy65](https://github.com/lindy65), [lip-d](https://github.com/lip-d), [liusy182](https://github.com/liusy182), [lmikaellukerad](https://github.com/lmikaellukerad), [mkraft](https://github.com/mkraft), [moonmeister](https://github.com/moonmeister), [MusikPolice](https://github.com/MusikPolice), [pichouk](https://github.com/pichouk), [rqtaylor](https://github.com/rqtaylor), [saturninoabril](https://github.com/saturninoabril), [stanchan](https://github.com/stanchan), [stephenkiers](https://github.com/stephenkiers), [tejasbubane](https://github.com/tejasbubane), [thePanz](https://github.com/thePanz), [torgeirl](https://github.com/torgeirl), [Vaelor](https://github.com/Vaelor), [vordimous](https://github.com/vordimous), [XinyueWang94](https://github.com/XinyueWang94), [yuya-oc](https://github.com/yuya-oc) 
+
+## Release v4.7
+
+ - **v4.7.4, released 2018-04-09**
+   - Mattermost v4.7.4 contains multiple security fixes ranging from low to high severity. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+   - Fixed a performance issue by removing the `DisplayName` index on the Channels table.
+ - **v4.7.3, released 2018-03-09**
+   - Mattermost v4.7.3 contains a moderate severity security fix. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+ - **v4.7.2, released 2018-02-23**
+   - Fixed an issue where message attachments didn’t render emojis.
+   - Fixed an issue where channels with a name 26 characters long were inaccessible with a 404 error.
+   - Fixed “We couldn’t get the emoji” server log messages.
+   - Fixed an issue with being unable to switch to direct or group message channels via CTRL/CMD+K channel switcher or via “msg/groupmsg” slash commands.
+   - Fixed an issue where clicking on "Send Message" from a user's profile popover redirected to Town Square instead of the user's direct message channel.
+   - Fixed an issue where links to direct and group message channels opened in a new tab.
+ - **v4.7.1, released 2018-02-20**
+   - Fixed an issue with [compliance export](https://docs.mattermost.com/administration/compliance-export.html) outputs, resulting in `Failed to update ChannelMemberHistory table` error  messages in the log when a user joins or leaves a channel. Issue updates [posted here](https://mattermost.atlassian.net/browse/MM-9633).
+ - **v4.7.0, released 2018-02-16**
+   - Original 4.7.0 release
+
+### Security Update
+
+- Mattermost v4.7.0 contains multiple security fixes ranging from low to high severity. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+
+### Highlights
+
+#### Client-Side Performance
+
+ - Added user-based rate limiting, in addition to rate limiting API access by IP address.
+ - Decreased page load time by loading custom emojis asynchronously rather than all on first page load.
+ - Optimized channel autocomplete (~) query by returning client-side results immediately.
+ - Decreased the size of most image assets by more than 25% by running `pngquant` to remove unnecessary metadata from PNGs.
+
+#### Image Proxy Support
+
+ - Image proxy servers increase performance through a layer of caching, and provide custom options to resize images.
+ - Three new configuration keys, `ImageProxyType`, `ImageProxyURL`, `ImageProxyOptions`, ensure that posts served to the client will have their markdown modified such that all images are loaded through a proxy.
+
+#### Updated Image Thumbnails
+
+ - Updated the appearance of image thumbnails, so that single thumbnails will now expand to a larger preview without clicking the image to open the preview window.
+
+#### Experimental Setting for Unreads Sidebar Section
+
+ - Added an experimental setting to group unread channels in the channel sidebar. The setting [must first be enabled by the System Admin](https://docs.mattermost.com/administration/config-settings.html#group-unread-channels-experimental), by replacing `disabled` with either `default_off` or `default_on` in config.json.
+
+### Improvements
+
+#### Web User Interface
+ - Added a status icon in the channel member list and sorted it by user status.
+ - Added ability to preview images found in link previews.
+ - Added a `Copy Link` option for sidebar channels in the Desktop App.
+ - Added focus on the text box after hitting "Edit" on Account Settings options.
+ - Improved formatting of quotes in the channel header.
+ - Added a date separator for search results.
+ - Channel names are now sorted correctly in the left-hand-side by taking non-alphabetical characters into consideration (e.g. brackets, hash sign, etc.)
+ 
+ #### Integrations
+ - Added username and profile picture to incoming webhook set up pages.
+ - Added support for Slack attachments in outgoing webhook responses.
+
+#### Emoji Picker
+ - Added the ability to navigate emoji picker with the keyboard.
+ - Added paging and search of custom emojis to webapp emoji picker.
+
+#### Channels
+ - Users are directed to the last channel they viewed in a team when switching to that team.
+ - Changed URLs of Direct Messages to use the form of `https://servername.com/messages/@username`, letting users open a direct message with each other via URL.
+ 
+#### Notifications
+ - Added a system message when a team is changed from public to private.
+
+#### Plugins (Beta)
+ - Zoom plugin now supports on-premise Zoom servers.
+
+#### Enterprise Edition
+- Increased max length of `User.Position` field to 128 characters to meet LDAP max length.
+- Increased OAuth state parameter limit. Some systems may send a state longer than 128 characters.
+
+### Bug Fixes
+ - Fixed an issue where OAuth account creation error page was unformatted.
+ - Fixed tab and alt-tab keyboard navigation for links on sign-in page.
+ - Fixed an issue where plugin slash commands didn't override username or icon.
+ - Fixed an issue where pagination for team members modal showed a next button when there are no more users to show.
+ - Fixed an issue where at-channel in `/header` should not trigger confirmation modal.
+ - Fixed an issue where auto-generated SAML Service provider login URL had two slashes instead of one.
+ - Fixed an issue where no unread mention appeared on non-mobile platform after receiving push notification.
+ - Fixed an issue where the text box was hidden by the keyboard when replying to a post in mobile view.
+ - Fixed username autocomplete not working with mixed cases.
+ - Fixed not being able to type Korean quickly in some dialogs.
+ - Fixed an issue where notification preference settings didn't respect case sensitivity for mention highlighting.
+ - Fixed where, after an ephemeral message, couldn't use `+:emoji:` to react to the previous message.
+ - Fixed Mattermost not loading on Firefox if the `media.peerconnection.enabled` setting in Firefox is set to false.
+ - Fixed login screen sometimes flashing before Mattermost server loads.
+ - Fixed an issue where bot messages from the Zoom plugin ignored the Zoom API URL field for on-prem Zoom servers.
+ - Disabled pull-to-refresh feature on Android (Chrome) to prevent unwanted page refresh.
+ - Fixed an issue where clicking `Save` in `Rename Channel` modal without changes did nothing.
+ - Fixed emoji picker search being case-sensitive.
+ - Fixed timestamp not being clickable in desktop mobile view.
+ - Fixed an issue where deleting a team via the API broke the web user interface.
+ 
+### Compatibility
+
+#### Removed and Deprecated Features
+
+- All API v3 endpoints have been deprecated, and scheduled for removal in Mattermost v5.0.
+- The `mentionKeys` prop in post type plugins is now removed to fix case sensitive mention highlighting. Plugins can retrieve the `mentionKeys` prop from the store as needed.
+- The permanent query parameter of the DELETE `/teams/{team_id}` APIv4 endpoint is not removed as previously announced, given customer and community feedback.
+- As Mattermost moves to a role based permissions system in v4.8, a number of configuration settings will be migrated to roles in the database, and changing their `config.json` values will no longer take effect. These permissions can still be modified by their respective System Console settings. The `config.json` settings to be migrated are:
+  - RestrictPublicChannelManagement
+  - RestrictPrivateChannelManagement
+  - RestrictPublicChannelCreation
+  - RestrictPrivateChannelCreation
+  - RestrictPublicChannelDeletion
+  - RestrictPrivateChannelDeletion
+  - RestrictPrivateChannelManageMembers
+  - EnableTeamCreation
+  - EnableOnlyAdminIntegrations
+  - RestrictPostDelete
+  - AllowEditPost
+  - RestrictTeamInvite
+
+For a list of past and upcoming deprecated features, [see our website](https://about.mattermost.com/deprecated-features/).
+
+#### config.json
+
+Multiple setting options were added to `config.json`. Below is a list of the additions and their default values on install. The settings can be modified in `config.json`, or the System Console when available.
+
+#### Changes to Team Edition and Enterprise Edition:
+
+ - Under `ServiceSettings` in `config.json`:
+    - Added `"ImageProxyType": ""`, `"ImageProxyOptions": ""`, and `"ImageProxyURL": ""` to ensure posts served to the client will have their markdown modified such that all images are loaded through a proxy.
+    - Added `"ExperimentalGroupUnreadChannels": disabled` to show an unread channel section in the webapp sidebar. The setting must first be enabled by the System Admin, by replacing `disabled` with either `default_off` or `default_on`.
+    - Added `"ExperimentalEnableDefaultChannelLeaveJoinMessages": true` that allows disabling of leave/join messages in the default channel, usually Town Square.
+ - Under `RateLimitingSettings` in `config.json`:
+    - Added `"VaryByUser": false`, a user-based rate limiting, to rate limit on token and on userID.
+
+### API Changes
+
+ - It is required that any new integrations use API v4 endpoints. For more details, and for a complete list of available endpoints, see [https://api.mattermost.com/](https://api.mattermost.com/).
+ - All API v3 endpoints have been deprecated, and scheduled for removal in Mattermost v5.0.
+
+#### RESTful API v4 Changes
+
+ - Added `GetChannelByName` and `GetTeamByName` to auto lowercase team and channel names in API requests. This ensures that the channel name is automatically lowercased for endpoints taking team or channel names as URL parameters.
+ - Added `POST /emoji/search`, `GET /emojis/name/{emoji_name}`, and `GET /emoji/autocomplete` to add consistency with user search/autocomplete endpoints. These API endpoints ensure that the benefits of `GET` for important performance related actions such as autocompleting are included.
+ - Added `/users/tokens/search` to allow System Admin to be able to find, manage and revoke personal access tokens as needed. This endpoint gets all tokens for all users if one has the `manage_system` permission.
+
+### WebSocket Event Changes
+
+ - Added `delete_team` web socket event to notify client whenever a team is deleted (e.g. via API call).
+ 
+### Database Changes
+
+**Users Table:**
+
+ - Increased size of `Position` field from 35 to 128 characters.
+
+**OAuthAuthData Table:**
+
+ - Increased size of `State` field from 128 to 1024 characters.
+
+**ChannelMemberHistory Table:**
+
+ - Removed `Email` column.
+ - Removed `Username` column.
+
+### Known Issues
+
+- Google login fails on the Classic mobile apps.
+- User can receive a video call from another browser tab while already on a call.
+- Jump link in search results does not always jump to display the expected post.
+- Status may sometimes get stuck as away or offline in High Availability mode with IP Hash turned off.
+- Searching stop words in quotes with Elasticsearch enabled returns more than just the searched terms.
+- Searching with Elasticsearch enabled may not always highlight the searched terms.
+- Team sidebar on desktop app does not update when channels have been read on mobile.
+- Channel scroll position flickers while images and link previews load.
+- CTRL/CMD+U shortcut to upload a file doesn't work on Firefox.
+- Numbered lists can sometimes extend beyond the normal post area.
+- Slack import through the CLI fails if email notifications are enabled.
+- Push notifications don't always clear on iOS when running Mattermost in High Availability mode.
+- `[WARN] plugin sandboxing is not supported. plugins will run with the same access level as the server` log message is created when sandboxing isn't enabled for plugins. If you don't use plugins, you can ignore this message. If you have plugins enabled, [learn how to enable sandboxing](https://developers.mattermost.com/extend/plugins/security/#sandboxing).
+
+### Contributors
+
+[amyblais](https://github.com/amyblais), [AndersonWebStudio](https://github.com/AndersonWebStudio), [andruwa13](https://github.com/andruwa13), [asaadmahmood](https://github.com/asaadmahmood), [bbodenmiller](https://github.com/bbodenmiller), [Brunzer](https://github.com/Brunzer), [ccbrown](https://github.com/ccbrown), [chclaus](https://github.com/chclaus), [cherniavskii](https://github.com/cherniavskii), [CometKim](https://github.com/CometKim), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [csduarte](https://github.com/csduarte), [cvitter](https://github.com/cvitter), [darkman](https://github.com/darkman), [der-test](https://github.com/der-test), [dlahn](https://github.com/dlahn), [enahum](https://github.com/enahum), [esethna](https://github.com/esethna), [fermulator](https://github.com/fermulator), [gig177](https://github.com/gig177), [grundleborg](https://github.com/grundleborg), [Hanzei](https://github.com/Hanzei), [hmhealey](https://github.com/hmhealey), [it33](https://github.com/it33), [james-mm](https://github.com/james-mm), [jarredwitt](https://github.com/jarredwitt), [jasonblais](https://github.com/jasonblais), [jespino](https://github.com/jespino), [jwilander](https://github.com/jwilander), [kaakaa](https://github.com/kaakaa), [kemenaran](https://github.com/kemenaran), [knechtionscoding](https://github.com/knechtionscoding), [laginha87](https://github.com/laginha87), [lasley](https://github.com/lasley), [letsila](https://github.com/letsila), [lfbrock](https://github.com/lfbrock), [lieut-data](https://github.com/lieut-data), [lindalumitchell](https://github.com/lindalumitchell), [lindy65](https://github.com/lindy65), [liusy182](https://github.com/liusy182), [Matterchen](https://github.com/Matterchen), [mkraft](https://github.com/mkraft), [MusikPolice](https://github.com/MusikPolice), [phuihock](https://github.com/phuihock), [pichouk](https://github.com/pichouk), [Rohlik](https://github.com/Rohlik), [R-Wang97](https://github.com/R-Wang97), [santos22](https://github.com/santos22), [saturninoabril](https://github.com/saturninoabril), [stephenkiers](https://github.com/stephenkiers), [sudheerDev](https://github.com/sudheerDev), [tayre](https://github.com/tayre), [tejasbubane](https://github.com/tejasbubane), [tkbky](https://github.com/tkbky), [Tristramg](https://github.com/Tristramg), [ulm0](https://github.com/ulm0), [watadarkstar](https://github.com/watadarkstar), [xuxip](https://github.com/xuxip), [yeoji](https://github.com/yeoji), [yuya-oc](https://github.com/yuya-oc)
+
+## Release v4.6
+
+ - **v4.6.3, release date 2018-04-09**
+   - Mattermost v4.6.3 contains a low severity security fix. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+ - **v4.6.2, release date 2018-02-23**
+   - Mattermost v4.6.2 contains multiple security fixes ranging from low to high severity. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+ - **v4.6.1, release date 2018-01-30**
+   - Fixed an issue where Let's Encrypt certificates were broken on Mattermost servers. The cache will be deleted upon upgrade so your certificate will be immediately renewed. Moreover, port 80 must be forwarded through a firewall, with [Forward80To443](https://docs.mattermost.com/administration/config-settings.html#forward-port-80-to-443) `config.json` setting set to `true`, to complete the Let's Encrypt certification.
+ - **v4.6.0, released 2018-01-16**
+   - Original 4.6.0 release
+
+### Highlights
+
+#### Client-Side Performance
+
+- Decreased channel switching time up to 45% by reducing post mounting time.
+- Decreased up to 85% of the memory retained following a channel switch by fixing memory leaks of the `post_time.jsx` component.
+- Decreased size of the most used icons and logos by 70-80% by running `pngquant` to remove unnecessary metadata from PNGs.
+
+### Improvements
+
+#### Web User Interface
+
+- Added a loading indicator while pinned posts and flagged posts lists are loading.
+- Added a loading indicator to MFA sign in button.
+- Added a tooltip for the '+' button when adding emoji reactions.
+- Channel switcher (CTRL/CMD+K) now filters by usernames, full names and nicknames.
+- Channel links are now rendered in the channel header.
+- File names are now shown in attachment previews.
+
+#### Plugins (Beta)
+
+- Plugins now support slash commands.
+
+#### Notifications
+
+- Updated default notification settings for new accounts to provide a better onboarding experience. Each of these can be configured in Account Settings. In particular, the updated default settings include:
+   - Desktop notifications only sent for mentions and direct messages.
+   - Mobile push notifications only sent when the user is away or offline, not when online.
+   - Mentions of the user's first name doesn't trigger mentions.
+
+#### 508 Compliance
+
+- Default language is now declared in HTML for Mattermost webpages.
+- Position of status indicators and reply icons updated when no CSS is rendered.
+- Use programmatically identifiable headings for team and channel name.
+
+#### Administration
+
+- Incoming webhook display name is now included in the post.Props field for better auditing.
+- System Admins can now reset their own password from the System Console users list.
+
+### Bug Fixes
+
+- Username updates are now immediately visible across all browser tabs.
+- Server logs no longer contain info messages about initializing plugins when plugins are disabled.
+- Fixed Mattermost not loading on Firefox v52.
+- Fixed issues with user at-mention autocomplete when using Tab multiple times.
+- Fixed an issue where typing an emoji reaction didn't add it to recently used emojis list.
+- OAuth and SAML users can now be deactivated from the Mattermost System Console, assuming they are also deactivated in the SSO provider.
+- Fixed email address validation for Microsoft Outlook formatted email addresses.
+- Fixed an issue where posts sometimes didn't send on iOS Classic app.
+- Team name can no longer be edited to be only one character long.
+- Editing a message to remove all text no longer deletes the message if it contains a file attachment.
+- Fixed an issue where searching for a channel using the second or third word in the name didn't work.
+- Other users no longer see deleted GIF previews in reply threads.
+- Fixed an issue where channels with Japanese or Cyrillic characters couldn't be created.
+- Fixed timestamp minute display for Zoom plugins.
+- Fixed an issue where page would load infinitely when trying to join a team with maximum capacity.
+- Fixed an issue where channel notification preferences reverted to defaults after updating preferences in one of the channels.
+
+### Compatibility
+
+#### Removed and Deprecated Features
+
+- All API v3 endpoints are now deprecated, and scheduled for removal in Mattermost v5.0.
+- The permanent query parameter of the DELETE `/teams/{team_id}` APIv4 endpoint for permanently deleting a team is scheduled for removal in Mattermost v4.7.
+
+For a list of past and upcoming deprecated features, [see our website](https://about.mattermost.com/deprecated-features/).
+
+#### config.json
+
+Multiple setting options were added to `config.json`. Below is a list of the additions and their default values on install. The settings can be modified in `config.json`, or the System Console when available.
+
+**Changes to Team Edition and Enterprise Edition**:
+
+- Under `ServiceSettings` in `config.json`:
+  - Added `"EnableTutorial": true` to control whether tutorial is shown to end users after account creation. This setting is experimental and may be replaced or removed in a future release.
+- Under `TeamSettings` in `config.json`:
+  - Added `"ExperimentalPrimaryTeam": ""` to set the primary team of the server. This setting is experimental and may be replaced or removed in a future release.
+- Under `EmailSettings` in `config.json`:
+  - Added `"LoginButtonColor": ""`, `"LoginButtonBorderColor": ""` and `"LoginButtonTextColor": ""` to set the style of the email login button for white labelling purposes.
+
+**Additional Changes to Enterprise Edition**:
+
+- Under `LdapSettings` in `config.json`:
+  - Added `"LoginButtonColor": ""`, `"LoginButtonBorderColor": ""` and `"LoginButtonTextColor": ""` to set the style of the LDAP login button for white labelling purposes.
+- Under `SamlSettings` in `config.json`:
+  - Added `"LoginButtonColor": ""`, `"LoginButtonBorderColor": ""` and `"LoginButtonTextColor": ""` to set the style of the SAML login button for white labelling purposes.
+
+### API Changes
+
+- It is required that any new integrations use API v4 endpoints. For more details, and for a complete list of available endpoints, see [https://api.mattermost.com/](https://api.mattermost.com/).
+- All API v3 endpoints are now deprecated, and scheduled for removal in Mattermost v5.0.
+- The permanent query parameter of the DELETE `/teams/{team_id}` APIv4 endpoint for permanently deleting a team is scheduled for removal in Mattermost v4.7.
+
+#### RESTful API v4 Changes
+
+- Added `/users/{user_id}/auth` to update a user's authentication method. This can be used to change them to/from LDAP authentication, for example.
+
+#### Plugin API Changes (Beta)
+
+- Added `RegisterCommand` to register a custom slash command. When the command is triggered, your plugin can fulfil it via the `ExecuteCommand` hook.
+- Added `UnregisterCommand` to unregister a command previously registered via `RegisterCommand`.
+- Added `GetChannelMember` to get a channel membership for a user.
+
+#### Plugin Hook Changes (Beta)
+
+- Added `ExecuteCommand` hook to execute a command that was previously registered via the `RegisterCommand` plugin API.
+
+### Database Changes
+
+**IncomingWebhooks Table:**
+- Renamed `PostUsername` column to `Username`.
+- Renamed `PostIconURL` column to `IconURL`.
+
+### Known Issues
+
+- Google login fails on the Classic mobile apps.
+- User can receive a video call from another browser tab while already on a call.
+- Jump link in search results does not always jump to display the expected post.
+- Status may sometimes get stuck as away or offline in High Availability mode with IP Hash turned off.
+- Searching stop words in quotes with Elasticsearch enabled returns more than just the searched terms.
+- Searching with Elasticsearch enabled may not always highlight the searched terms.
+- Team sidebar on desktop app does not update when channels have been read on mobile.
+- Channel scroll position flickers while images and link previews load.
+- CTRL/CMD+U shortcut to upload a file doesn't work on Firefox.
+- Numbered lists can sometimes extend beyond the normal post area.
+- Slack import through the CLI fails if email notifications are enabled.
+- Letters are skipped in a few dialogs when using Korean keyboard in IE11.
+- Push notifications don't always clear on iOS when running Mattermost in High Availability mode.
+- Deleting a team via the API breaks the user interface.
+- Bot messages from the Zoom plugin ignore the Zoom API URL field for on-prem Zoom servers.
+
+### Contributors
+
+- [amyblais](https://github.com/amyblais), [AndersonWebStudio](https://github.com/AndersonWebStudio), [asaadmahmood](https://github.com/asaadmahmood), [ccbrown](https://github.com/ccbrown), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [csduarte](https://github.com/csduarte), [cvitter](https://github.com/cvitter), [dlahn](https://github.com/dlahn), [enahum](https://github.com/enahum), [esethna](https://github.com/esethna), [g3d](https://github.com/g3d), [grundleborg](https://github.com/grundleborg), [hmhealey](https://github.com/hmhealey), [it33](https://github.com/it33), [james-mm](https://github.com/james-mm), [jarredwitt](https://github.com/jarredwitt), [jespino](https://github.com/jespino), [jwilander](https://github.com/jwilander), [kaakaa](https://github.com/kaakaa), [letsila](https://github.com/letsila), [lfbrock](https://github.com/lfbrock), [lieut-data](https://github.com/lieut-data), [lindalumitchell](https://github.com/lindalumitchell), [lindy65](https://github.com/lindy65), [lisakycho](https://github.com/lisakycho), [liusy182](https://github.com/liusy182), [LordVeovis](https://github.com/LordVeovis), [Matterchen](https://github.com/Matterchen), [mkraft](https://github.com/mkraft), [MusikPolice](https://github.com/MusikPolice), [panditsavitags](https://github.com/panditsavitags), [pichouk](https://github.com/pichouk), [pixelbrackets](https://github.com/pixelbrackets), [pruthvip](https://github.com/pruthvip), [R-Wang97](https://github.com/R-Wang97), [saturninoabril](https://github.com/saturninoabril), [skvale](https://github.com/skvale), [stephenkiers](https://github.com/stephenkiers), [sudheerDev](https://github.com/sudheerDev), [sumantro93](https://github.com/sumantro93), [tayre](https://github.com/tayre), [tborg](https://github.com/tborg), [tejasbubane](https://github.com/tejasbubane), [watadarkstar](https://github.com/watadarkstar), [yuya-oc](https://github.com/yuya-oc)
+
+## Release v4.5
+
+ - **v4.5.2, release date 2018-02-23**
+   - Mattermost v4.5.2 contains multiple security fixes ranging from low to high severity. [Upgrading](http://docs.mattermost.com/administration/upgrade.html) is highly recommended. Details will be posted on our [security updates page](https://about.mattermost.com/security-updates/) 14 days after release as per the [Mattermost Responsible Disclosure Policy](https://www.mattermost.org/responsible-disclosure-policy/).
+ - **v4.5.1, released 2018-01-16**
+   - Fixed an issue where Mattermost wouldn't load on certain versions of Firefox, including v52-54 and v57 in private mode.
+ - **v4.5.0, released 2017-12-16**
+   - Original 4.5.0 release
+
+### Highlights
+
+#### Zoom Plugin (Beta)
+
+- [Zoom](https://www.zoom.us/) video calling and screensharing plugin. Learn more [here](https://about.mattermost.com/default-zoom-documentation).
+- Manage plugins from the **System Console > Plugins (Beta)** section.
+
+#### Actiance Support (Beta) ([Enterprise Edition E20](https://about.mattermost.com/pricing/) Add-On)
+
+- Compliance export support for [Actiance](https://www.actiance.com/) as a compliance solution. Learn more [here](https://about.mattermost.com/default-compliance-export-documentation).
+- Access compliance export from the **System Console > Advanced > Compliance Export (Beta)**.
+
+### Improvements
+
+#### Web User Interface
+- `CTRL/CMD` + `/` now toggles the keyboard shortcuts dialog.
+- Link previews now appear in the right-hand side in comment threads.
+- Timestamp permalinks now open in the current view on desktop and browser.
+- Pinned posts are now sorted newest to oldest.
+- Updated markdown to better handle non-Latin characters in URLs.
+- Added WebRTC call icon to desktop mobile view header.
+- Added a '+' sign to quickly add emoji reactions to a post.
+- Added support for different emoji skintones.
+- Added inline playback for GIF attachments.
+
+#### Integrations
+
+- Added an option for an outgoing webhook to reply to the posted message as a comment.
+- JIRA plugin is now bundled as a prepackaged plugin manageable from the System Console > Plugins > Management.
+- Added support for mentions with <@userid>, <!channel>, <!all> and <!here> in webhook posts.
+- Personal access tokens can now be temporarily deactivated in the Account Settings.
+
+#### Channels
+
+- Direct Message channels with deactivated users are now hidden in the sidebar and can be reopened from the **More...**  Direct Messages list.
+- You can now open a direct message channel with yourself.
+
+#### Notifications
+
+- Removed unnecessary log messages posted when pending email notifications are deleted because a user comes online before the batch is sent.
+- Desktop notification icon has been updated on Edge browsers.
+
+#### Keyboard Shortcuts
+
+- Added a `/groupmsg` command to start a new group message channel.
+- Added CTRL+SHIFT+L to set focus to the message input box.
+
+#### System Console
+
+- Added a confirm modal to the Data Retention settings page.
+- Added settings pages for uploading and managing plugins in the System Console > Plugins (Beta) section.
+- Added the ability to revoke a user's sessions from the System Console.
+
+### Bug Fixes
+
+- Closing a direct or group message channel no longer purges channel preferences.
+- Users no longer get a blank page after hitting "x" on a deleted message in permalink view.
+- Fixed an issue where `AmazonS3Region` defaults to us-east-1 regardless of the value input.
+- Channel links render as expected when linking to a channel that the current user does not belong to.
+- Uppercase letter is no longer required for a password if the password requirement is set to at least 5 characters and a number.
+- Profile image updates are now visible in other active clients and the right-hand side after the change.
+- Plugins can no longer be uploaded if they have the same plugin ID.
+- Creating a channel with a name including a reserved word no longer breaks the user interface.
+- Fixed the AD/LDAP Test Connection button.
+- Fixed an issue causing `invalid or expired session` server logs.
+- Removed a duplicate error message on the login page after a password reset.
+- Fixed an issue where the OAuth ClientID and Secret values were missing after setup.
+- Emoji picker now works when the right-hand side is expanded.
+- Error messages in the System Console user list no longer breaks the user interface.
+- Fixed an issue where only System Admins could edit OAuth apps even if integration creation was not restricted to admins.
+- Fixed an issue where "New messages v" bubble didn't always clear in a fresh direct message channel.
+- Fixed channel preferences not restoring after closing and reopening a direct or group message channel.
+
+### Compatibility
+
+#### Removed and Deprecated Features
+- All APIv3 endpoints are scheduled for removal on January 16, 2018.
+
+For a list of past and upcoming deprecated features, [see our website](https://about.mattermost.com/deprecated-features/).
+
+#### config.json
+
+Multiple setting options were added to `config.json`. Below is a list of the additions and their default values on install. The settings can be modified in `config.json`, or the System Console when available.
+
+**Changes to Team Edition and Enterprise Edition**:
+
+- Under `ServiceSettings` in `config.json`:
+  - Added `"EnablePreviewFeatures": true` to hide the **Advanced** > **Preview re-release features** section from Account Settings.
+  - Added `"CloseUnusedDirectMessages": false` to hide inactive direct message channels from the sidebar.
+  - Added `"ExperimentalEnableAuthenticationTransfer": true` to set whether users can change authentication methods.
+- Under `EmailSettings` in `config.json`:
+  - Added `"UseChannelInEmailNotifications": false` to set whether email notifications contain the channel name in the subject line.
+- Under `PluginSettings` in `config.json`:
+  - Added `"ClientDirectory": "./client/plugins"` to set the location of client plugins.
+
+**Additional Changes to Enterprise Edition**:
+
+- Added `MessageExportSettings` in `config.json`:
+  - Added `"EnableExport": false` to enable message export.
+  - Added `"DailyRunTime": "01:00"` to set the time for the daily export job.
+  - Added `"ExportFromTimestamp": 0` to set the timestamp for which posts to include in the message export.
+  - Added `"FileLocation": "export"` to set the message export location.
+  - Added `"BatchSize": 10000` to set how many new posts are batched together to a compliance export file.
+
+### API v4 Changes
+
+- It is recommended that any new integrations use API v4 endpoints. For more details, and for a complete list of available endpoints, see [https://api.mattermost.com/](https://api.mattermost.com/).
+- All API v3 endpoints are scheduled for removal on January 16, 2018.
+
+### Known Issues
+
+- Google login fails on the Classic mobile apps.
+- User can receive a video call from another browser tab while already on a call.
+- Jump link in search results does not always jump to display the expected post.
+- Status may sometimes get stuck as away or offline in High Availability mode with IP Hash turned off.
+- Searching stop words in quotes with Elasticsearch enabled returns more than just the searched terms.
+- Searching with Elasticsearch enabled may not always highlight the searched terms.
+- Team sidebar doesn't always show unreads from other teams on first load.
+- Team sidebar on desktop app does not update when channels have been read on mobile.
+- System Admin cannot reset their own password via the System Console.
+- Channel scroll position flickers while images and link previews load.
+- CTRL/CMD+U shortcut to upload a file doesn't work on Firefox.
+- Profile pictures and usernames don't immediately update across tabs or in the right-hand side comment threads.
+- Numbered lists can sometimes extend beyond the normal post area.
+- Typing an emoji reaction does not add it to recently used emojis.
+- Server logs contain messages about initializing plugins even when plugins are disabled.
+
+### Contributors
+
+/mattermost-webapp
+
+- [asaadmahmood](https://github.com/asaadmahmood), [avasconcelos114](https://github.com/avasconcelos114), [ccbrown](https://github.com/ccbrown), [CometKim](https://github.com/CometKim), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [crspeller](https://github.com/crspeller), [csduarte](https://github.com/csduarte), [deveshjadon98](https://github.com/deveshjadon98), [enahum](https://github.com/enahum), [fraziern](https://github.com/fraziern), [grundleborg](https://github.com/grundleborg), [h2oloopan](https://github.com/h2oloopan), [hmhealey](https://github.com/hmhealey), [jasonblais](https://github.com/jasonblais), [jespino](https://github.com/jespino), [jwilander](https://github.com/jwilander), [kaakaa](https://github.com/kaakaa), [KishoreFartiyal](https://github.com/KishoreFartiyal), [lfbrock](https://github.com/lfbrock), [mikelinden1](https://github.com/mikelinden1), [mkraft](https://github.com/mkraft), [MusikPolice](https://github.com/MusikPolice), [QuantumKing](https://github.com/QuantumKing), [rickbatka](https://github.com/rickbatka), [R-Wang97](https://github.com/R-Wang97), [santos22](https://github.com/santos22), [saturninoabril](https://github.com/saturninoabril), [sudheerDev](https://github.com/sudheerDev), [tkbky](https://github.com/tkbky), [yth0625](https://github.com/yth0625)
+
+/mattermost-plugin-zoom
+
+- [crspeller](https://github.com/crspeller), [jwilander](https://github.com/jwilander)
+
+/mattermost-server
+
+- [amyblais](https://github.com/amyblais), [ccbrown](https://github.com/ccbrown), [coreyhulen](https://github.com/coreyhulen), [cpanato](https://github.com/cpanato), [cpfeiffer](https://github.com/cpfeiffer), [crspeller](https://github.com/crspeller), [csduarte](https://github.com/csduarte), [enahum](https://github.com/enahum), [grundleborg](https://github.com/grundleborg), [hmhealey](https://github.com/hmhealey), [jasonblais](https://github.com/jasonblais), [jespino](https://github.com/jespino), [jwilander](https://github.com/jwilander), [letsila](https://github.com/letsila), [lindalumitchell](https://github.com/lindalumitchell), [mkraft](https://github.com/mkraft), [mogul](https://github.com/mogul), 
+[MusikPolice](https://github.com/MusikPolice), [yeoji](https://github.com/yeoji)
+
+/mattermost-mobile
+
+- [cpfeiffer](https://github.com/cpfeiffer), [csduarte](https://github.com/csduarte), [enahum](https://github.com/enahum), [hmhealey](https://github.com/hmhealey), [jarredwitt](https://github.com/jarredwitt), [lfbrock](https://github.com/lfbrock), [mkraft](https://github.com/mkraft)
+
+/docs
+
+- [amyblais](https://github.com/amyblais), [bbodenmiller](https://github.com/bbodenmiller), [ccbrown](https://github.com/ccbrown), [comharris](https://github.com/comharris), [esethna](https://github.com/esethna), [grundleborg](https://github.com/grundleborg), [hmhealey](https://github.com/hmhealey), [it33](https://github.com/it33), [jasonblais](https://github.com/jasonblais), 
+[jespino](https://github.com/jespino), [jwilander](https://github.com/jwilander), [kaakaa](https://github.com/kaakaa), [lfbrock](https://github.com/lfbrock), [lindalumitchell](https://github.com/lindalumitchell), [lindy65](https://github.com/lindy65), [mkdbns](https://github.com/mkdbns), [mkraft](https://github.com/mkraft), [saturninoabril](https://github.com/saturninoabril)
+
+/mattermost-docker
+
+- [andruwa13](https://github.com/andruwa13), [muffl0n](https://github.com/muffl0n), [pichouk](https://github.com/pichouk), [xcompass](https://github.com/xcompass)
+
+/mattermost-load-test
+
+- [ccbrown](https://github.com/ccbrown), [crspeller](https://github.com/crspeller), [jasonblais](https://github.com/jasonblais)
+
+/mattermost-redux
+
+- [brettmc](https://github.com/brettmc), [ccbrown](https://github.com/ccbrown), [csduarte](https://github.com/csduarte), [enahum](https://github.com/enahum), [hmhealey](https://github.com/hmhealey), [jespino](https://github.com/jespino), [jwilander](https://github.com/jwilander), [mkraft](https://github.com/mkraft), [sudheerDev](https://github.com/sudheerDev)
+
+/mattermost-developer-documentation
+
+- [ccbrown](https://github.com/ccbrown), [coreyhulen](https://github.com/coreyhulen), [crspeller](https://github.com/crspeller), [jwilander](https://github.com/jwilander), [MusikPolice](https://github.com/MusikPolice)
+
+/mattermost-plugin-jira
+
+- [ccbrown](https://github.com/ccbrown)
+
+/mattermost-webrtc
+
+- [enahum](https://github.com/enahum)
+
+/desktop
+
+- [dmeza](https://github.com/dmeza), [jasonblais](https://github.com/jasonblais), [yuya-oc](https://github.com/yuya-oc)
+
+/mattermost-kubernetes
+
+- [cpanato](https://github.com/cpanato)
+
+/mattermost-selenium
+
+- [lindalumitchell](https://github.com/lindalumitchell)
+
+/mattermost-api-reference
+
+- [grundleborg](https://github.com/grundleborg), [jasonblais](https://github.com/jasonblais), [jwilander](https://github.com/jwilander), [saturninoabril](https://github.com/saturninoabril)
+
+/mattermost-ios-classic
+
+- [coreyhulen](https://github.com/coreyhulen)
+
+/mattermost-developer-kit
+
+- [jwilander](https://github.com/jwilander)
+
+/mattermost-build
+
+- [crspeller](https://github.com/crspeller), [mthornba](https://github.com/mthornba)
+
+/marked
+
+- [hmhealey](https://github.com/hmhealey)
+
 ## Release v4.4.5
 
  - **v4.4.5, release date 2017-12-11**
@@ -103,10 +1519,13 @@ Also see [changelog in progress](http://bit.ly/2nK3cVf) for the next release.
 - Fixed mentions not appearing linked in message drafts when in preview mode.
 - Fixed an issue where an existing account could change their email address to one not in the [restricted domain list](https://docs.mattermost.com/administration/config-settings.html#restrict-account-creation-to-specified-email-domains).
 - Fixed emoji reactions being added to system messages when using the `+:emoji:` command.
+- Fixed an issue where message retention policy didn't work in Postgres databases if there were emoji reactions to delete.
 
 ### Compatibility
 
 Composite database indexes were added to the `Posts` table. This may lead to longer upgrade times for servers with more than 1 million messages.
+
+Moreover, LDAP sync now depends on email. If you have AD/LDAP login enabled, make sure all users on your AD/LDAP server have an email address or that their account is deactivated in Mattermost. 
 
 #### Removed and Deprecated Features
 - All APIv3 endpoints are scheduled for removal on January 16, 2018.
@@ -381,6 +1800,7 @@ Multiple setting options were added to `config.json`. Below is a list of the add
 - Emojis names matching usernames can trigger mentions.
 - Integration message attachment fails to post if attachment length exceeds 7900 characters.
 - Uppercase letter is required for a password if the password requirement is set to at least 5 characters and a number.
+- Message retention policy may not work in Postgres databases if there are emoji reactions to delete.
 
 ### Contributors
 
@@ -455,7 +1875,7 @@ Multiple setting options were added to `config.json`. Below is a list of the add
 - Added message buttons to support user interactions with posts made by incoming webhooks and custom slash commands.
 
 #### Mobile Support for AppConfig
-- iOS and Android mobile apps now support Enterprise Mobility Management (EMM) solutions through integration with [App Config](https://www.appconfig.org/). See [documentation](https://docs.mattermost.com/deployment/mobile-appconfig.html) to learn more.
+- iOS and Android mobile apps now support Enterprise Mobility Management (EMM) solutions through integration with [App Config](https://www.appconfig.org/). See [documentation](https://docs.mattermost.com/mobile/mobile-appconfig.html) to learn more.
 
 ### Improvements
 
@@ -923,7 +2343,7 @@ Many thanks to all our contributors. In alphabetical order:
 
 #### Native iOS and Android Apps
 - Second generation mobile apps released for [iOS](https://itunes.apple.com/us/app/mattermost/id1257222717?mt=8) and [Android](https://play.google.com/store/apps/details?id=com.mattermost.rn).
-- The apps are [EMM compatible starting with BlackBerry Dynamics](https://about.mattermost.com/mattermost-2nd-gen-mobile-apps-released-emm-compatible-starting-with-blackberry-dynamics/).
+- The apps are [EMM compatible starting with BlackBerry Dynamics](https://about.mattermost.com/releases/mattermost-2nd-gen-mobile-apps-released-emm-compatible-starting-with-blackberry-dynamics/).
 
 #### Updated Web User Interface
 - Updated the appearance of channel header and channel sidebar in the web user interface.
@@ -1641,7 +3061,7 @@ Many thanks to all our contributors. In alphabetical order:
 ### Highlights
 
 #### Native iOS and Android Apps (Beta)
-- Second generation mobile apps, built using React Native, are [available for beta testing](https://about.mattermost.com/a-native-mobile-experience-second-generation-mobile-apps-released-in-beta/) on [iOS](https://mattermost-fastlane.herokuapp.com/) and [Android](https://play.google.com/apps/testing/com.mattermost.react.native).
+- Second generation mobile apps, built using React Native, are [available for beta testing](https://about.mattermost.com/releases/a-native-mobile-experience-second-generation-mobile-apps-released-in-beta/) on [iOS](https://mattermost-fastlane.herokuapp.com/) and [Android](https://play.google.com/apps/testing/com.mattermost.react.native).
 
 #### Pinned Posts
 - Important messages can be pinned to the channel for easy reference. Pinned posts are visible to all channel members.

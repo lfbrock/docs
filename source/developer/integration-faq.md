@@ -1,6 +1,8 @@
 # Integrations FAQ
 ---
 
+Come [join our "Contributors" community channel](https://pre-release.mattermost.com/core/channels/tickets) on our daily build server, where you can discuss questions with community members and the Mattermost core team. Join our ["Developers" channel](https://pre-release.mattermost.com/core/channels/developers) for technical discussions and our ["Integrations" channel](https://pre-release.mattermost.com/core/channels/integrations) for all integrations and plugins discussions.
+
 ## What's the difference between incoming and outgoing webhooks?
 
 A webhook is a way for one app to send real-time data to another app.
@@ -115,7 +117,7 @@ Automating Mattermost installation within another application:
 4. For directory locations defined in `config.json`, such as the location of the local file storage directory (`./data/`) or logs directory (`./logs`), you can redefine those locations in your `config.json` settings and move the directories.
    - All other directories should remain as they are in `/mattermost`
 5. Test that your Mattermost server is running with your new configuration.
-6. Also, from the commandline run `./bin/platform -version` to test that the commandline interface is functioning properly.
+6. Also, from the commandline run `./bin/mattermost -version` to test that the commandline interface is functioning properly.
 
 Automating Mattermost upgrade within another application:
 

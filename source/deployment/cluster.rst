@@ -11,7 +11,6 @@ High availability in Mattermost consists of running redundant Mattermost applica
 
   This document applies to Mattermost Server version 4.0 and later. For previous versions, see :doc:`cluster-310`.
 
-
 .. contents::
   :backlinks: top
   :local:
@@ -133,7 +132,7 @@ Proxy Server Configuration
 
 The proxy server exposes the cluster of Mattermost servers to the outside world. The Mattermost servers are designed for use with a proxy server such as NGINX, a hardware load balancer, or a cloud service like Amazon Elastic Load Balancer.
 
-If you want to monitor the server with a health check you can use ``http://10.10.10.2/api/v3/general/ping`` and check the response for ``Status 200``, indicating success. Use this health check route to mark the server *in-service* or *out-of-service*.
+If you want to monitor the server with a health check you can use ``http://10.10.10.2/api/v4/system/ping`` and check the response for ``Status 200``, indicating success. Use this health check route to mark the server *in-service* or *out-of-service*.
 
 A sample configuration for NGINX is provided below. It assumes that you have two Mattermost servers running on private IP addresses of ``10.10.10.2`` and ``10.10.10.4``.
 
@@ -147,6 +146,21 @@ A sample configuration for NGINX is provided below. It assumes that you have two
 
       server {
           server_name mattermost.example.com;
+
+          location ~ /api/v[0-9]+/(users/)?websocket$ {
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "upgrade";
+                client_max_body_size 50M;
+                proxy_set_header Host $http_host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_set_header X-Frame-Options SAMEORIGIN;
+                proxy_buffers 256 16k;
+                proxy_buffer_size 16k;
+                proxy_read_timeout 600s;
+                proxy_pass http://backend;
+          }
 
           location / {
                 client_max_body_size 50M;
@@ -197,6 +211,21 @@ To configure a multi-database Mattermost server:
 1. Update the ``DataSource`` setting in ``config.json`` with a connection string to your master database server. The connection string is based on the database type set in ``DriverName``, either ``postgres`` or ``mysql``.
 2. Update the ``DataSourceReplicas`` setting in ``config.json`` with a series of connection strings to your database read replica servers in the format ``["readreplica1", "readreplica2"]``. Each connection should also be compatible with the ``DriverName`` setting.
 
+Here's an example SqlSettings block for one master and two read replicas:
+
+  "SqlSettings": {
+        "DriverName": "mysql",
+        "DataSource": "master_user:master_password@tcp(master.server)/mattermost?charset=utf8mb4,utf8\u0026readTimeout=30s\u0026writeTimeout=30s",
+        "DataSourceReplicas": ["slave_user:slave_password@tcp(replica1.server)/mattermost?charset=utf8mb4,utf8\u0026readTimeout=30s\u0026writeTimeout=30s","slave_user:slave_password@tcp(replica2.server)/mattermost?charset=utf8mb4,utf8\u0026readTimeout=30s\u0026writeTimeout=30s"],
+        "DataSourceSearchReplicas": [],
+        "MaxIdleConns": 20,
+        "MaxOpenConns": 300,
+        "Trace": false,
+        "AtRestEncryptKey": "",
+        "QueryTimeout": 30
+    }  
+
+
 The new settings can be applied by either stopping and starting the server, or by loading the configuration settings as described in the next section.
 
 Once loaded, database write requests are sent to the master database and read requests are distributed among the other databases in the list.
@@ -234,6 +263,18 @@ Leader Election
 In Mattermost v4.2 and later, a cluster leader election process assigns any scheduled task such as LDAP sync to run on a single node in a multi-node cluster environment.
 
 The process is based on a widely used `bully leader election algorithm <https://en.wikipedia.org/wiki/Bully_algorithm>`_ where the process with the lowest node ID number from amongst the non-failed processes is selected as the "leader". 
+
+Job Server
+^^^^^^^^^^^^^^^^
+
+Mattermost runs periodic tasks via the `job server <https://docs.mattermost.com/administration/config-settings.html#jobs>`_. These tasks include:
+
+ - LDAP sync
+ - Data retention
+ - Compliance exports
+ - Elasticsearch indexing
+
+Run all job servers with ``--noschedule flag``, then set ``JobSettings.RunScheduler`` to ``true`` in config.json for all app servers in the cluster. The cluster leader will then be responsible for scheduling recurring jobs.
 
 Upgrade Guide
 -------------
@@ -363,3 +404,8 @@ App Refreshes Continuously
 When configuration settings are modified through the System Console, the client refreshes every time a user connects to a different app server. This occurs because the servers have different `config.json` files in an HA cluster.
 
 Modify configuration settings directly through ``config.json`` `following these steps <https://docs.mattermost.com/deployment/cluster.html#updating-configuration-changes-while-operating-continuously>`_.
+
+Messages Do Not Post Until After Reloading
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When running in high-availability mode, make sure all Mattermost application servers are running the same version of Mattermost. If they are running different versions, it can lead to a state where the lower version app server cannot handle a request and the request will not be sent until the frontend application is refreshed and sent to a server with a valid Mattermost version. Symptoms to look for include requests failing seemingly at random or a single application server having a drastic rise in goroutines and API errors.

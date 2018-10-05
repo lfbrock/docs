@@ -1,7 +1,5 @@
-Custom Branding Tools  (E10)
+Custom Branding Tools
 ============================
-
-Available in `Enterprise Edition E10 and higher <https://about.mattermost.com/pricing/>`_.
 
 Use custom branding tools to present a Mattermost experience that is tailored to the branding of your organization. 
 
@@ -9,8 +7,6 @@ Use custom branding tools to present a Mattermost experience that is tailored to
 
 Enable Custom Branding
 ----------------------
-
-After purchasing and installing a license key for Enterprise Edition E10 or E20:
 
 1. Go to **System Console** > **Customization** > **Custom Branding** and set the value to ``true``.
 2. Choose a **Site Name**, upload a **Custom Brand Image** and write **Custom Brand Text**.
@@ -30,7 +26,7 @@ Upload a company logo or custom image representative of your site that is displa
 
 Custom Brand Text
 `````````````````
-Write custom text to display your company tagline or a welcome prompt. Custom text will be shown below the custom brand image on the left side of site login page on desktop. You can format this text to a maximum of 1024 characters using the same `Markdown formatting syntax <http://docs.mattermost.com/help/messaging/formatting-text.html>`_ as used in Mattermost messages.
+Write custom text to display your company tagline or a welcome prompt. Custom text will be shown below the custom brand image on the left side of site login page on desktop. You can format this text to a maximum of 500 characters using the same `Markdown formatting syntax <http://docs.mattermost.com/help/messaging/formatting-text.html>`_ as used in Mattermost messages.
 
 Site Description
 ````````````````

@@ -3,7 +3,7 @@ Account Settings
 
 --------------
 
-Account Settings is accessible from the **Main Menu** by clicking the three dots at the top of the channels pane. From here, you can configure your profile settings, notification preferences, integrations, theme settings, and display options.
+Account Settings is accessible from the **Main Menu** by clicking the three horizontal lines (or hamburger menu) at the top of the channels pane. From here, you can configure your profile settings, notification preferences, integrations, theme settings, and display options.
 
 General
 -------
@@ -99,6 +99,8 @@ Desktop Notifications
 
 Desktop notifications appear in the corner of your main monitor when there is activity in Mattermost.
 
+When `Desktop App <https://about.mattermost.com/download/#mattermostApps>`_ notifications are set to "Only for mentions and direct messages", an empty red circle is displayed over the upper right corner of the Mattermost dock icon when any message without an at-mention is received. A solid red circle with a post count is displayed when a message with an at-mention is received.
+
 Send Desktop Notifications
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -112,7 +114,9 @@ Notification sounds fire for any activity that would trigger a desktop notificat
 Notification Duration
 ^^^^^^^^^^^^^^^^^^^^^
 
-Sets how long desktop notifications will remain on screen. If set to **Unlimited**, the user will have to manually clear each notification as it appears on screen. Desktop notifications in Safari can only stay on screen for a maximum of 5 seconds.
+*Removed in June 16th, 2018 release*
+
+In Mattermost v5.0 and later, desktop notifications will stay onscreen for 5 seconds when supported by the browser and operating system.
 
 Email Notifications
 ~~~~~~~~~~~~~~~~~~~
@@ -131,7 +135,7 @@ If you are actively viewing a channel (public, private, or direct message) on de
 Trigger Mobile Push Notifications When
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also choose when to send push notifications depending on your status. By default, push notifications are sent if your status is "Online, away or offline". If "Send Mobile Push Notifications" is set as "Never", this setting is hidden. If your System Administrator has not set up push notifications, this setting will be disabled.
+You can also choose when to send push notifications depending on your status. By default, push notifications are sent if your status is "Away or offline". If "Send Mobile Push Notifications" is set as "Never", this setting is hidden. If your System Administrator has not set up push notifications, this setting will be disabled.
 
 Words That Trigger Mentions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -142,6 +146,10 @@ Reply Notifications
 ~~~~~~~~~~~~~~~~~~~
 
 In addition to **Words that Trigger Mentions**, this setting allows you to receive mention notifications when someone replies to a thread that you started or participated in. You are considered to start a thread when you post a message to which other members of your team reply. You are considered to participate in a thread when you post a message using the `reply button <https://docs.mattermost.com/help/getting-started/messaging-basics.html#messaging-basics>`_ in an already existing thread.
+
+Automatic Direct Message Replies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Set a custom message that will be automatically sent in response to Direct Messages. Mentions in Public and Private Channels will not trigger the automated reply. Enabling Automatic Replies sets your status to Out of Office and disables email and push notifications. This setting is experimental and `must be enabled by your System Admin <https://docs.mattermost.com/administration/config-settings.html?highlight=config%20settings#enable-automatic-replies-experimental>`_.
 
 Display
 -------
@@ -180,8 +188,14 @@ Teammate Name Display
 
 Configure how names are displayed in Mattermost: nickname, username or full name.
 
+Timezone
+~~~~~~~~~~~~~~~~~~~~~
+
+Select the timezone used for timestamps in the user interface and email notifications. The setting `must first be enabled by the System Admin <https://docs.mattermost.com/administration/config-settings.html#timezone>`_ by replacing ``false`` with ``true`` in config.json.
+
 Website Link Previews
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
 When available, the first web link in a message will show a preview of the website content below the message. This `setting must be enabled by your System Admin <https://docs.mattermost.com/administration/config-settings.html#link-previews>`_.
 
 Link Previews
@@ -212,8 +226,9 @@ Select what language Mattermost displays in the user interface. Options include:
 - Nederlands - Dutch
 - Polski - Polish
 - Português (Brasil) - Portuguese
-- Pусский - Russian
+- Română - Romanian
 - Türkçe - Turkish
+- Pусский - Russian
 - 한국어 - Korean
 - 中文 (简体) - Simplified Chinese
 - 中文 (繁體) - Traditional Chinese
@@ -222,9 +237,13 @@ Select what language Mattermost displays in the user interface. Options include:
 Sidebar
 --------
 
-Automatically Close Direct Messages
+Automatically close direct messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Hide Direct Message conversations with no activity for 7 days. These conversations can be reopened with the “+” button in the sidebar or by using the Channel Switcher (CTRL+K). This setting is experimental and `must be enabled by your System Admin <https://docs.mattermost.com/administration/config-settings.html#autoclose-direct-messages-in-sidebar-experimental>`_.
+
+Group unreads channels
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If enabled, this feature groups unread channels at the top of the channel sidebar. This setting is experimental and can be disabled from **Account Settings** -> **Sidebar** -> **Group Unreads Channels**. The setting `must first be enabled by the System Admin <https://docs.mattermost.com/administration/config-settings.html#group-unread-channels-experimental>`_, by replacing ``disabled`` with either ``default_off`` or ``default_on`` in config.json.
 
 Advanced
 --------
@@ -252,6 +271,14 @@ Preview pre-release features
 Turn on preview features to view them early, ahead of their official release:
 
 - **Show markdown preview option in message input box** Turning this on will show a "Preview" option when typing in the text input box. Pressing "Preview" shows what the Markdown formatting in the message looks like before the message is sent.
-- **For the first web link in a message, display a preview of website content below the message, if available** Turning this on will show a preview snippet posted below links from select websites.
-- **Enable the ability to make and receive one-on-one WebRTC calls** Turning this on will allow users to make one-on-one video calls on Chrome, Firefox and Mattermost Desktop Apps inside Mattermost. This feature is only available if WebRTC is enabled on the server. See `documentation <https://docs.mattermost.com/deployment/webrtc.html>`__ to learn more.
-- **Enable emoji picker for reactions and message input box** Turning this on enables the emoji picker icon in the message input box and in existing messages. To add one or more emoji to a message that you are writing, click the emoji picker icon in the message input box. To add an emoji as a reaction to an existing message, click the emoji picker icon in the message.
+
+Deactivate Account
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use this setting to deactivate your account. After deactivating, an email notification is sent confirming the deactivation was successful.
+
+Deactivating your account removes your ability to log in to the Mattermost server and disables all email and mobile notifications. To reactivate your account, contact your System Administrator.
+
+Only available for accounts with email login, and if your System Administrator has set ``EnableUserDeactivation`` to ``true`` in ``config.json``.
+
+For accounts with other authentication methods such as AD/LDAP or SAML, or for accounts that do not have this setting available, contact your System Administrator to deactivate your account.

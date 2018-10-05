@@ -1,6 +1,6 @@
 .. _jira:
 
-JIRA Webhook Plugin (Beta)
+JIRA Webhook Plugin 
 ================================
 
 Set up a JIRA integration for your Mattermost instance within minutes using a pre-packaged JIRA webhook plugin.
@@ -24,7 +24,7 @@ Enable JIRA on your Mattermost instance
 
 1 - (Optional) Create a new user account for your JIRA plugin, which can act as a bot account posting JIRA updates to Mattermost channels.
 
-2 - Enable JIRA in **System Console > Plugins > JIRA (Beta)**. 
+2 - Enable JIRA in **System Console > Plugins > JIRA**. 
 
 3 - Select the username that this plugin is attached to. If you created an account in step 1, choose that username. Then hit **Save**.
 
@@ -34,9 +34,11 @@ Enable JIRA on your Mattermost instance
 4 - Next, copy the webhook URL above the **Save** button, which is used to configure the plugin in your JIRA project.
 
 .. note::
-   Before pasting the webhook URL into JIRA, make sure to replace ``teamurl`` and ``channelurl`` with the Mattermost team URL and channel URL you want the JIRA events to post to. The values should be in lower case.
+   Before pasting the webhook URL into JIRA, make sure to replace ``teamurl`` and ``channelurl`` with the Mattermost team URL and channel URL you want the JIRA events to post to. The values should be in lower case. 
    
-   For instance, if the team URL is ``contributors`` and channel URL is ``town-square``, then the final webhook URL on the above screenshot would be 
+   Moreover, replace ``siteurl`` with the `site URL of your Mattermost instance <https://docs.mattermost.com/administration/config-settings.html#site-url>`_, and ``webhooksecret`` with the secret generated in step 3. 
+   
+   For instance, if the team URL is ``contributors``, channel URL is ``town-square`` and site URL is ``https://ci-linux-postgres.mattermost.com``, then the final webhook URL on the above screenshot would be 
    
   .. code-block:: text
      
@@ -50,7 +52,7 @@ Configure the webhook in your JIRA project
 .. image:: ../../source/images/jira_administration_menu.png
   :width: 300 px
 
-6 - On the left-hand sidebar, go to **Advanced > WebHooks**. Then click the **Create a Webhook** button to display the webhook creation form. Choose a unique name and add the JIRA webhook URL from step 3 as the URL. 
+6 - On the left-hand sidebar, go to **Advanced > WebHooks**. Then click the **Create a Webhook** button to display the webhook creation form. Choose a unique name and add the JIRA webhook URL from step 4 as the URL. 
 
 7 - (Optional) Set a description and a custom JQL query to determine which types of tickets trigger events. For more information on JQL queries, refer to the `Atlassian help documentation <https://confluence.atlassian.com/jirasoftwarecloud/advanced-searching-764478330.html>`_.
 
@@ -67,7 +69,7 @@ Configure the webhook in your JIRA project
 Disabling JIRA Plugin
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can disable the JIRA plugin any time from **System Console > Plugins > JIRA (Beta)**.
+You can disable the JIRA plugin any time from **System Console > Plugins > JIRA**.
 
 Frequently Asked Questions (FAQ)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -75,7 +77,7 @@ Frequently Asked Questions (FAQ)
 Why is the Mattermost domain missing from my webhook URL?
 ..........................................................
 
-This is because `Site URL <https://docs.mattermost.com/administration/config-settings.html#site-url>`_ hasn't been set. As a result, the webhook URL displayed in **System Console > Plugins > JIRA (Beta)** is of the form ``/plugins/jira/...``.
+This is because `Site URL <https://docs.mattermost.com/administration/config-settings.html#site-url>`_ hasn't been set. As a result, the webhook URL displayed in **System Console > Plugins > JIRA** is of the form ``/plugins/jira/...``.
 
 To resolve it, set your Site URL in **System Console > General > Configuration**.
 
@@ -84,17 +86,26 @@ Why doesn't my JIRA webhook post any messages?
 
 Try the following troubleshooting steps:
 
-1. Confirm **User** field is set in **System Console > Plugins > JIRA (Beta)**. The plugin needs to be attached to a user account for the webhook to post messages.
+1. Confirm **User** field is set in **System Console > Plugins > JIRA**. The plugin needs to be attached to a user account for the webhook to post messages.
 2. Confirm the team URL and channel URL you specified in the JIRA webhook URL is in lower case.
 3. For issue updated events, only status changes when the ticket is reopened, or when resolved/closed are supported. If you'd like to see support for additional events, `let us know <https://mattermost.uservoice.com/forums/306457-general>`_.
 4. If you specified a JQL query in your JIRA webhook page, paste the JQL to JIRA issue search and make sure it returns results. If it doesn't, the query may be incorrect. Refer to the `Atlassian documentation <https://confluence.atlassian.com/jirasoftwarecloud/advanced-searching-764478330.html>`_ for help.
+5. Use a curl command to make a POST request to the webhook URL. If curl command completes with a ``200 OK`` response, the plugin is configured correctly. For instance, you can run the following command
+
+   .. code-block:: text
+
+     curl -v --insecure "https://<your-mattermost-url>/plugins/jira/webhook?secret=<your-secret>&team=<your-team>&channel=<your-channel>&user_id=admin&user_key=admin" --data '{"event":"some_jira_event"}'
+
+   where ``<your-mattermost-url>``, ``<your-secret>``, ``<your-team-url>`` and ``<your-channel-url>`` depend on your setup when configuring the JIRA plugin.
+   
+   Note that the curl command won't result in an actual post in your channel.
 
 If you are still having trouble with configuration, feel free to post in our `Troubleshooting forum <https://forum.mattermost.org/t/how-to-use-the-troubleshooting-forum/150>`_ and we'll be happy to help with issues during setup.
 
 How do I disable the plugin quickly in an emergency?
 .....................................................
 
-Set **Enable JIRA** to ``false`` any time from **System Console > Plugins > JIRA (Beta)**. Requests will stop immediately with an error code in **System Console > Logs**. No posts are created until the plugin is re-enabled.
+Set **Enable JIRA** to ``false`` any time from **System Console > Plugins > JIRA**. Requests will stop immediately with an error code in **System Console > Logs**. No posts are created until the plugin is re-enabled.
 
 Why do I get an error ``WebHooks can only use standard http and https ports (80 or 443).``?
 ............................................................................................
@@ -103,13 +114,13 @@ JIRA only allows webhooks to connect to the standard ports 80 and 443. If you ar
 
 .. code-block:: text
 
-  https://32zanxm6u6.execute-api.us-east-1.amazonaws.com/dev/proxy?url=https%3A%2F%2F<your-mattermost-url>%3A<your-port>%2Fplugins%2Fjira%2Fwebhook%3Fsecret%3DWb6w15YWJ9WeBooebLHslgr2KN1AajI_%26team%3D<your-team-url>%26channel%3D<your-channel-url>
+  https://32zanxm6u6.execute-api.us-east-1.amazonaws.com/dev/proxy?url=https%3A%2F%2F<your-mattermost-url>%3A<your-port>%2Fplugins%2Fjira%2Fwebhook%3Fsecret%<your-secret>%26team%3D<your-team-url>%26channel%3D<your-channel-url>
     
-where ``<your-mattermost-url>``, ``<your-port>``, ``<your-team-url>`` and ``<your-channel-url>`` depend on your setup from the above steps.
+where ``<your-mattermost-url>``, ``<your-port>``, ``<your-secret>``, ``<your-team-url>`` and ``<your-channel-url>`` depend on your setup from the above steps.
 
 How do I handle credential rotation?
 ......................................
 
-You can generate a new secret in **System Console > Plugins > JIRA (Beta)**, and paste the new webhook URL in your JIRA webhook configuration. 
+You can generate a new secret in **System Console > Plugins > JIRA**, and paste the new webhook URL in your JIRA webhook configuration. 
 
 This might result in downtime of the JIRA plugin, but it should only be a few minutes at most.

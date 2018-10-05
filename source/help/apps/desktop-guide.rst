@@ -31,6 +31,13 @@ To access a new server from your desktop app environment:
 4. In the **URL** field, enter the complete URL of the server that you want to connect to. Must begin with either ``http://`` or ``https://``.
 5. Click **Add**.
 
+To access a new server from your Mac desktop app environment:
+
+1. On the menu bar, go to **Mattermost > Sign into Another Server**.
+2. In the **Server Display Name** field, enter the name that you want for the tab.
+3. In the **Server URL** field, enter the complete URL of the server that you want to connect to. Must begin with either ``http://`` or ``https://``.
+4. Click **Add**.
+
 Editing Servers
 ~~~~~~~~~~~~~~~
 
@@ -76,6 +83,11 @@ Flash taskbar icon when a new message is received (Windows, Linux only)
     Configure whether the taskbar icon flashes for a few messages when a new message is received on any of your active teams and servers.
 
     This setting is disabled by default.
+    
+Bounce the Dock icon when receiving a notification (Mac only)
+    When enabled, the Dock icon will either bounce once or bounce until the user opens the app when receiving a notification.
+    
+    This setting is disabled by default.
 
 Show Mattermost icon in the menu bar (Mac only)
     When enabled, Mattermost icon is added to the Mac menu bar.
@@ -89,5 +101,10 @@ Show icon in the notification area (Linux only)
 
 Leave app running in notification center when application window is closed (Linux only)
     When enabled, closing the application window will leave the Mattermost desktop app running in your notification center. This can be useful if you want to check for unread mentions while away from the app.
+
+    This setting is disabled by default.
+    
+Use GPU hardware acceleration
+    If enabled, Mattermost UI is rendered more efficiently but can lead to decreased stability for some systems. Setting takes effect after restarting the app.
 
     This setting is disabled by default.

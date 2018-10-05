@@ -26,6 +26,13 @@ Your **Team Description** is displayed when viewing the list of teams available 
 
 You can enter a description up to 50 characters in length.
 
+Team Icon
+~~~~~~~~~~~~~~~~
+
+Your **Team Icon** appears in the team sidebar, visible if users are members of more than one team. 
+
+You can upload a team icon in BMP, JPG or PNG format. Square images with a solid background color are recommended, since transparency in PNG icons fills with a white background in the Team Sidebar. Removing the team icon resets it to the default icon that contains the first two letters of the team name.
+
 Allow anyone to join this team
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -44,5 +51,4 @@ Import
 Import from Slack (Beta)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can import channels and users from Slack into Mattermost from **Team Settings > Import**. Please review our documentation on `Slack Import <https://docs.mattermost.com/administration/migrating.html#migrating-from-slack>`_ for more details.
-
+You can import channels and users from Slack into Mattermost from **Slack** > **Administration** > **Workspace settings** > **Import/Export Data** > **Export** > **Start Export**. Please review our documentation on `Slack Import <https://docs.mattermost.com/administration/migrating.html#migrating-from-slack>`_ for more details.

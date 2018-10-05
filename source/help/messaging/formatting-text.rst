@@ -23,6 +23,7 @@ You can use either ``_`` or ``*`` around a word to make it italic. Use two to ma
 * ``**bold**`` renders as **bold**
 * ``**_bold-italic_**`` renders as |bold_italics|
 * ``~~strikethrough~~`` renders as |strikethrough|
+
 .. |bold_italics| image:: ../../images/bold_italics.PNG
   :width: 100px
 .. |strikethrough| image:: ../../images/strikethrough.PNG
@@ -125,30 +126,39 @@ Renders as:
 Code Block
 ----------
 
-Create a code block by indenting each line by four spaces, or by placing ``````` on the line above and below your code.
+Creating a fixed width code block is recommended for pasting multi-line blocks of code or other text output that is easier to read with fixed width font alignment. Examples include block text snippets, ASCII tables, and log files.
 
-Example:
+This can be accomplished in one of two ways:
 
-.. code-block:: none
-
-
-  ```
-  code block
-  ```
-
-Renders as:
+ 1. Placing 3x backtics :kbd:`\`\`\`` on the line directly above and directly below your code
 
 .. code-block:: none
 
-
+  ```
+  this is my
   code block
+  ```
+
+
+* :guilabel:`TIP` - Enter 3x backticks :kbd:`\`\`\``, :kbd:`SHIFT + ENTER`, :kbd:`<type_your_code>`, :kbd:`SHIFT + ENTER`, and finally 3x backticks :kbd:`\`\`\``.
+
+
+ 2. Indenting each line by four spaces
+
+.. code-block:: none
+
+      this is my
+      code block
+
+  ^^^^ 4x spaces
+
 
 **Syntax Highlighting**
 
 To add syntax highlighting, type the language to be highlighted after the ``````` at the beginning of the code block. Mattermost also offers four different code themes (GitHub, Solarized Dark, Solarized Light, Monokai) that can be changed in **Account Settings** > **Display** > **Theme** > **Custom Theme** > **Center Channel Styles**
 
 Supported languages are:
-``actionscript``, ``applescript``, ``bash``, ``clojure``, ``coffeescript``, ``cpp``, ``cs``, ``css``, ``d``, ``dart``, ``delphi``, ``diff``, ``django``, ``dockerfile``, ``erlang``, ``fortran``, ``fsharp``, ``gcode``, ``go``, ``groovy``, ``handlebars``, ``haskell``, ``haxe``, ``java``, ``javascript``, ``json``, ``julia``, ``kotlin``, ``less``, ``lisp``, ``lua``, ``makefile``, ``markdown``, ``matlab``, ``objectivec``, ``ocaml``, ``perl``, ``php``, ``powershell``, ``puppet``, ``python``, ``r``, ``ruby``, ``rust``, ``scala``, ``scheme``, ``scss``, ``smalltalk``, ``sql``, ``swift``, ``tex``, ``vbnet``, ``vbscript``, ``verilog``, ``xml``, ``yaml``
+``actionscript``, ``applescript``, ``bash``, ``clojure``, ``coffeescript``, ``cpp``, ``cs``, ``css``, ``d``, ``dart``, ``delphi``, ``diff``, ``django``, ``dockerfile``, ``erlang``, ``fortran``, ``fsharp``, ``gcode``, ``go``, ``groovy``, ``handlebars``, ``haskell``, ``haxe``, ``java``, ``javascript``, ``json``, ``julia``, ``kotlin``, ``less``, ``lisp``, ``lua``, ``makefile``, ``markdown``, ``matlab``, ``objectivec``, ``ocaml``, ``perl``, ``php``, ``powershell``, ``puppet``, ``python``, ``r``, ``ruby``, ``rust``, ``scala``, ``scheme``, ``scss``, ``smalltalk``, ``sql``, ``stylus``, ``swift``, ``tex``, ``text``, ``vbnet``, ``vbscript``, ``verilog``, ``xml``, ``yaml``
 
 Example:
 
