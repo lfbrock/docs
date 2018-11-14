@@ -14,16 +14,27 @@ Development Process
    :glob:
 
    /process/overview*
+   /process/deprecated-features*
+   /process/software-requirements*
+   /developer/style*
+   /developer/fx*
+   /developer/localization*
+   /process/definitions*
+   /process/pm-faq*
+   
+Release Process
+-------------------
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+
    /process/feature-release*
    /process/bug-fix-release*
    /process/dot-release*
    /process/security-release*
    /process/mobile-release*
-   /process/deprecated-features*
-   /developer/style*
-   /developer/fx*
-   /developer/localization*
-   /process/definitions*
+   /process/release-faq*
 
 Community Process
 -------------------
